@@ -1,19 +1,17 @@
 // pages/receipt.tsx
 
-import { useEffect, useContext } from 'react';
-import TopMenu from '../components/TopMenu';
-import { OrderContext } from '../contexts/OrderContext';
-import { useRouter } from 'next/router';
+import React, { useEffect, useContext } from "react";
+import TopMenu from "../components/TopMenu";
+import { OrderContext } from "../contexts/OrderContext";
 
 const ReceiptScreen: React.FC = () => {
-  const router = useRouter();
   const { orderData } = useContext(OrderContext)!;
 
-  const { dish, drinks, dateTime, numberOfPeople, email } = orderData;
+  const { drinks, dateTime, numberOfPeople, email } = orderData;
 
   // Fixed prices
-  const foodPricePerPerson = 10; // You can adjust this
-  const drinkPrice = 5; // You can adjust this
+  const foodPricePerPerson = 15; // TODO lagaverð
+  const drinkPrice = 5; // TODO lagaverð
 
   const foodTotal = foodPricePerPerson * numberOfPeople;
   const drinksTotal = drinks.reduce(
@@ -26,18 +24,18 @@ const ReceiptScreen: React.FC = () => {
   useEffect(() => {
     const saveOrder = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/orders', {
-          method: 'POST',
+        const response = await fetch("http://localhost:3001/api/orders", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(orderData),
         });
         if (!response.ok) {
-          throw new Error('Failed to save order.');
+          throw new Error("Failed to save order.");
         }
       } catch (error) {
-        console.error('Error saving order:', error);
+        console.error("Error saving order:", error);
       }
     };
     saveOrder();
@@ -47,11 +45,11 @@ const ReceiptScreen: React.FC = () => {
     <div>
       <TopMenu />
       <div className="max-w-2xl mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">Receipt</h1>
+        <h1 className="text-2xl font-bold mb-4 text-[#3E6053]">Receipt</h1>
         <div className="mb-4">
           <h2 className="text-xl font-semibold mb-2">Order Details</h2>
           <p>
-            <strong>Date and Time:</strong>{' '}
+            <strong>Date and Time:</strong>{" "}
             {new Date(dateTime).toLocaleString()}
           </p>
           <p>
@@ -64,12 +62,12 @@ const ReceiptScreen: React.FC = () => {
 
         <div className="mb-4">
           <h2 className="text-xl font-semibold mb-2">Items</h2>
-          <h3 className="text-lg font-semibold">Dish</h3>
+          <h3 className="text-lg font-semibold">Food</h3>
           <p>
-            {dish?.strMeal} x {numberOfPeople} @ ${foodPricePerPerson} each
+            Dish x {numberOfPeople} @ ${foodPricePerPerson} each
           </p>
           <p>
-            <strong>Subtotal:</strong> ${foodTotal.toFixed(2)}
+            <strong>Food Total:</strong> ${foodTotal.toFixed(2)}
           </p>
 
           <h3 className="text-lg font-semibold mt-4">Drinks</h3>
@@ -83,7 +81,7 @@ const ReceiptScreen: React.FC = () => {
           </p>
         </div>
 
-        <h2 className="text-2xl font-bold">
+        <h2 className="text-2xl font-bold text-[#BA2329]">
           Total Price: ${totalPrice.toFixed(2)}
         </h2>
       </div>

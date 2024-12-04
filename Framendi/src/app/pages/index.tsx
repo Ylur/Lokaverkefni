@@ -1,23 +1,17 @@
 // pages/index.tsx
 
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  FormEvent,
-  useCallback,
-} from "react";
+import React, { useState, useContext, FormEvent, useCallback } from "react";
 import { useRouter } from "next/router";
 import TopMenu from "../components/TopMenu";
 import CarouselComponent from "../components/CarouselComponent";
 import { OrderContext } from "../contexts/OrderContext";
+import Image from "next/image";
 
 const HomePage: React.FC = () => {
   const router = useRouter();
   const { setOrderData } = useContext(OrderContext)!;
   const [emailInput, setEmailInput] = useState("");
 
-  // Images for the carousel
   const images = ["/images/1.jpg", "/images/2.jpg", "/images/3.jpg"];
 
   const handleEmailCheck = useCallback(
@@ -29,7 +23,7 @@ const HomePage: React.FC = () => {
         if (response.ok) {
           const data = await response.json();
           setOrderData(data);
-          router.push("/select-dish");
+          router.push("/select-drink");
         } else {
           alert("No order found for this email.");
         }
@@ -40,14 +34,6 @@ const HomePage: React.FC = () => {
     [router, setOrderData]
   );
 
-  // Check if email is provided in the URL slug
-  useEffect(() => {
-    const { email } = router.query;
-    if (email && typeof email === "string") {
-      handleEmailCheck(email);
-    }
-  }, [router.query, handleEmailCheck]);
-
   const handleEmailSubmit = (e: FormEvent) => {
     e.preventDefault();
     handleEmailCheck(emailInput);
@@ -57,15 +43,18 @@ const HomePage: React.FC = () => {
     <div>
       <TopMenu />
       <header className="text-center my-8">
-        <h1 className="text-4xl font-bold">Restaurant Logo</h1>
+        <Image src="/logo.png" alt="Restaurant Logo" width={375} height={360} />
+        <h1 className="text-4xl font-bold text-[#3E6053]">
+          Welcome Lil Bits
+        </h1>
       </header>
 
       <CarouselComponent images={images} />
 
       <div className="text-center my-8">
         <button
-          onClick={() => router.push("/select-dish")}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          onClick={() => router.push("/select-drink")}
+          className="bg-[#C16757] text-white px-4 py-2 rounded hover:bg-[#BA2329]"
         >
           Start Order
         </button>
@@ -82,7 +71,7 @@ const HomePage: React.FC = () => {
         />
         <button
           type="submit"
-          className="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          className="ml-2 bg-[#C16757] text-white px-4 py-2 rounded hover:bg-[#BA2329]"
         >
           Check Order
         </button>
