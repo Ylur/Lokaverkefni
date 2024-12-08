@@ -1,11 +1,12 @@
-// pages/select-drink.tsx
+"use client";
 
-import React, { useState, useEffect, useContext } from "react";
-import { useRouter } from "next/router";
+import React, { useState, useEffect, useContext, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import TopMenu from "../components/TopMenu";
-import { OrderContext } from "../contexts/OrderContext";
+import { OrderContext, Drink } from "../contexts/OrderContext"; // Correct import
 import Image from "next/image";
 
+// Define DrinkAPI interface as received from the API
 interface DrinkAPI {
   idDrink: string;
   strDrink: string;
@@ -14,11 +15,20 @@ interface DrinkAPI {
 
 const SelectDrink: React.FC = () => {
   const router = useRouter();
-  const { orderData, setOrderData } = useContext(OrderContext)!;
-  const [drinks, setDrinks] = useState<DrinkAPI[]>([]);
-  const [selectedDrinks, setSelectedDrinks] = useState(orderData.drinks);
+  const context = useContext(OrderContext);
 
-  const fetchDrinks = async () => {
+  if (!context) {
+    throw new Error("SelectDrink must be used within an OrderProvider");
+  }
+
+  const { orderData, setOrderData } = context;
+  const [drinks, setDrinks] = useState<DrinkAPI[]>([]);
+  const [selectedDrinks, setSelectedDrinks] = useState<Drink[]>(
+    orderData.drinks
+  ); // Use Drink[] here
+
+  // Fetch drinks from API
+  const fetchDrinks = useCallback(async () => {
     try {
       const response = await fetch(
         "https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic"
@@ -30,12 +40,13 @@ const SelectDrink: React.FC = () => {
     } catch (error) {
       console.error("Error fetching drinks:", error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchDrinks();
-  }, []);
+  }, [fetchDrinks]);
 
+  // Toggle selection of a drink
   const toggleDrinkSelection = (drink: DrinkAPI) => {
     const exists = selectedDrinks.find((d) => d.idDrink === drink.idDrink);
     if (exists) {
@@ -43,10 +54,13 @@ const SelectDrink: React.FC = () => {
         selectedDrinks.filter((d) => d.idDrink !== drink.idDrink)
       );
     } else {
-      setSelectedDrinks([...selectedDrinks, { ...drink, quantity: 1 }]);
+      // Add the drink with a default quantity of 1
+      const newDrink: Drink = { ...drink, quantity: 1 };
+      setSelectedDrinks([...selectedDrinks, newDrink]);
     }
   };
 
+  // Update quantity of a selected drink
   const updateQuantity = (id: string, quantity: number) => {
     setSelectedDrinks(
       selectedDrinks.map((drink) =>

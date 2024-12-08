@@ -1,7 +1,13 @@
-import type { NextConfig } from "next";
+// next.config.ts
+
+import { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  reactStrictMode: true,
+  images: {
+    domains: ['www.themealdb.com', 'www.thecocktaildb.com'], // Add your external image domains here
+  },
+  // Other configurations...
 };
 
 export default nextConfig;

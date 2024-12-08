@@ -1,21 +1,25 @@
-// pages/select-dish.tsx
+'use client';
 
-import React, { useState, useEffect, useContext } from "react";
-import { useRouter } from "next/router";
+import React, { useState, useEffect, useContext, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import TopMenu from "../components/TopMenu";
-import { OrderContext } from "../contexts/OrderContext";
+import { OrderContext, Dish } from "../contexts/OrderContext"; // Correct import
 import Image from "next/image";
 
 const SelectDish: React.FC = () => {
   const router = useRouter();
-  const { orderData, setOrderData } = useContext(OrderContext)!;
-  const [dish, setDish] = useState(orderData.dish);
+  const context = useContext(OrderContext);
 
-  const fetchRandomDish = async () => {
+  if (!context) {
+    throw new Error("SelectDish must be used within an OrderProvider");
+  }
+
+  const { orderData, setOrderData } = context;
+  const [dish, setDish] = useState<Dish | null>(orderData.dish);
+
+  const fetchRandomDish = useCallback(async () => {
     try {
-      const response = await fetch(
-        "https://www.themealdb.com/api/json/v1/1/random.php"
-      );
+      const response = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
       const data = await response.json();
       if (data.meals) {
         setDish(data.meals[0]);
@@ -24,13 +28,13 @@ const SelectDish: React.FC = () => {
     } catch (error) {
       console.error("Error fetching dish:", error);
     }
-  };
+  }, [orderData, setOrderData]);
 
   useEffect(() => {
     if (!dish) {
       fetchRandomDish();
     }
-  }, []);
+  }, [dish, fetchRandomDish]);
 
   const handleNext = () => {
     router.push("/select-drink");
@@ -47,8 +51,8 @@ const SelectDish: React.FC = () => {
             <Image
               src={dish.strMealThumb}
               alt={dish.strMeal}
-              width={500} // TODO
-              height={300} // TODO
+              width={500}
+              height={300}
               className="w-full h-auto my-4 rounded"
             />
             <p>{dish.strInstructions}</p>

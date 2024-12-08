@@ -1,23 +1,25 @@
-// contexts/OrderContext.tsx
-'use client'
+'use client';
 
 import React, { createContext, useState, ReactNode } from "react";
 
-interface Dish {
+// Define the structure of a Dish
+export interface Dish {
   idMeal: string;
   strMeal: string;
   strMealThumb: string;
   strInstructions: string;
 }
 
-interface Drink {
+// Define the structure of a Drink
+export interface Drink {
   idDrink: string;
   strDrink: string;
   strDrinkThumb: string;
   quantity: number;
 }
 
-interface OrderData {
+// Define the structure of the entire order
+export interface OrderData {
   dish: Dish | null;
   drinks: Drink[];
   dateTime: string;
@@ -25,19 +27,21 @@ interface OrderData {
   email: string;
 }
 
+// Define the context's value type
 interface OrderContextProps {
   orderData: OrderData;
   setOrderData: React.Dispatch<React.SetStateAction<OrderData>>;
 }
 
-export const OrderContext = createContext<OrderContextProps | undefined>(
-  undefined
-);
+// Create the context with an initial undefined value
+export const OrderContext = createContext<OrderContextProps | undefined>(undefined);
 
+// Define the props for the OrderProvider
 interface OrderProviderProps {
   children: ReactNode;
 }
 
+// Create the OrderProvider component
 export const OrderProvider: React.FC<OrderProviderProps> = ({ children }) => {
   const [orderData, setOrderData] = useState<OrderData>({
     dish: null,

@@ -1,35 +1,33 @@
-// components/TopMenu.tsx
+'use client';
 
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 const TopMenu: React.FC = () => {
-  const router = useRouter();
+  const pathname = usePathname();
 
   const menuItems = [
     { path: "/", label: "Home" },
-    { path: "/select-dish", label: "Select Dish" },
-    { path: "/select-drink", label: "Select Drink" },
-    { path: "/order", label: "Order" },
+    { path: "/select", label: "Select Order" }, // Updated path
     { path: "/receipt", label: "Receipt" },
   ];
 
   return (
     <nav className="bg-gray-800 p-4">
       <ul className="flex space-x-4">
-        {menuItems.map((item) => (
-          <li key={item.path}>
-            <Link href={item.path}>
-              <a
-                className={`text-white hover:text-yellow-500 ${
-                  router.pathname === item.path ? "underline" : ""
-                }`}
+        {menuItems.map((item) => {
+          const isActive = pathname === item.path ? "underline" : "";
+          return (
+            <li key={item.path}>
+              <Link
+                href={item.path}
+                className={`text-white hover:text-yellow-500 ${isActive}`}
               >
                 {item.label}
-              </a>
-            </Link>
-          </li>
-        ))}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );
