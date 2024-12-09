@@ -1,1 +1,1 @@
-Lokaverkefni 2 önn NTV
+Tilraun 2 á lokaverkefni.
