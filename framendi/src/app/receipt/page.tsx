@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
 export default function ReceiptPage() {
@@ -8,21 +8,22 @@ export default function ReceiptPage() {
   const router = useRouter();
   
   const email = searchParams.get("email");
-  const date = searchParams.get("date");
-  const time = searchParams.get("time");
+  const date = new Date().toLocaleDateString(); // Use current date if not provided
+  const time = new Date().toLocaleTimeString(); // Use current time if not provided
   const people = Number(searchParams.get("people")) || 1;
-  const dishId = searchParams.get("dishId");
   
- 
-  const dishPricePerPerson = 20; // TODO skoða verðin
+  // Decode dish details
+  const dishParam = searchParams.get("dish");
+  const selectedDish = dishParam ? JSON.parse(dishParam) : null;
+
+  const dishPricePerPerson = 20; // TODO: Adjust price dynamically if needed
+  const dishTotal = selectedDish ? dishPricePerPerson * selectedDish.quantity : 0;
+
+  // Hardcoded drinks as an example
   const selectedDrinks = [
-    // TODO extract these from query params or global state.
-    // Hard-kóðað í bili
     { strDrink: "Margarita", quantity: 2, price: 8 },
     { strDrink: "Mojito", quantity: 1, price: 10 },
   ];
-
-  const dishTotal = dishPricePerPerson * people;
   const drinksTotal = selectedDrinks.reduce((sum, d) => sum + d.price * d.quantity, 0);
   const total = dishTotal + drinksTotal;
 
@@ -40,9 +41,15 @@ export default function ReceiptPage() {
         <hr className="my-4" />
         
         <h3 className="text-lg font-bold mb-2">Selected Dish:</h3>
-        <p>{dishId ? `Dish ID: ${dishId}` : "No dish selected"}</p>
-        <p>Price per person: ${dishPricePerPerson}</p>
-        <p>Dish Total: ${dishTotal}</p>
+        {selectedDish ? (
+          <>
+            <p>{selectedDish.strMeal} x {selectedDish.quantity}</p>
+            <p>Price per person: ${dishPricePerPerson}</p>
+            <p>Dish Total: ${dishTotal}</p>
+          </>
+        ) : (
+          <p>No dish selected</p>
+        )}
 
         <hr className="my-4" />
 
@@ -59,7 +66,6 @@ export default function ReceiptPage() {
         <h2 className="text-xl font-bold">Total: ${total}</h2>
         
         <div className="text-center mt-4">
-          {/* In a real flow, you might have a button to complete the order or go home */}
           <button
             onClick={() => router.push("/")}
             className="bg-green-500 text-white px-4 py-2 rounded"
