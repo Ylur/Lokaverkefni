@@ -24,15 +24,17 @@ export default function SelectDrinksPage() {
   const email = searchParams.get("email");
 
   useEffect(() => {
-    async function fetchDrinks() {
+    async function fetchRandomDrinks() {
       const res = await fetch("https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail");
       const data = await res.json();
-      if (data.drinks) {
-        setDrinks(data.drinks);
+
+      if (data.drinks && data.drinks.length > 0) {
+        // Randomly select 3 unique drinks from the list
+        const shuffledDrinks = data.drinks.sort(() => 0.5 - Math.random());
+        setDrinks(shuffledDrinks.slice(0, 3));
       }
     }
-
-    fetchDrinks();
+    fetchRandomDrinks();
   }, []);
 
   function toggleDrink(drink: Drink) {
@@ -80,7 +82,7 @@ export default function SelectDrinksPage() {
             return (
               <div
                 key={drink.idDrink}
-                className={`p-4 bg-white rounded shadow relative ${isSelected ? "border-2 border-blue-500" : ""}`}
+                className={`p-4 bg-black rounded shadow relative ${isSelected ? "border-2 border-blue-500" : ""}`}
               >
                 <Image
                   src={drink.strDrinkThumb}
@@ -106,7 +108,7 @@ export default function SelectDrinksPage() {
                       min={1}
                       value={selectedDrink.quantity}
                       onChange={(e) => updateQuantity(drink.idDrink, Number(e.target.value))}
-                      className="border p-1 w-16 text-center"
+                      className="border p-1 w-16 text-center text-black"
                     />
                   </div>
                 )}

@@ -13,14 +13,11 @@ export default function ReceiptPage() {
   const people = Number(searchParams.get("people")) || 1;
   const dishId = searchParams.get("dishId");
   
-  // In a real app, you'd also have drink selections. For now,
-  // let's assume we have them from global state or they were also passed along.
-  
-  // Mock data for calculation:
-  const dishPricePerPerson = 20; // e.g., $20 per person for the dish
+ 
+  const dishPricePerPerson = 20; // TODO skoða verðin
   const selectedDrinks = [
-    // Normally you'd extract these from query params or global state.
-    // Hard-coding as an example:
+    // TODO extract these from query params or global state.
+    // Hard-kóðað í bili
     { strDrink: "Margarita", quantity: 2, price: 8 },
     { strDrink: "Mojito", quantity: 1, price: 10 },
   ];
@@ -33,7 +30,7 @@ export default function ReceiptPage() {
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold text-center mb-6">Receipt</h1>
 
-      <div className="max-w-md mx-auto bg-white p-4 rounded shadow">
+      <div className="max-w-md mx-auto bg-black p-4 rounded shadow">
         <h2 className="text-xl font-bold mb-4">Overview</h2>
         <p className="mb-2">Email: {email}</p>
         <p className="mb-2">Date: {date}</p>

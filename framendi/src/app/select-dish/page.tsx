@@ -11,9 +11,15 @@ interface Meal {
   idMeal: string;
 }
 
+interface SelectedMeal {
+  idMeal: string;
+  strMeal: string;
+  quantity: number;
+}
+
 export default function SelectDishPage() {
   const [dishes, setDishes] = useState<Meal[]>([]);
-  const [selectedMeal, setSelectedMeal] = useState<Meal | null>(null);
+  const [selected, setSelected] = useState<SelectedMeal[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
@@ -21,7 +27,6 @@ export default function SelectDishPage() {
   useEffect(() => {
     async function fetchRandomDishes() {
       const fetchedDishes: Meal[] = [];
-      // Fetch 3 random dishes for variety
       for (let i = 0; i < 3; i++) {
         const res = await fetch("https://themealdb.com/api/json/v1/1/random.php");
         const data = await res.json();
@@ -35,28 +40,43 @@ export default function SelectDishPage() {
   }, []);
 
   function toggleDish(dish: Meal) {
-    if (selectedMeal && selectedMeal.idMeal === dish.idMeal) {
-      // Deselect if already selected
-      setSelectedMeal(null);
-    } else {
-      // Select this dish
-      setSelectedMeal(dish);
-    }
+    setSelected((prev) => {
+      const existing = prev.find((d) => d.idMeal === dish.idMeal);
+      if (existing) {
+        // If already selected, remove it
+        return prev.filter((d) => d.idMeal !== dish.idMeal);
+      } else {
+        // Add with quantity 1 by default
+        return [...prev, { idMeal: dish.idMeal, strMeal: dish.strMeal, quantity: 1 }];
+      }
+    });
+  }
+
+  function updateQuantity(dishId: string, quantity: number) {
+    setSelected((prev) =>
+      prev.map((d) => (d.idMeal === dishId ? { ...d, quantity } : d))
+    );
   }
 
   function handleNext() {
-    if (!selectedMeal) {
-      alert("Please select a dish before proceeding.");
+    if (selected.length === 0) {
+      alert("Please select at least one dish.");
       return;
     }
 
     const params = new URLSearchParams();
     if (email) params.set("email", email);
-    // Pass along the selected dish’s idMeal or name as needed
-    params.set("dishId", selectedMeal.idMeal);
+    
+     // Pass selected dishes as a query parameter (encode as JSON string)
+  const selectedDishes = selected.map((dish) => ({
+    idMeal: dish.idMeal,
+    strMeal: dish.strMeal,
+    quantity: dish.quantity,
+  }));
+  params.set("dishes", JSON.stringify(selectedDishes));
 
-    router.push(`/select-drinks?${params.toString()}`);
-  }
+  router.push(`/select-drinks?${params.toString()}`);
+}
 
   return (
     <div className="container mx-auto p-8">
@@ -67,11 +87,13 @@ export default function SelectDishPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {dishes.map((dish) => {
-            const isSelected = selectedMeal?.idMeal === dish.idMeal;
+            const isSelected = selected.some((d) => d.idMeal === dish.idMeal);
+            const selectedDish = selected.find((d) => d.idMeal === dish.idMeal);
+
             return (
               <div
                 key={dish.idMeal}
-                className={`p-4 bg-white rounded shadow relative ${isSelected ? "border-2 border-blue-500" : ""}`}
+                className={`p-4 bg-black rounded shadow relative ${isSelected ? "border-2 border-blue-500" : ""}`}
               >
                 <Image
                   src={dish.strMealThumb}
@@ -86,8 +108,21 @@ export default function SelectDishPage() {
                   onClick={() => toggleDish(dish)}
                   className="bg-blue-500 text-white px-2 py-1 rounded"
                 >
-                  {isSelected ? "Deselect" : "Select"}
+                  {isSelected ? "Remove" : "Select"}
                 </button>
+
+                {isSelected && selectedDish && (
+                  <div className="mt-2 flex items-center space-x-2">
+                    <label>Qty:</label>
+                    <input
+                      type="number"
+                      min={1}
+                      value={selectedDish.quantity}
+                      onChange={(e) => updateQuantity(dish.idMeal, Number(e.target.value))}
+                      className="border p-1 w-16 text-center text-black"
+                    />
+                  </div>
+                )}
               </div>
             );
           })}

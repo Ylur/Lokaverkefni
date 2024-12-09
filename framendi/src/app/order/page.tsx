@@ -11,15 +11,15 @@ export default function OrderPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  // Optional: Get previously selected dish/drink info from query params or global state
-  // For now, we just proceed to the receipt page with these new params.
+  // TODO: Get previously selected dish/drink info from query params or global state
+  // á meðan we just proceed to the receipt page with these new params.
 
   function validate() {
-    // Basic validations:
-    // - date should not be in the past (simple check: must be today or future)
-    // - time should be between 16:00 and 23:00, Mon-Fri (skipping weekday check for brevity)
+    // Passa:
+    // - date should not be in the past
+    // - time should be between 16:00 and 23:00, Mon-Fri 
     // - people between 1 and 10
-    // - email format: string@string.string (very basic check)
+    // - email format: string@string.string
 
     if (!email.includes("@") || !email.includes(".")) {
       alert("Please enter a valid email address.");
@@ -58,13 +58,13 @@ export default function OrderPage() {
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold text-center mb-6">Order Details</h1>
 
-      <div className="max-w-md mx-auto bg-white p-4 rounded shadow">
+      <div className="max-w-md mx-auto bg-black p-4 rounded shadow">
         <label className="block mb-2">Date:</label>
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="border p-2 rounded w-full mb-4"
+          className="border p-2 rounded w-full mb-4 text-black"
         />
 
         <label className="block mb-2">Time (16:00 - 23:00):</label>
@@ -72,7 +72,7 @@ export default function OrderPage() {
           type="time"
           value={time}
           onChange={(e) => setTime(e.target.value)}
-          className="border p-2 rounded w-full mb-4"
+          className="border p-2 rounded w-full mb-4 text-black"
         />
 
         <label className="block mb-2">Number of People (1-10):</label>
@@ -82,7 +82,7 @@ export default function OrderPage() {
           max={10}
           value={people}
           onChange={(e) => setPeople(Number(e.target.value))}
-          className="border p-2 rounded w-full mb-4"
+          className="border p-2 rounded w-full mb-4 text-black"
         />
 
         <label className="block mb-2">Email:</label>
@@ -90,7 +90,7 @@ export default function OrderPage() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="border p-2 rounded w-full mb-4"
+          className="border p-2 rounded w-full mb-4 text-black"
         />
 
         <button

@@ -77,7 +77,7 @@ export default function HomePage() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="border p-2 rounded mr-2"
+          className="border p-2 rounded mr-2 text-black"
           placeholder="you@example.com"
         />
         <button
