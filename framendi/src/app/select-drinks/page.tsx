@@ -80,7 +80,7 @@ export default function SelectDrinksPage() {
     params.set("drinks", JSON.stringify(selectedDrinks));
 
     // Push to the order/receipt page
-    router.push(`/receipt?${params.toString()}`);
+    router.push(`/booking?${params.toString()}`);
   }
 
   return (
@@ -146,7 +146,7 @@ export default function SelectDrinksPage() {
           onClick={handleNext}
           className="bg-green-500 text-white px-4 py-2 rounded"
         >
-          Finish (Receipt)
+          Booking
         </button>
       </div>
     </div>

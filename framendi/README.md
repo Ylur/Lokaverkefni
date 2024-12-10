@@ -1,5 +1,6 @@
 Tilraun 2 á lokaverkefni.
 
+Homepage->Dish page->Drink page->Booking page -> Receipt page.
 
 Select Dish Page:
 User selects a dish and specifies a quantity.

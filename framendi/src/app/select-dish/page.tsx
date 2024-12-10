@@ -71,6 +71,7 @@ export default function SelectDishPage() {
 
     const params = new URLSearchParams();
     if (email) params.set("email", email);
+    
 
     // Pass selected dishes as a query parameter (encode as JSON string)
     const selectedDishes = selected.map((dish) => ({

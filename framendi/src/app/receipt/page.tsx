@@ -69,14 +69,14 @@ export default function ReceiptPage() {
         {selectedDishes.length > 0 ? (
           selectedDishes.map((dish, i) => (
             <div key={i} className="mb-2">
-              {dish.strMeal} x {dish.quantity} = $
+              {dish.strMeal} x {dish.quantity} = ₽
               {dish.quantity * dishPricePerPerson}
             </div>
           ))
         ) : (
           <p>No dishes selected</p>
         )}
-        <p className="font-bold">Dishes Total: ${dishTotal}</p>
+        <p className="font-bold">Dishes Total: ₽{dishTotal}</p>
 
         <hr className="my-4" />
 
@@ -84,17 +84,17 @@ export default function ReceiptPage() {
         {selectedDrinks.length > 0 ? (
           selectedDrinks.map((d, i) => (
             <div key={i} className="mb-2">
-              {d.strDrink} x {d.quantity} = ${d.quantity * drinkPrice}
+              {d.strDrink} x {d.quantity} = {d.quantity * drinkPrice}
             </div>
           ))
         ) : (
           <p>No drinks selected</p>
         )}
-        <p className="font-bold">Drinks Total: ${drinksTotal}</p>
+        <p className="font-bold">Drinks Total: ₽{drinksTotal}</p>
 
         <hr className="my-4" />
 
-        <h2 className="text-xl font-bold">Total: ${total}</h2>
+        <h2 className="text-xl font-bold">Total: ₽{total}</h2>
 
         <div className="text-center mt-4">
           <button

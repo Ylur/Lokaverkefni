@@ -37,22 +37,28 @@ export default function OrderPage() {
 
   function handleNext() {
     if (!validate()) return;
-
+  
     const params = new URLSearchParams();
     params.set("email", email);
     params.set("date", date);
     params.set("time", time);
     params.set("people", people.toString());
-
-    // Include dishId, drink selections, etc. if stored in query params or state.
-    // E.g. if previously stored dishId in query params:
+  
+    // Retrieve dishes and drinks from the current search params.
+    const dishes = searchParams.get("dishes");
+    const drinks = searchParams.get("drinks");
+  
+    // pass along to the receipt page.
+    if (dishes) params.set("dishes", dishes);
+    if (drinks) params.set("drinks", drinks);
+  
+    // dishId stored:
     const dishId = searchParams.get("dishId");
     if (dishId) params.set("dishId", dishId);
-
-    // If you stored drinks in global state or session, you'd handle that differently.
-    
+  
     router.push(`/receipt?${params.toString()}`);
   }
+  
 
   return (
     <div className="container mx-auto p-8">
