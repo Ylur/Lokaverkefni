@@ -1,3 +1,5 @@
+//Drykkir
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -22,6 +24,7 @@ export default function SelectDrinksPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
+  const dishesParam = searchParams.get("dishes");
 
   useEffect(() => {
     async function fetchRandomDrinks() {
@@ -31,7 +34,6 @@ export default function SelectDrinksPage() {
       const data = await res.json();
 
       if (data.drinks && data.drinks.length > 0) {
-        // Randomly select 3 unique drinks from the list
         const shuffledDrinks = data.drinks.sort(() => 0.5 - Math.random());
         setDrinks(shuffledDrinks.slice(0, 3));
       }
@@ -43,10 +45,8 @@ export default function SelectDrinksPage() {
     setSelected((prev) => {
       const existing = prev.find((d) => d.idDrink === drink.idDrink);
       if (existing) {
-        // If already selected, remove it
         return prev.filter((d) => d.idDrink !== drink.idDrink);
       } else {
-        // Add with quantity 1 by default
         return [
           ...prev,
           { idDrink: drink.idDrink, strDrink: drink.strDrink, quantity: 1 },
@@ -69,13 +69,23 @@ export default function SelectDrinksPage() {
 
     const params = new URLSearchParams();
     if (email) params.set("email", email);
-    router.push(`/order?${params.toString()}`);
+    if (dishesParam) params.set("dishes", dishesParam);
+
+    // Pass selected drinks as a query parameter (encoded as JSON string)
+    const selectedDrinks = selected.map((drink) => ({
+      idDrink: drink.idDrink,
+      strDrink: drink.strDrink,
+      quantity: drink.quantity,
+    }));
+    params.set("drinks", JSON.stringify(selectedDrinks));
+
+    // Push to the order/receipt page
+    router.push(`/receipt?${params.toString()}`);
   }
 
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold text-center mb-6">Select Drinks</h1>
-
       {drinks.length === 0 ? (
         <p>Loading drinks...</p>
       ) : (
@@ -136,7 +146,7 @@ export default function SelectDrinksPage() {
           onClick={handleNext}
           className="bg-green-500 text-white px-4 py-2 rounded"
         >
-          Next (Order Screen)
+          Finish (Receipt)
         </button>
       </div>
     </div>

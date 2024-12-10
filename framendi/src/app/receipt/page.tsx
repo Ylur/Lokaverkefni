@@ -3,33 +3,53 @@
 import React from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
+interface SelectedDish {
+  idMeal: string;
+  strMeal: string;
+  quantity: number;
+}
+
+interface SelectedDrink {
+  idDrink: string;
+  strDrink: string;
+  quantity: number;
+}
+
+
 export default function ReceiptPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const email = searchParams.get("email");
-  const date = new Date().toLocaleDateString(); // Use current date if not provided
-  const time = new Date().toLocaleTimeString(); // Use current time if not provided
+  const date = new Date().toLocaleDateString();
+  const time = new Date().toLocaleTimeString();
   const people = Number(searchParams.get("people")) || 1;
 
-  // Decode dish details
-  const dishParam = searchParams.get("dish");
-  const selectedDish = dishParam ? JSON.parse(dishParam) : null;
+  // Parse selected dishes
+  const dishesParam = searchParams.get("dishes");
+  const selectedDishes: SelectedDish[] = dishesParam ? JSON.parse(dishesParam) : [];
 
-  const dishPricePerPerson = 20; // TODO: Adjust price dynamically if needed
-  const dishTotal = selectedDish
-    ? dishPricePerPerson * selectedDish.quantity
-    : 0;
 
-  // Hardcoded drinks as an example TODO REMOVE AND FETCH FROM DRINK AND DISH PAGE
-  const selectedDrinks = [
-    { strDrink: "Margarita", quantity: 2, price: 8 },
-    { strDrink: "Mojito", quantity: 1, price: 10 },
-  ];
-  const drinksTotal = selectedDrinks.reduce(
-    (sum, d) => sum + d.price * d.quantity,
-    0
-  );
+
+  // Parse selected drinks
+  const drinksParam = searchParams.get("drinks");
+  const selectedDrinks: SelectedDrink[] = drinksParam ? JSON.parse(drinksParam) : [];
+
+  // Pricing logic
+  const dishPricePerPerson = 20; 
+  const drinkPrice = 8; // example fixed price per drink, adjust as needed
+
+  // Calculate totals
+  const dishTotal = selectedDishes.reduce((sum: number, dish: SelectedDish) => {
+    return sum + dish.quantity * dishPricePerPerson;
+  }, 0);
+  
+
+  const drinksTotal = selectedDrinks.reduce((sum: number, drink: SelectedDrink) => {
+    return sum + drink.quantity * drinkPrice;
+  }, 0);
+  
+
   const total = dishTotal + drinksTotal;
 
   return (
@@ -45,27 +65,31 @@ export default function ReceiptPage() {
 
         <hr className="my-4" />
 
-        <h3 className="text-lg font-bold mb-2">Selected Dish:</h3>
-        {selectedDish ? (
-          <>
-            <p>
-              {selectedDish.strMeal} x {selectedDish.quantity}
-            </p>
-            <p>Price per person: ${dishPricePerPerson}</p>
-            <p>Dish Total: ${dishTotal}</p>
-          </>
+        <h3 className="text-lg font-bold mb-2">Selected Dishes:</h3>
+        {selectedDishes.length > 0 ? (
+          selectedDishes.map((dish, i) => (
+            <div key={i} className="mb-2">
+              {dish.strMeal} x {dish.quantity} = $
+              {dish.quantity * dishPricePerPerson}
+            </div>
+          ))
         ) : (
-          <p>No dish selected</p>
+          <p>No dishes selected</p>
         )}
+        <p className="font-bold">Dishes Total: ${dishTotal}</p>
 
         <hr className="my-4" />
 
         <h3 className="text-lg font-bold mb-2">Selected Drinks:</h3>
-        {selectedDrinks.map((d, i) => (
-          <div key={i} className="mb-2">
-            {d.strDrink} x {d.quantity} = ${d.price * d.quantity}
-          </div>
-        ))}
+        {selectedDrinks.length > 0 ? (
+          selectedDrinks.map((d, i) => (
+            <div key={i} className="mb-2">
+              {d.strDrink} x {d.quantity} = ${d.quantity * drinkPrice}
+            </div>
+          ))
+        ) : (
+          <p>No drinks selected</p>
+        )}
         <p className="font-bold">Drinks Total: ${drinksTotal}</p>
 
         <hr className="my-4" />
