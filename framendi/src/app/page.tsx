@@ -41,51 +41,69 @@ export default function HomePage() {
 
   return (
     <div className="container mx-auto p-8">
-      <h1 className="text-5xl font-bold text-center mb-6">
-        Welcome to Lil Bits
-      </h1>
-      {/* Simple placeholder "carousel" - Add width/height for Next.js Image */}
-      <div className="mb-8 flex space-x-4 justify-center">
-        <Image
-          src="/photos/sample1.jpg"
-          alt="Sample 1"
-          width={128}
-          height={128}
-          className="object-cover"
-        />
-        <Image
-          src="/photos/sample2.jpg"
-          alt="Sample 2"
-          width={128}
-          height={128}
-          className="object-cover"
-        />
-        <Image
-          src="/photos/sample3.jpg"
-          alt="Sample 3"
-          width={128}
-          height={128}
-          className="object-cover"
-        />
-      </div>
+      {/* Main 2x2 grid container with blue border */}
+      <div className="grid grid-cols-2 grid-rows-2 gap-4 border border-blue-500 p-4">
+        
+        {/* Upper Left: Carousel */}
+        <div className="border border-blue-500 p-4">
+          <div className="flex space-x-4 justify-center">
+            <Image
+              src="/photos/sample1.jpg"
+              alt="Sample 1"
+              width={128}
+              height={128}
+              className="object-cover"
+            />
+            <Image
+              src="/photos/sample2.jpg"
+              alt="Sample 2"
+              width={128}
+              height={128}
+              className="object-cover"
+            />
+            <Image
+              src="/photos/sample3.jpg"
+              alt="Sample 3"
+              width={128}
+              height={128}
+              className="object-cover"
+            />
+          </div>
+        </div>
 
-      <div className="text-center">
-        <p className="mb-4">
-          Enter your email to continue your order or start a new one:
-        </p>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="border p-2 rounded mr-2 text-black"
-          placeholder="you@example.com"
-        />
-        <button
-          onClick={handleStartOrder}
-          className="bg-blue-500 text-white p-2 rounded"
-        >
-          Start Order
-        </button>
+        {/* Upper Right: Placeholder Content */}
+        <div className="border border-blue-500 p-4">
+          {/* Add any content you want here */}
+          <h2 className="text-xl mb-2">Welcome to Our Service</h2>
+          <p>Additional information herdygerdy here.</p>
+        </div>
+
+        {/* Lower Left: Email Section */}
+        <div className="border border-blue-500 p-4 text-center">
+          <p className="mb-4">
+            Enter your email to continue your order or start a new one:
+          </p>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="border p-2 rounded mr-2 text-black"
+            placeholder="you@example.com"
+          />
+          <button
+            onClick={handleStartOrder}
+            className="bg-blue-500 text-white p-2 rounded"
+          >
+            Start Order
+          </button>
+        </div>
+
+        {/* Lower Right: Order View (placeholder) */}
+        <div className="border border-blue-500 p-4">
+          <h2 className="text-xl mb-2">Your Current Order</h2>
+          {/* Once the user selects dishes/drinks, load their order details here */}
+          <p>No items selected yet.</p>
+        </div>
       </div>
     </div>
   );
