@@ -25,7 +25,9 @@ export default function SelectDrinksPage() {
 
   useEffect(() => {
     async function fetchRandomDrinks() {
-      const res = await fetch("https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail");
+      const res = await fetch(
+        "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail"
+      );
       const data = await res.json();
 
       if (data.drinks && data.drinks.length > 0) {
@@ -45,7 +47,10 @@ export default function SelectDrinksPage() {
         return prev.filter((d) => d.idDrink !== drink.idDrink);
       } else {
         // Add with quantity 1 by default
-        return [...prev, { idDrink: drink.idDrink, strDrink: drink.strDrink, quantity: 1 }];
+        return [
+          ...prev,
+          { idDrink: drink.idDrink, strDrink: drink.strDrink, quantity: 1 },
+        ];
       }
     });
   }
@@ -76,13 +81,19 @@ export default function SelectDrinksPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {drinks.map((drink) => {
-            const isSelected = selected.some((d) => d.idDrink === drink.idDrink);
-            const selectedDrink = selected.find((d) => d.idDrink === drink.idDrink);
+            const isSelected = selected.some(
+              (d) => d.idDrink === drink.idDrink
+            );
+            const selectedDrink = selected.find(
+              (d) => d.idDrink === drink.idDrink
+            );
 
             return (
               <div
                 key={drink.idDrink}
-                className={`p-4 bg-black rounded shadow relative ${isSelected ? "border-2 border-blue-500" : ""}`}
+                className={`p-4 bg-black rounded shadow relative ${
+                  isSelected ? "border-2 border-blue-500" : ""
+                }`}
               >
                 <Image
                   src={drink.strDrinkThumb}
@@ -107,7 +118,9 @@ export default function SelectDrinksPage() {
                       type="number"
                       min={1}
                       value={selectedDrink.quantity}
-                      onChange={(e) => updateQuantity(drink.idDrink, Number(e.target.value))}
+                      onChange={(e) =>
+                        updateQuantity(drink.idDrink, Number(e.target.value))
+                      }
                       className="border p-1 w-16 text-center text-black"
                     />
                   </div>

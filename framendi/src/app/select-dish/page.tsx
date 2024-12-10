@@ -28,7 +28,9 @@ export default function SelectDishPage() {
     async function fetchRandomDishes() {
       const fetchedDishes: Meal[] = [];
       for (let i = 0; i < 3; i++) {
-        const res = await fetch("https://themealdb.com/api/json/v1/1/random.php");
+        const res = await fetch(
+          "https://themealdb.com/api/json/v1/1/random.php"
+        );
         const data = await res.json();
         if (data.meals && data.meals.length > 0) {
           fetchedDishes.push(data.meals[0]);
@@ -47,7 +49,10 @@ export default function SelectDishPage() {
         return prev.filter((d) => d.idMeal !== dish.idMeal);
       } else {
         // Add with quantity 1 by default
-        return [...prev, { idMeal: dish.idMeal, strMeal: dish.strMeal, quantity: 1 }];
+        return [
+          ...prev,
+          { idMeal: dish.idMeal, strMeal: dish.strMeal, quantity: 1 },
+        ];
       }
     });
   }
@@ -66,17 +71,17 @@ export default function SelectDishPage() {
 
     const params = new URLSearchParams();
     if (email) params.set("email", email);
-    
-     // Pass selected dishes as a query parameter (encode as JSON string)
-  const selectedDishes = selected.map((dish) => ({
-    idMeal: dish.idMeal,
-    strMeal: dish.strMeal,
-    quantity: dish.quantity,
-  }));
-  params.set("dishes", JSON.stringify(selectedDishes));
 
-  router.push(`/select-drinks?${params.toString()}`);
-}
+    // Pass selected dishes as a query parameter (encode as JSON string)
+    const selectedDishes = selected.map((dish) => ({
+      idMeal: dish.idMeal,
+      strMeal: dish.strMeal,
+      quantity: dish.quantity,
+    }));
+    params.set("dishes", JSON.stringify(selectedDishes));
+
+    router.push(`/select-drinks?${params.toString()}`);
+  }
 
   return (
     <div className="container mx-auto p-8">
@@ -93,7 +98,9 @@ export default function SelectDishPage() {
             return (
               <div
                 key={dish.idMeal}
-                className={`p-4 bg-black rounded shadow relative ${isSelected ? "border-2 border-blue-500" : ""}`}
+                className={`p-4 bg-black rounded shadow relative ${
+                  isSelected ? "border-2 border-blue-500" : ""
+                }`}
               >
                 <Image
                   src={dish.strMealThumb}
@@ -118,7 +125,9 @@ export default function SelectDishPage() {
                       type="number"
                       min={1}
                       value={selectedDish.quantity}
-                      onChange={(e) => updateQuantity(dish.idMeal, Number(e.target.value))}
+                      onChange={(e) =>
+                        updateQuantity(dish.idMeal, Number(e.target.value))
+                      }
                       className="border p-1 w-16 text-center text-black"
                     />
                   </div>

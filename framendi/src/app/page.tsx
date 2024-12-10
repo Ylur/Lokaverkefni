@@ -41,7 +41,7 @@ export default function HomePage() {
 
   return (
     <div className="container mx-auto p-8">
-      {/* Main 2x2 grid container with blue border */}
+      {/* Main 2x2 grid container  */}
       <div className="grid grid-cols-2 grid-rows-2 gap-4 border border-blue-500 p-4">
         {/* Upper Left: Carousel */}
         <div className="border border-blue-500 p-4">

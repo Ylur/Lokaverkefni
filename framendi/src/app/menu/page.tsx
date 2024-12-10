@@ -1,8 +1,6 @@
 "use client";
 
 import React, { FC, JSX } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import Image from "next/image";
 
 interface MenuItem {
@@ -105,7 +103,7 @@ const MenuPage: FC = () => {
 
   return (
     <>
-      <Header />
+
 
       <div
         className="relative bg-cover bg-center h-96"
@@ -126,7 +124,6 @@ const MenuPage: FC = () => {
         {renderMenuSection("Sides", sides)}
       </div>
 
-      <Footer />
     </>
   );
 };
