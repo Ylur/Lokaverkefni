@@ -48,7 +48,7 @@ export default function SelectDishPage() {
         // If already selected, remove it
         return prev.filter((d) => d.idMeal !== dish.idMeal);
       } else {
-        // Add with quantity 1 by default
+        // quantity 1 by default
         return [
           ...prev,
           { idMeal: dish.idMeal, strMeal: dish.strMeal, quantity: 1 },
@@ -71,9 +71,8 @@ export default function SelectDishPage() {
 
     const params = new URLSearchParams();
     if (email) params.set("email", email);
-    
 
-    // Pass selected dishes as a query parameter (encode as JSON string)
+    // Pass selected dishes as a query parameter
     const selectedDishes = selected.map((dish) => ({
       idMeal: dish.idMeal,
       strMeal: dish.strMeal,

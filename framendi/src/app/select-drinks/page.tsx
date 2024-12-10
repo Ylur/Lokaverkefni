@@ -71,7 +71,7 @@ export default function SelectDrinksPage() {
     if (email) params.set("email", email);
     if (dishesParam) params.set("dishes", dishesParam);
 
-    // Pass selected drinks as a query parameter (encoded as JSON string)
+    // Pass selected drinks as a query parameter
     const selectedDrinks = selected.map((drink) => ({
       idDrink: drink.idDrink,
       strDrink: drink.strDrink,
@@ -79,7 +79,7 @@ export default function SelectDrinksPage() {
     }));
     params.set("drinks", JSON.stringify(selectedDrinks));
 
-    // Push to the order/receipt page
+    // Push to the order/booking page
     router.push(`/booking?${params.toString()}`);
   }
 
@@ -87,6 +87,7 @@ export default function SelectDrinksPage() {
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold text-center mb-6">Select Drinks</h1>
       {drinks.length === 0 ? (
+        //flex
         <p>Loading drinks...</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
