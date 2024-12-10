@@ -1,7 +1,0 @@
-{
-  "/menu/page": "app/menu/page.js",
-  "/select-dish/page": "app/select-dish/page.js",
-  "/select-drinks/page": "app/select-drinks/page.js",
-  "/order/page": "app/order/page.js",
-  "/receipt/page": "app/receipt/page.js"
-}
