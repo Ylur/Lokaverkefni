@@ -6,25 +6,30 @@ import { useSearchParams, useRouter } from "next/navigation";
 export default function ReceiptPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  
+
   const email = searchParams.get("email");
   const date = new Date().toLocaleDateString(); // Use current date if not provided
   const time = new Date().toLocaleTimeString(); // Use current time if not provided
   const people = Number(searchParams.get("people")) || 1;
-  
+
   // Decode dish details
   const dishParam = searchParams.get("dish");
   const selectedDish = dishParam ? JSON.parse(dishParam) : null;
 
   const dishPricePerPerson = 20; // TODO: Adjust price dynamically if needed
-  const dishTotal = selectedDish ? dishPricePerPerson * selectedDish.quantity : 0;
+  const dishTotal = selectedDish
+    ? dishPricePerPerson * selectedDish.quantity
+    : 0;
 
-  // Hardcoded drinks as an example
+  // Hardcoded drinks as an example TODO REMOVE AND FETCH FROM DRINK AND DISH PAGE
   const selectedDrinks = [
     { strDrink: "Margarita", quantity: 2, price: 8 },
     { strDrink: "Mojito", quantity: 1, price: 10 },
   ];
-  const drinksTotal = selectedDrinks.reduce((sum, d) => sum + d.price * d.quantity, 0);
+  const drinksTotal = selectedDrinks.reduce(
+    (sum, d) => sum + d.price * d.quantity,
+    0
+  );
   const total = dishTotal + drinksTotal;
 
   return (
@@ -37,13 +42,15 @@ export default function ReceiptPage() {
         <p className="mb-2">Date: {date}</p>
         <p className="mb-2">Time: {time}</p>
         <p className="mb-2">People: {people}</p>
-        
+
         <hr className="my-4" />
-        
+
         <h3 className="text-lg font-bold mb-2">Selected Dish:</h3>
         {selectedDish ? (
           <>
-            <p>{selectedDish.strMeal} x {selectedDish.quantity}</p>
+            <p>
+              {selectedDish.strMeal} x {selectedDish.quantity}
+            </p>
             <p>Price per person: ${dishPricePerPerson}</p>
             <p>Dish Total: ${dishTotal}</p>
           </>
@@ -64,7 +71,7 @@ export default function ReceiptPage() {
         <hr className="my-4" />
 
         <h2 className="text-xl font-bold">Total: ${total}</h2>
-        
+
         <div className="text-center mt-4">
           <button
             onClick={() => router.push("/")}
