@@ -2,12 +2,21 @@
 
 import React, { FC } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const Header: FC = () => {
   return (
-    <header className="bg-black shadow-md">
+    <header className="bg-gray-300 shadow-md">
       <nav className="container mx-auto flex justify-between p-4">
-        <div className="text-2xl font-bold">LOGO HÉR</div>
+        <div className="text-2xl font-bold">
+          <Image
+            src="/Images/lb.png"
+            alt="Logoið"
+            width={128}
+            height={128}
+            className="object-cover"
+          />
+        </div>
         <ul className="flex space-x-4">
           <li>
             <Link href="/" className="hover:text-gray-700">

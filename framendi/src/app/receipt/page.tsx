@@ -37,7 +37,7 @@ export default function ReceiptPage() {
 
   // Pricing logic
   const dishPricePerPerson = 20; 
-  const drinkPrice = 8; // example fixed price per drink, adjust as needed
+  const drinkPrice = 8; // fixed þangað til ég veit annað
 
   // Calculate totals
   const dishTotal = selectedDishes.reduce((sum: number, dish: SelectedDish) => {

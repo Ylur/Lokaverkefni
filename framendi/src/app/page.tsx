@@ -47,22 +47,22 @@ export default function HomePage() {
         <div className="border border-blue-500 p-4">
           <div className="flex space-x-4 justify-center">
             <Image
-              src="/photos/sample1.jpg"
-              alt="Sample 1"
+              src="/Images/lb.png"
+              alt="Diskur eitt"
               width={128}
               height={128}
               className="object-cover"
             />
             <Image
               src="/photos/sample2.jpg"
-              alt="Sample 2"
+              alt="Diskur tvö"
               width={128}
               height={128}
               className="object-cover"
             />
             <Image
               src="/photos/sample3.jpg"
-              alt="Sample 3"
+              alt="Diskur þrjú"
               width={128}
               height={128}
               className="object-cover"
