@@ -5,9 +5,9 @@ import Link from "next/link";
 
 const Header: FC = () => {
   return (
-    <header className="bg-white shadow-md">
+    <header className="bg-black shadow-md">
       <nav className="container mx-auto flex justify-between p-4">
-        <div className="text-2xl font-bold">Lil bits</div>
+        <div className="text-2xl font-bold">LOGO HÉR</div>
         <ul className="flex space-x-4">
           <li>
             <Link href="/" className="hover:text-gray-700">
