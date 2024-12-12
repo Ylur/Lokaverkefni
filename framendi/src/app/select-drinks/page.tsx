@@ -41,6 +41,7 @@ export default function SelectDrinksPage() {
     fetchRandomDrinks();
   }, []);
 
+  // d = placeholder fyrir drykk. Flækir þetta kóðan eða er þetta notað almennt?
   function toggleDrink(drink: Drink) {
     setSelected((prev) => {
       const existing = prev.find((d) => d.idDrink === drink.idDrink);
