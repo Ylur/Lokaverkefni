@@ -10,7 +10,7 @@ export default function HomePage() {
 
   // Check if an order (expense) exists for the given email
   async function checkOrderByEmail(email: string) {
-    // Fetch all expenses from your server
+    // Fetch all expenses from the server
     const res = await fetch("http://localhost:3001/api/expenses", {
       method: "GET",
     });
@@ -43,7 +43,7 @@ export default function HomePage() {
     <div className="container mx-auto p-8">
       {/* Main 2x2 grid container  */}
       <div className="grid grid-cols-2 grid-rows-2 gap-4 border border-blue-500 p-4">
-        {/* Upper Left: Carousel */}
+        {/* Upper Left: Carousel TODO ath með að breyta þessu*/}
         <div className="border border-blue-500 p-4">
           <div className="flex space-x-4 justify-center">
             <Image
@@ -80,7 +80,7 @@ export default function HomePage() {
         {/* Lower Left: Email Section */}
         <div className="border border-blue-500 p-4 text-center">
           <p className="mb-4">
-            Enter your email to continue your order or start a new one:
+            Please enter your email to continue your order or start a new one:
           </p>
           <input
             type="email"
@@ -100,7 +100,7 @@ export default function HomePage() {
         {/* Lower Right: Order View (placeholder) */}
         <div className="border border-blue-500 p-4">
           <h2 className="text-xl mb-2">Your Current Order</h2>
-          {/* Once the user selects dishes/drinks, load their order details here */}
+          {/* TODO load order/dish/drinks  details here */}
           <p>No items selected yet.</p>
         </div>
       </div>
