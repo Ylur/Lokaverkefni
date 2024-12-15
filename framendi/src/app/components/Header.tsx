@@ -20,7 +20,7 @@ const Header: FC = () => {
       </div>
   
       {/* Centered Links */}
-      <ul className="flex flex-grow justify-center space-x-8 text-4xl">
+      <ul className="flex flex-grow justify-center space-x-8 text-2xl">
         <li>
           <Link href="/" className="text-accent hover:text-gray-700">
             Home
