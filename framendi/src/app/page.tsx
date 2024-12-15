@@ -62,7 +62,7 @@ export default function HomePage() {
           <div ref={sliderRef} className="keen-slider">
             <div className="keen-slider__slide">
               <Image
-                src="/Images/lb.png"
+                src="/photos/Dish3.png"
                 alt="Diskur 1"
                 layout="responsive"
                 width={128}
@@ -72,7 +72,7 @@ export default function HomePage() {
             </div>
             <div className="keen-slider__slide">
               <Image
-                src="/Images/lb.png"
+                src="/photos/Dish1.png"
                 alt="Diskur 2"
                 layout="responsive"
                 width={128}
@@ -82,7 +82,7 @@ export default function HomePage() {
             </div>
             <div className="keen-slider__slide">
               <Image
-                src="/Images/lb.png"
+                src="/photos/Dish5.png"
                 alt="Diskur 3"
                 layout="responsive"
                 width={128}
