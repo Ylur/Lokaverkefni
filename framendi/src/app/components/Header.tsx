@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const Header: FC = () => {
   return (
-    <header className="bg-secondary shadow-md">
+    <header className="bg-primary shadow-md">
       <nav className="container mx-auto flex justify-between p-4">
         <div className="text-2xl font-bold">
           <Image

@@ -1,8 +1,7 @@
 "use client";
 
 import React, { FC } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+
 
 const AboutPage: FC = () => {
   return (
@@ -31,7 +30,7 @@ const AboutPage: FC = () => {
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div className="relative flex items-center justify-center h-full">
             <div className="text-center text-white">
-              {/* Additional text or elements can go here */}
+              
             </div>
           </div>
         </div>
