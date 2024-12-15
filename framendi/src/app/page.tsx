@@ -3,11 +3,22 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
+import "keen-slider/keen-slider.min.css";
+import { useKeenSlider } from "keen-slider/react";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
   const router = useRouter();
+
+  // Initialize Keen Slider
+  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
+    loop: true,
+    mode: "snap",
+    slides: {
+      perView: 1,
+      spacing: 5,
+    },
+  });
 
   // Check if an order (expense) exists for the given email
   async function checkOrderByEmail(email: string) {
@@ -42,66 +53,72 @@ export default function HomePage() {
 
   return (
     <div className="container mx-auto p-8">
-      {/* Main 2x2 grid container  */}
-      <div className="grid grid-cols-2 grid-rows-2 gap-4 border border-secondary p-4">
-        {/* Upper Left: Carousel TODO ath með að breyta þessu*/}
-        <div className="border border-secondary p-4">
-          <div className="flex space-x-4 justify-center">
-            <Image
-              src="/Images/lb.png"
-              alt="Diskur eitt"
-              width={128}
-              height={128}
-              className="object-cover"
-            />
-            <Image
-              src="/Images/lb.png"
-              alt="Diskur tvö"
-              width={128}
-              height={128}
-              className="object-cover"
-            />
-            <Image
-              src="/Images/lb.png"
-              alt="Diskur þrjú"
-              width={128}
-              height={128}
-              className="object-cover"
-            />
+      <div className="grid grid-cols-4 grid-rows-2 gap-4 border border-secondary p-4">
+        {/* Upper Left: Keen Slider Carousel */}
+        <div className="border border-secondary p-4 flex flex-col items-center">
+          <div ref={sliderRef} className="keen-slider">
+            <div className="keen-slider__slide">
+              <Image
+                src="/Images/lb.png"
+                alt="Diskur 1"
+                layout="responsive"
+                width={128}
+                height={128}
+                className="object-cover"
+              />
+            </div>
+            <div className="keen-slider__slide">
+              <Image
+                src="/Images/lb.png"
+                alt="Diskur 2"
+                layout="responsive"
+                width={128}
+                height={128}
+                className="object-cover"
+              />
+            </div>
+            <div className="keen-slider__slide">
+              <Image
+                src="/Images/lb.png"
+                alt="Diskur 3"
+                layout="responsive"
+                width={128}
+                height={128}
+                className="object-cover"
+              />
+            </div>
           </div>
         </div>
 
         {/* Upper Right: Placeholder Content */}
-        <div className="border border-secondary p-4">
-          {/* Add content */}
+        <div className="border border-secondary p-6">
           <h2 className="text-xl mb-2">Welcome to Our Service</h2>
-          <p>Additional information herdygerdy here.</p>
+          <p>TODO setja eitthvað hér.</p>
         </div>
 
         {/* Lower Left: Email Section */}
-        <div className="border border-secondary p-4 text-center">
-          <p className="mb-4">
+        <div className="border border-secondary p-6 flex flex-col items-center">
+          <p className="mb-4 text-center">
             Please enter your email to continue your order or start a new one:
           </p>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border p-2 rounded mr-2 text-primary bg-secondary"
+            className="border p-2 rounded mb-4 text-primary bg-secondary"
             placeholder="you@example.com"
           />
           <button
             onClick={handleStartOrder}
-            className="bg-secondary text-primary p-2 rounded"
+            className="bg-secondary text-primary py-2 px-4 rounded"
           >
             Start Order
           </button>
         </div>
 
         {/* Lower Right: Order View (placeholder) */}
-        <div className="border border-secondary p-4">
+        <div className="border border-secondary p-6">
           <h2 className="text-xl mb-2">Your Current Order</h2>
-          {/* TODO load order/dish/drinks  details here */}
           <p>No items selected yet.</p>
         </div>
       </div>
