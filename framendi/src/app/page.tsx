@@ -10,7 +10,7 @@ export default function HomePage() {
   const [email, setEmail] = useState("");
   const router = useRouter();
 
-  // Initialize Keen Slider
+  // carouselið Keen Slider
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
     mode: "snap",
@@ -19,6 +19,9 @@ export default function HomePage() {
       spacing: 5,
     },
   });
+  
+  const nextSlide = () => instanceRef.current?.next();
+  const prevSlide = () => instanceRef.current?.prev();
 
   // Check if an order (expense) exists for the given email
   async function checkOrderByEmail(email: string) {
@@ -53,9 +56,9 @@ export default function HomePage() {
 
   return (
     <div className="container mx-auto p-8">
-      <div className="grid grid-cols-4 grid-rows-2 gap-4 border border-secondary p-4">
+      <div className="grid grid-cols-2 grid-rows-2 gap-4 border border-secondary p-4">
         {/* Upper Left: Keen Slider Carousel */}
-        <div className="border border-secondary p-4 flex flex-col items-center">
+        <div className="place-self-auto border border-secondary p-4 flex flex-col items-center">
           <div ref={sliderRef} className="keen-slider">
             <div className="keen-slider__slide">
               <Image
@@ -87,8 +90,22 @@ export default function HomePage() {
                 className="object-cover"
               />
             </div>
+            <button
+          onClick={prevSlide}
+          className="absolute left-2 bottom-10 bg-yellow-200 p-2 rounded-full"
+        >
+          &#8249;
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-2 bottom-10  bg-yellow-200 p-2 rounded-full"
+        >
+          &#8250;
+        </button>
           </div>
         </div>
+
+      
 
         {/* Upper Right: Placeholder Content */}
         <div className="border border-secondary p-6">
