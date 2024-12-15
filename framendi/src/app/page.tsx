@@ -136,7 +136,7 @@ export default function HomePage() {
         {/* Lower Right: Order View (placeholder) */}
         <div className="border border-secondary p-6">
           <h2 className="text-xl mb-2">Your Current Order</h2>
-          <p>No items selected yet.</p>
+          <p>Setja pöntun hingað eftir login.</p>
         </div>
       </div>
     </div>
