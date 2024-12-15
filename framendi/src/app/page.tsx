@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+
 export default function HomePage() {
   const [email, setEmail] = useState("");
   const router = useRouter();
@@ -72,7 +73,7 @@ export default function HomePage() {
 
         {/* Upper Right: Placeholder Content */}
         <div className="border border-blue-500 p-4">
-          {/* Add any content you want here */}
+          {/* Add content */}
           <h2 className="text-xl mb-2">Welcome to Our Service</h2>
           <p>Additional information herdygerdy here.</p>
         </div>

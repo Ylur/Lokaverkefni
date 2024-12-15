@@ -111,7 +111,7 @@ const MenuPage: FC = () => {
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative flex items-center justify-center h-full">
-          <div className="text-center text-white">
+          <div className="text-center text-accent">
             <h1 className="text-5xl font-bold">Our LiL menu</h1>
           </div>
         </div>
