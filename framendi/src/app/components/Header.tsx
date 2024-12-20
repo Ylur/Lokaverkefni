@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { AuthContext } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
+import Login from "../components/Login";
 
 const Header: FC = () => {
   const { token, setToken } = useContext(AuthContext);
@@ -59,7 +60,8 @@ const Header: FC = () => {
         <div className="flex items-center space-x-4 text-2xl">
           {!token ? (
             <>
-              <Link href="/login" className="text-accent hover:text-gray-700">
+              <Link 
+                href="/login" className="text-accent hover:text-gray-700">
                 Login
               </Link>
               <Link

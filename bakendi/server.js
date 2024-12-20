@@ -16,7 +16,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:3000', // Update this to your frontend's URL in production
+    origin: 'http://localhost:3000', // framenda URL
 }));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
