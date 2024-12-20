@@ -19,7 +19,7 @@ const Register = () => {
     try {
       const token = await register(email, password);
       setToken(token);
-      router.push("/"); // Redirect to homepage after registration
+      router.push("/"); // aftur á forsíðu
     } catch (err: any) {
       setError(err.message);
     }

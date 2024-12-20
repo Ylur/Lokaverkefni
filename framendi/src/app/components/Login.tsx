@@ -1,4 +1,3 @@
-// framendi/src/app/components/Login.tsx
 
 "use client";
 
@@ -13,15 +12,20 @@ const Login = () => {
   const { setToken } = useContext(AuthContext);
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
     try {
       const token = await login(email, password);
       setToken(token);
-      router.push("/"); // Redirect to a protected page after successful login
+      router.push("/"); 
     } catch (err: any) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,8 +51,12 @@ const Login = () => {
         placeholder="Your password"
         required
       />
-      <button type="submit" className="bg-secondary text-primary py-2 px-4 rounded w-full">
-        Login
+      <button
+        type="submit"
+        className="bg-secondary text-primary py-2 px-4 rounded w-full"
+        disabled={loading}
+      >
+        {loading ? "Logging in..." : "Login"}
       </button>
     </form>
   );
