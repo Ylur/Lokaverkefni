@@ -15,3 +15,6 @@ dotenv: For managing environment variables
 cors: To handle Cross-Origin Resource Sharing
 
 tree -I "node_modules|.git"
+
+
+npm install --save-dev nodemon - til að restarta server eftir code changes
