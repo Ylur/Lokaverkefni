@@ -19,7 +19,7 @@ const Login = () => {
     try {
       const token = await login(email, password);
       setToken(token);
-      router.push("/dashboard"); // Redirect to a protected page after successful login
+      router.push("/"); // Redirect to a protected page after successful login
     } catch (err: any) {
       setError(err.message);
     }

@@ -1,9 +1,9 @@
-// framendi/src/app/components/Register.tsx
+// src/app/components/Register.tsx
 
 "use client";
 
 import React, { useState, useContext } from "react";
-import { register } from "../utils/api";
+import { register } from "../utils/api"; 
 import { AuthContext } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
 
@@ -19,7 +19,7 @@ const Register = () => {
     try {
       const token = await register(email, password);
       setToken(token);
-      router.push("/dashboard"); // Redirect to a protected page after successful registration
+      router.push("/"); // Redirect to homepage after registration
     } catch (err: any) {
       setError(err.message);
     }

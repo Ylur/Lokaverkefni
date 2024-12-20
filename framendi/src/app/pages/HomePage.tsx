@@ -1,15 +1,19 @@
+// src/app/page.tsx
+
 "use client";
 
-import React, { FC } from "react";
+import React, { useContext } from "react";
 import DishPreview from "../components/DishPreview";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import ProtectedRoute from "../components/ProtectedRoute";
+import { AuthContext } from "../context/AuthContext";
+import Login from "../components/Login"; // Import the Login component
 import Link from "next/link";
 
-const HomePage: FC = () => {
+const HomePage = () => {
+  const { token } = useContext(AuthContext);
+
   return (
-    <ProtectedRoute>
     <>
       <Header />
 
@@ -24,26 +28,42 @@ const HomePage: FC = () => {
             <p className="mt-4 text-lg">Where LiL Food Meets LiL Company.</p>
           </div>
         </div>
-      
       </div>
 
       <div className="container mx-auto p-8">
-        <section>
-          <h2 className="text-3xl font-bold text-center mb-6">Our Popular Dishes</h2>
-          <DishPreview />
-          <div className="text-center mt-8">
-            <Link
-              href="/menu"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-            >
-              View Full Menu
-            </Link>
-          </div>
-        </section>
+        {!token ? (
+          // If user is not authenticated, show the Login component
+          <section>
+            <h2 className="text-3xl font-bold text-center mb-6">Please Log In</h2>
+            <Login />
+            <div className="text-center mt-4">
+              <p>
+                Don't have an account?{" "}
+                <Link href="/register" className="text-blue-500 hover:underline">
+                  Register here
+                </Link>
+              </p>
+            </div>
+          </section>
+        ) : (
+          // If user is authenticated, show the main content
+          <section>
+            <h2 className="text-3xl font-bold text-center mb-6">Our Popular Dishes</h2>
+            <DishPreview />
+            <div className="text-center mt-8">
+              <Link
+                href="/menu"
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                View Full Menu
+              </Link>
+            </div>
+          </section>
+        )}
       </div>
+
       <Footer />
     </>
-    </ProtectedRoute>
   );
 };
 
