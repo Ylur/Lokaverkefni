@@ -1,14 +1,22 @@
-
+// server.js
 
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-// Remove body-parser as Express has built-in parsing
+const rateLimit = require('express-rate-limit');
+
 const authRoutes = require('./routes/auth');
 const ordersRoutes = require('./routes/orders');
 
 const app = express();
+
+// Rate Limiting Middleware for Authentication Routes
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+    message: { success: false, error: 'Too many requests, please try again later.' },
+});
 
 // Middleware
 app.use(cors({
@@ -16,6 +24,9 @@ app.use(cors({
     credentials: true, // Allow credentials (cookies, authorization headers)
 }));
 app.use(express.json());
+
+// Apply rate limiting to authentication routes
+app.use('/api/auth', authLimiter);
 
 // Routes
 app.use('/api/auth', authRoutes);       // Routes for /api/auth/register and /api/auth/login
@@ -29,10 +40,8 @@ app.get('/', (req, res) => {
 // Connect to MongoDB and Start Server
 const PORT = process.env.PORT || 3001;
 
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+// Updated mongoose.connect without deprecated options
+mongoose.connect(process.env.MONGO_URI)
 .then(() => {
     console.log('Connected to MongoDB');
     app.listen(PORT, () => {

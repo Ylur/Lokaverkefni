@@ -1,31 +1,36 @@
 // bakendi/types.js
 
 /**
- * @typedef {Object} Provision
- * @property {string} id - Unique identifier.
- * @property {string} name - Name of the provision.
- * @property {string} description - Description of the provision.
- * @property {string} imageSource - URL to the image of the provision.
- * @property {number} price - Price of the provision.
- * @property {string} category - Category of the provision.
+ * @typedef {Object} User
+ * @property {string} id - Unique identifier for the user.
+ * @property {string} username - Username of the user.
+ * @property {string} email - Email of the user.
+ * @property {string} password - Hashed password of the user.
+ * @property {string} [resetPasswordToken] - Token for password reset.
+ * @property {Date} [resetPasswordExpires] - Expiration time for reset token.
  */
 
 /**
- * @typedef {Provision} Dish
- * @property {string} cousine - Type of cuisine.
+ * @typedef {Object} SelectedDish
+ * @property {string} idMeal - Unique identifier for the dish.
+ * @property {string} strMeal - Name of the dish.
+ * @property {number} quantity - Quantity ordered.
  */
 
 /**
- * @typedef {Provision} Drink
- * @property {string} brewer - Brewer of the drink.
+ * @typedef {Object} SelectedDrink
+ * @property {string} idDrink - Unique identifier for the drink.
+ * @property {string} strDrink - Name of the drink.
+ * @property {number} quantity - Quantity ordered.
  */
 
 /**
  * @typedef {Object} Order
- * @property {number} id - Unique identifier for the order.
- * @property {string} email - Email of the user who placed the order.
- * @property {Dish} dish - The dish ordered.
- * @property {Drink[]} drinks - Array of drinks ordered.
- * @property {number} count - Quantity of the order.
+ * @property {string} id - Unique identifier for the order.
+ * @property {string} user - User ID who placed the order.
+ * @property {string} email - Email of the user.
  * @property {Date} date - Date when the order was placed.
+ * @property {SelectedDish[]} dishes - Array of dishes ordered.
+ * @property {SelectedDrink[]} drinks - Array of drinks ordered.
+ * @property {number} total - Total amount of the order.
  */

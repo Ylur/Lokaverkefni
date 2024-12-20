@@ -1,9 +1,10 @@
-
+// bakendi/controllers/authController.js
 
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { sendResetEmail } = require('../utils/email');
+const { validationResult } = require('express-validator');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1h';
@@ -12,12 +13,14 @@ const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1h';
  * Register a new user
  */
 const register = async (req, res) => {
-    const { username, email, password } = req.body;
-
-    // Basic validation
-    if (!username || !email || !password) {
-        return res.status(400).json({ success: false, error: 'Username, email, and password are required.' });
+    // Validate inputs
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        // Return the first validation error
+        return res.status(400).json({ success: false, error: errors.array()[0].msg });
     }
+
+    const { username, email, password } = req.body;
 
     try {
         // Check if username or email already exists
@@ -44,12 +47,14 @@ const register = async (req, res) => {
  * Authenticate user and get token
  */
 const login = async (req, res) => {
-    const { email, password } = req.body;
-
-    // Basic validation
-    if (!email || !password) {
-        return res.status(400).json({ success: false, error: 'Email and password are required.' });
+    // Validate inputs
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        // Return the first validation error
+        return res.status(400).json({ success: false, error: errors.array()[0].msg });
     }
+
+    const { email, password } = req.body;
 
     try {
         // Find user by email
@@ -78,12 +83,14 @@ const login = async (req, res) => {
  * Request Password Reset
  */
 const resetPasswordRequest = async (req, res) => {
-    const { email } = req.body;
-
-    // Basic validation
-    if (!email) {
-        return res.status(400).json({ success: false, error: 'Email is required.' });
+    // Validate inputs
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        // Return the first validation error
+        return res.status(400).json({ success: false, error: errors.array()[0].msg });
     }
+
+    const { email } = req.body;
 
     try {
         // Find user by email
@@ -117,7 +124,13 @@ const resetPassword = async (req, res) => {
     const { token } = req.params;
     const { password } = req.body;
 
-    // Basic validation
+    // Validate inputs
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        // Return the first validation error
+        return res.status(400).json({ success: false, error: errors.array()[0].msg });
+    }
+
     if (!password) {
         return res.status(400).json({ success: false, error: 'New password is required.' });
     }

@@ -3,11 +3,11 @@
 const { v4: uuidv4 } = require('uuid');
 
 /**
- * Generates a new UUID.
- * @returns {string} A new UUID.
+ * Generate a UUID v4
+ * @returns {string} UUID
  */
-function generateUUID() {
+const generateUUID = () => {
     return uuidv4();
-}
+};
 
-module.exports = generateUUID;
+module.exports = { generateUUID };
