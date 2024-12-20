@@ -3,12 +3,12 @@
 "use client";
 
 import React, { useState, useContext } from "react";
-import { register } from "../utils/api"; 
+import { register } from "../utils/api";
 import { AuthContext } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
 
 const Register = () => {
-  const [username, setUsername] = useState(""); // Added state for username
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setToken } = useContext(AuthContext);
@@ -20,17 +20,20 @@ const Register = () => {
     try {
       const token = await register(username, email, password); // Pass username
       setToken(token);
-      router.push("/"); // Redirect to homepage
+      router.push("/"); // Redirect to homepage sem ætti að sýna order möguleika
     } catch (err: any) {
       setError(err.message);
     }
   };
 
   return (
-    <form onSubmit={handleRegister} className="max-w-md mx-auto p-8 border border-secondary rounded">
+    <form
+      onSubmit={handleRegister}
+      className="max-w-md mx-auto p-8 border border-secondary rounded"
+    >
       <h2 className="text-xl mb-4">Register</h2>
       {error && <p className="text-red-500 mb-4">{error}</p>}
-      
+
       <label className="block mb-2">Username:</label>
       <input
         type="text"
@@ -59,7 +62,10 @@ const Register = () => {
         placeholder="Your password"
         required
       />
-      <button type="submit" className="bg-secondary text-primary py-2 px-4 rounded w-full">
+      <button
+        type="submit"
+        className="bg-secondary text-primary py-2 px-4 rounded w-full"
+      >
         Register
       </button>
     </form>

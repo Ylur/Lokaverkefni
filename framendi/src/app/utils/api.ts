@@ -37,6 +37,7 @@ export async function register(username: string, email: string, password: string
   }
 }
 
+
 /**
  * Log in an existing user
  * @param email User's email
@@ -44,7 +45,7 @@ export async function register(username: string, email: string, password: string
  * @returns JWT token upon successful login
  */
 export async function login(email: string, password: string): Promise<string> {
-  const response = await fetch(`${API_BASE_URL}/login`, {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, { // Updated endpoint
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),

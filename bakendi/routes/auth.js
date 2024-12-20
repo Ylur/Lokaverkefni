@@ -5,7 +5,7 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const authenticateToken = require('../middleware/authenticateToken');
 const { body } = require('express-validator');
-const User = require('../models/User'); 
+const User = require('../models/User'); // Import the User model
 
 // Registration Route with Validation
 router.post('/register', [
@@ -52,6 +52,7 @@ router.get('/profile', authenticateToken, async (req, res) => {
         res.status(500).json({ success: false, error: 'Internal server error while fetching profile.' });
     }
 });
+
 
 // GET /api/auth/users - For Development Only / fjarlægja eftir það, aldrei nota í prod
 router.get('/users', authenticateToken, async (req, res) => {
