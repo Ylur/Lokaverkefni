@@ -1,16 +1,16 @@
 // bakendi/middleware/authenticateToken.js
 
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
+const User = require('../models/User');
+require('dotenv').config();
 
-// Load environment variables
-dotenv.config();
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
 /**
  * Middleware to authenticate JWT tokens.
  * Attaches the user object to the request if valid.
  */
-function authenticateToken(req, res, next) {
+const authenticateToken = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1]; // Expected format: "Bearer TOKEN"
 
@@ -18,13 +18,20 @@ function authenticateToken(req, res, next) {
         return res.status(401).json({ success: false, error: 'Access token missing.' });
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err) {
-            return res.status(403).json({ success: false, error: 'Invalid or expired token.' });
+    try {
+        // Verify token
+        const decoded = jwt.verify(token, JWT_SECRET);
+        // Find user by ID and exclude password
+        const user = await User.findById(decoded.id).select('-password');
+        if (!user) {
+            return res.status(401).json({ success: false, error: 'User not found.' });
         }
-        req.user = user; // Attach user information to request
+        req.userDetails = user; // Attach user details to request
         next();
-    });
-}
+    } catch (err) {
+        console.error('Authentication error:', err);
+        res.status(403).json({ success: false, error: 'Invalid or expired token.' });
+    }
+};
 
 module.exports = authenticateToken;

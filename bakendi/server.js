@@ -1,37 +1,44 @@
-// bakendi/server.js
 
+
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
-
+const mongoose = require('mongoose');
+// Remove body-parser as Express has built-in parsing
 const authRoutes = require('./routes/auth');
 const ordersRoutes = require('./routes/orders');
 
-// Initialize environment variables
-dotenv.config();
-
-// Initialize Express app
 const app = express();
 
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:3000', // framenda URL
+    origin: process.env.CLIENT_URL || 'http://localhost:3000', // Frontend URL from .env
+    credentials: true, // Allow credentials (cookies, authorization headers)
 }));
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 // Routes
-app.use('/api', authRoutes);       // Routes for /api/register and /api/login
-app.use('/api/orders', ordersRoutes); // Routes for order management
+app.use('/api/auth', authRoutes);       // Routes for /api/auth/register and /api/auth/login
+app.use('/api/orders', ordersRoutes);   // Routes for order management
 
 // Health Check Route
 app.get('/', (req, res) => {
     res.send('Restaurant Server is running.');
 });
 
-// Start the Server
+// Connect to MongoDB and Start Server
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-    console.log(`[server]: Server is running at http://localhost:${PORT}`);
+
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => {
+    console.log('Connected to MongoDB');
+    app.listen(PORT, () => {
+        console.log(`[server]: Server is running at http://localhost:${PORT}`);
+    });
+})
+.catch((err) => {
+    console.error('MongoDB connection error:', err);
 });
