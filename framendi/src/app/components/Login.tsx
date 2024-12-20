@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useContext } from "react";
@@ -21,7 +20,7 @@ const Login = () => {
     try {
       const token = await login(email, password);
       setToken(token);
-      router.push("/"); 
+      router.push("/");
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -30,7 +29,10 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleLogin} className="max-w-md mx-auto p-8 border border-secondary rounded">
+    <form
+      onSubmit={handleLogin}
+      className="max-w-md mx-auto p-8 border border-secondary rounded"
+    >
       <h2 className="text-xl mb-4">Login</h2>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <label className="block mb-2">Email:</label>

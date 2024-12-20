@@ -1,33 +1,52 @@
+# =====================
 # Logs
+# =====================
 logs/
 *.log
 
-# Dependency directories
+# =====================
+# Dependency Directories
+# =====================
 node_modules/
 vendor/
+.node_modules/
 
-# Environment files
+# =====================
+# Environment Files
+# =====================
 .env
+.env.local
+.env.development.local
+.env.production.local
+.env.build
 
-# Build output
+# =====================
+# Build Output
+# =====================
+.next/
+out/
 dist/
 build/
+.cache/
 
-# System files
+# =====================
+# System Files
+# =====================
 .DS_Store
 Thumbs.db
+desktop.ini
+.AppleDouble
+.LSOverride
 
-# Next.js files
-.next/
-
-# Node modules (redundant but consistent)
-.node_modules/
+# =====================
+# Editor Directories and Files
+# =====================
 
 # VS Code
 .vscode/
 *.code-workspace
 
-# JetBrains IDEs (e.g., WebStorm, IntelliJ)
+# JetBrains IDEs
 .idea/
 *.iml
 
@@ -35,61 +54,63 @@ Thumbs.db
 *.sublime-project
 *.sublime-workspace
 
-# Mac-specific
+# =====================
+# OS-specific Files
+# =====================
+# Mac
 .DS_Store
 
-# Windows-specific
+# Windows
 Thumbs.db
 desktop.ini
 
-# Local environment settings
-.env.local
-.env.development.local
-.env.production.local
-
-# npm debug log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# OS-specific
-.AppleDouble
-.LSOverride
-
-# Parcel cache
-.cache/
-
-# Build artifacts
-out/
-
-# Coverage reports
-coverage/
-
-# Temporary files for testing
+# =====================
+# Temporary Files
+# =====================
 *.tmp
 *.temp
 
-# CI/CD artifacts
-*.log
+# =====================
+# CI/CD Artifacts
+# =====================
 *.pid
 *.seed
 *.pid.lock
 
-# Next.js specific
+# =====================
+# Cache and Coverage
+# =====================
+.cache/
+coverage/
+
+# =====================
+# Parcel Cache
+# =====================
+.cache/
+
+# =====================
+# TypeScript Build Outputs
+# =====================
+*.tsbuildinfo
+
+# =====================
+# Lock Files
+# =====================
+# Choose one based on the package manager you're using
+# Uncomment the ones applicable to your project
+
+# npm
+package-lock.json
+
+# Yarn
+yarn.lock
+
+# pnpm
+pnpm-lock.yaml
+
+# =====================
+# Next.js Specific
+# =====================
 .next/
 out/
 .vercel/
-.env.build
-
-# npm or Yarn lock files (choose one, if applicable)
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-
-# npm or Yarn lock files (choose one, if applicable)
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-
-# TypeScript build outputs
-*.tsbuildinfo

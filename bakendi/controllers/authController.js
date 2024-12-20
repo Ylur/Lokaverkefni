@@ -16,6 +16,7 @@ const register = async (req, res) => {
     // Validate inputs
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+        console.log('Login Validation Errors:', errors.array());
         // Return the first validation error
         return res.status(400).json({ success: false, error: errors.array()[0].msg });
     }
@@ -26,6 +27,7 @@ const register = async (req, res) => {
         // Check if username or email already exists
         const existingUser = await User.findOne({ $or: [{ email }, { username }] });
         if (existingUser) {
+            console.log('No user found with email:', email);
             return res.status(409).json({ success: false, error: 'Username or email already exists.' });
         }
 
@@ -35,6 +37,7 @@ const register = async (req, res) => {
 
         // Generate JWT
         const token = jwt.sign({ id: newUser._id, email: newUser.email }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+        console.log('JWT Token generated for user:', email);
 
         res.status(201).json({ success: true, token });
     } catch (error) {
@@ -66,6 +69,7 @@ const login = async (req, res) => {
         // Compare passwords
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
+            console.log('Invalid password for email:', email);
             return res.status(401).json({ success: false, error: 'Invalid email or password.' });
         }
 
