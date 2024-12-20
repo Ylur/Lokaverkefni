@@ -5,6 +5,7 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const authenticateToken = require('../middleware/authenticateToken');
 const { body } = require('express-validator');
+const User = require('../models/User'); 
 
 // Registration Route with Validation
 router.post('/register', [
@@ -49,6 +50,17 @@ router.get('/profile', authenticateToken, async (req, res) => {
     } catch (error) {
         console.error('Error fetching profile:', error);
         res.status(500).json({ success: false, error: 'Internal server error while fetching profile.' });
+    }
+});
+
+// GET /api/auth/users - For Development Only / fjarlægja eftir það, aldrei nota í prod
+router.get('/users', authenticateToken, async (req, res) => {
+    try {
+        const users = await User.find().select('-password'); // ekki passwords
+        res.status(200).json({ success: true, users });
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        res.status(500).json({ success: false, error: 'Internal server error while fetching users.' });
     }
 });
 

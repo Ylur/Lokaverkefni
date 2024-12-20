@@ -11,15 +11,16 @@ const API_BASE_URL = "http://localhost:3001/api";
 
 /**
  * Register a new user
+ * @param username User's username
  * @param email User's email
  * @param password User's password
  * @returns JWT token upon successful registration
  */
-export async function register(email: string, password: string): Promise<string> {
-  const response = await fetch(`${API_BASE_URL}/register`, {
+export async function register(username: string, email: string, password: string): Promise<string> {
+  const response = await fetch(`${API_BASE_URL}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ username, email, password }),
   });
 
   if (!response.ok) {
