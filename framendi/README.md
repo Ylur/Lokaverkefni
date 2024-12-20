@@ -2,6 +2,8 @@ Tilraun 293 á lokaverkefni.
 
 Homepage->Dish page->Drink page->Booking page -> Receipt page.
 
+Framendi sækir upplýsingar í /api/orders
+
 Select Dish Page:
 User selects a dish and specifies a quantity.
 Dish details (strMeal, quantity) are passed to the receipt page as a query parameter.

@@ -4,10 +4,12 @@ import React, { FC } from "react";
 import DishPreview from "../components/DishPreview";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import ProtectedRoute from "../components/ProtectedRoute";
 import Link from "next/link";
 
 const HomePage: FC = () => {
   return (
+    <ProtectedRoute>
     <>
       <Header />
 
@@ -22,6 +24,7 @@ const HomePage: FC = () => {
             <p className="mt-4 text-lg">Where LiL Food Meets LiL Company.</p>
           </div>
         </div>
+      
       </div>
 
       <div className="container mx-auto p-8">
@@ -40,6 +43,7 @@ const HomePage: FC = () => {
       </div>
       <Footer />
     </>
+    </ProtectedRoute>
   );
 };
 
