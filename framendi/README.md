@@ -1,4 +1,4 @@
-Tilraun 2 á lokaverkefni.
+Tilraun 293 á lokaverkefni.
 
 Homepage->Dish page->Drink page->Booking page -> Receipt page.
 
@@ -15,3 +15,4 @@ Total Calculation:
 Dish total is calculated based on price per person and quantity.
 Drinks total is calculated from the hardcoded values.
 Grand total combines the dish total and drinks total.
+tree -I "node_modules|.git"
