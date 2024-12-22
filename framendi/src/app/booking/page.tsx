@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function OrderPage() {
@@ -61,6 +61,7 @@ export default function OrderPage() {
   
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold text-center mb-6">Order Details</h1>
 
@@ -107,5 +108,6 @@ export default function OrderPage() {
         </button>
       </div>
     </div>
+    </Suspense>
   );
 }
