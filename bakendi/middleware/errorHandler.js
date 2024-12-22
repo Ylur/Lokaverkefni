@@ -1,15 +1,10 @@
 // bakendi/middleware/errorHandler.js
-//TODO skoða hvort ég vilji nota þetta fyrir lokaverkefnið
 
-const { logger } = require("../server");
+const logger = require('../utils/logger'); 
 
-module.exports = (err, req, res, next) => {
-  logger.error(
-    `${err.status || 500} - ${err.message} - ${req.originalUrl} - ${
-      req.method
-    } - ${req.ip}`
-  );
-  res
-    .status(err.status || 500)
-    .json({ success: false, error: err.message || "Internal Server Error" });
+const errorHandler = (err, req, res, next) => {
+    logger.error(err.stack); // Log fyrir error stack trace
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
 };
+
+module.exports = errorHandler;
