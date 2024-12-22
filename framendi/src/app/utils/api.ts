@@ -209,6 +209,8 @@ export async function updateOrder(
   }
 }
 
+
+
 /**
  * Delete an order by ID for the authenticated user
  * @param token JWT token for authentication
@@ -257,4 +259,6 @@ export async function deleteOrdersByEmail(
     throw new Error(errorData.error || "Failed to delete orders by email");
   }
 }
+
+
 export type { Order };

@@ -2,6 +2,12 @@
 
 require('dotenv').config();
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const loginRoute = require('./api/login');
+const verifyTokenRoute = require('./api/verifyToken');
+const logoutRoute = require('./api/logout');
+const errorHandler = require('./middleware/errorHandler');
+const generalLimiter = require('./middleware/rateLimiter');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const rateLimit = require('express-rate-limit');
@@ -24,6 +30,7 @@ app.use(cors({
     credentials: true, // Allow credentials (cookies, authorization headers)
 }));
 app.use(express.json());
+app.use(generalLimiter);
 
 // Apply rate limiting to authentication routes
 app.use('/api/auth', authLimiter);
@@ -31,6 +38,7 @@ app.use('/api/auth', authLimiter);
 // Routes
 app.use('/api/auth', authRoutes);       // Routes for /api/auth/register and /api/auth/login
 app.use('/api/orders', ordersRoutes);   // Routes for order management
+app.use(generalLimiter);
 
 // Health Check Route
 app.get('/', (req, res) => {
@@ -39,7 +47,9 @@ app.get('/', (req, res) => {
 
 // Connect to MongoDB and Start Server
 const PORT = process.env.PORT || 3001;
-
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
 // Updated mongoose.connect without deprecated options
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {

@@ -3,11 +3,10 @@
 "use client";
 
 import React from "react";
-import Register from "../components/Register";
 import Login from "../components/Login";
 
-const RegisterPage = () => {
+const LoginPage = () => {
   return <Login />;
 };
 
-export default RegisterPage;
+export default LoginPage;

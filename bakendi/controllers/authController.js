@@ -6,7 +6,10 @@ const crypto = require('crypto');
 const { sendResetEmail } = require('../utils/email');
 const { validationResult } = require('express-validator');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+    throw new Error('JWT_SECRET environment variable is not defined.');
+}
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1h';
 
 /**
