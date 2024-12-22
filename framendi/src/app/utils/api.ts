@@ -7,6 +7,7 @@ import {
   NewOrder,
   RegisterResponse,
   LoginResponse,
+  APIError,
 } from "../types";
 
 // Ef locally þá nota þetta.
@@ -79,6 +80,7 @@ export async function login(email: string, password: string): Promise<string> {
     throw new Error(data.error || "Login failed");
   }
 }
+
 
 // =====================
 // Order Management Functions
@@ -234,6 +236,7 @@ export async function deleteOrderById(
   }
 }
 
+
 /**
  * Delete all orders associated with a specific email for the authenticated user
  * @param token JWT token for authentication
@@ -260,5 +263,5 @@ export async function deleteOrdersByEmail(
   }
 }
 
-
+export type { LoginResponse, APIError };
 export type { Order };

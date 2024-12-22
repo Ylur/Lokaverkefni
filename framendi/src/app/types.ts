@@ -52,4 +52,5 @@ export interface SelectedDish {
   
   export interface RegisterResponse extends AuthResponse {}
   export interface LoginResponse extends AuthResponse {}
+  export interface APIError extends AuthResponse{}
   
