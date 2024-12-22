@@ -1,9 +1,11 @@
+// src/app/booking/page.tsx
+
 "use client";
 
 import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function OrderPage() {
+function OrderForm() {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [people, setPeople] = useState(1);
@@ -14,22 +16,23 @@ export default function OrderPage() {
   // TODO: Get previously selected dish/drink info from query params or global state
   // á meðan we just proceed to the receipt page with these new params.
 
-  function validate() {
+
     // Passa:
     // - date should not be in the past
     // - time should be between 16:00 and 23:00, Mon-Fri 
     // - people between 1 and 10
     // - email format: string@string.string
 
-    if (!email.includes("@") || !email.includes(".")) {
-      alert("Please enter a valid email address.");
-      return false;
-    }
-
-    if (people < 1 || people > 10) {
-      alert("Number of people must be between 1 and 10.");
-      return false;
-    }
+    function validate() {
+      if (!email.includes("@") || !email.includes(".")) {
+        alert("Please enter a valid email address.");
+        return false;
+      }
+  
+      if (people < 1 || people > 10) {
+        alert("Number of people must be between 1 and 10.");
+        return false;
+      }
 
     // Add more checks for date/time as needed.
     return true;
@@ -48,7 +51,7 @@ export default function OrderPage() {
     const dishes = searchParams.get("dishes");
     const drinks = searchParams.get("drinks");
   
-    // pass along to the receipt page.
+    // Pass along to the receipt page.
     if (dishes) params.set("dishes", dishes);
     if (drinks) params.set("drinks", drinks);
   
@@ -61,7 +64,7 @@ export default function OrderPage() {
   
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold text-center mb-6">Order Details</h1>
 
@@ -108,6 +111,13 @@ export default function OrderPage() {
         </button>
       </div>
     </div>
+  
+  );
+}
+export default function OrderPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <OrderForm />
     </Suspense>
   );
 }
