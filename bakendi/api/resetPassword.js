@@ -1,14 +1,13 @@
-// bakendi/api/register.js
+// bakendi/api/resetPassword.js
 
 const cors = require('cors')({
-    origin: 'https://lokaverkefni-three.vercel.app', // framenda url
-    methods: ['POST'], // Only allow POST requests enda skráning
+    origin: 'https://lokaverkefni-three.vercel.app',
+    methods: ['POST'],
     credentials: true,
   });
   
-  
   const connectToDatabase = require('../utils/connectToDatabase');
-  const { register } = require('../controllers/authController');
+  const { resetPassword } = require('../controllers/authController');
   
   module.exports = async (req, res) => {
     await cors(req, res, async () => {
@@ -17,7 +16,7 @@ const cors = require('cors')({
         return;
       }
       await connectToDatabase();
-      await register(req, res);
+      await resetPassword(req, res);
     });
   };
   

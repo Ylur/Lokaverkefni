@@ -1,6 +1,8 @@
+// bakendi/api/login.js
+
 const cors = require('cors')({
-    origin: 'https://lokaverkefni-three.vercel.app/', 
-    methods: ['POST', 'GET', 'PUT', 'DELETE'],
+    origin: 'https://lokaverkefni-three.vercel.app', // Framenda url
+    methods: ['POST'], // Only allow POST requests
     credentials: true,
   });
   

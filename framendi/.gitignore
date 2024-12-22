@@ -114,3 +114,7 @@ pnpm-lock.yaml
 .next/
 out/
 .vercel/
+
+# bakendi/.gitignore
+
+server.js
