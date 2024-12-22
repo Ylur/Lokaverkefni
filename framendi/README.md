@@ -36,3 +36,16 @@ Create Order: POST /api/orders/create-order
 Update Order: PUT /api/orders/order/id/:id
 Delete Order by ID: DELETE /api/orders/order/id/:id
 Delete All Orders by Email: DELETE /api/orders/order/email/:email
+
+Til að búa til JWT secret notaði ég crypt sem er innbyggt í node: node -e "console.log(require('crypto').randomBytes(64).toString('hex'));"
+Gott ráð er að breyta þessu reglulega.
+Aldrei harðkóða og nota frekar t.d.
+
+Vercel Environment Variables: Securely manage environment variables in Vercel.
+HashiCorp Vault: A tool for securely accessing secrets.
+AWS Secrets Manager: Manage secrets within AWS infrastructure.
+Azure Key Vault: Securely store and access secrets in Azure.
+Google Secret Manager: Manage secrets within Google Cloud Platform.
+
+Bjó til email til að nota fyrir registering og senda email frá.
+lokaverkefni0@gmail.com
