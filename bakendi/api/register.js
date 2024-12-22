@@ -1,12 +1,13 @@
 // bakendi/api/register.js
 
+const cors = require('cors')({
+    origin: 'https://lokaverkefni-three.vercel.app', // Framenda url
+    methods: ['POST', 'GET', 'PUT', 'DELETE'],
+    credentials: true,
+  });
+
 const connectToDatabase = require('../utils/connectToDatabase');
 const { register } = require('../controllers/authController');
-const cors = require('cors')({
-  origin: 'https://lokaverkefni-three.vercel.app/', 
-  methods: ['POST', 'GET', 'PUT', 'DELETE'],
-  credentials: true,
-});
 
 module.exports = async (req, res) => {
   await cors(req, res, async () => {
