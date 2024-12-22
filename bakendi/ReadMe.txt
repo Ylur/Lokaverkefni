@@ -18,3 +18,5 @@ tree -I "node_modules|.git"
 
 
 npm install --save-dev nodemon - til að restarta server eftir code changes
+
+api/ sér um öll functions
