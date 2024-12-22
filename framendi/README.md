@@ -50,3 +50,8 @@ Google Secret Manager: Manage secrets within Google Cloud Platform.
 
 Bjó til email til að nota fyrir registering og senda email frá.
 lokaverkefni0@gmail.com
+
+Suspense bætt við
+https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+
+"Reading search parameters through useSearchParams() without a Suspense boundary will opt the entire page into client-side rendering. This could cause your page to be blank until the client-side JavaScript has loaded"

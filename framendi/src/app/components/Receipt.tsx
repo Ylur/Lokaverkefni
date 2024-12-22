@@ -2,7 +2,7 @@
 
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { SelectedDish, SelectedDrink } from "../types"; 
 
@@ -109,4 +109,10 @@ const Receipt = () => {
   );
 };
 
-export default Receipt;
+export default function ReceiptPage() {
+   return (
+      <Suspense>
+
+      </Suspense>
+    );
+  }
