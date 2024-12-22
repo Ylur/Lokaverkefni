@@ -7,6 +7,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const rateLimit = require("express-rate-limit");
 const csurf = require("csurf");
+const morgan = require("morgan"); // Import morgan
 
 // Import Routes
 const authRoutes = require("./routes/auth"); // Handles /api/auth/register and /api/auth/login
@@ -17,6 +18,9 @@ const logoutRoute = require("./api/logout"); // Handles /api/logout
 // Import Middleware
 const errorHandler = require("./middleware/errorHandler");
 const generalLimiter = require("./middleware/rateLimiter");
+
+// Import Logger
+const logger = require("./utils/logger"); // winston logger
 
 const app = express();
 
@@ -52,6 +56,14 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 app.use(generalLimiter); // Apply general rate limiting to all routes
+
+// Set up morgan for HTTP request logging
+// Define a custom format or use a predefined one
+app.use(
+  morgan("combined", {
+    stream: { write: (message) => logger.info(message.trim()) },
+  })
+);
 
 // Apply Rate Limiting to Authentication Routes
 app.use("/api/auth", authLimiter);
