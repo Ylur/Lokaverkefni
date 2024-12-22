@@ -1,8 +1,8 @@
-
+// src/app/components/Receipt.tsx
 
 "use client";
 
-import React, { Suspense } from "react";
+import React from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { SelectedDish, SelectedDrink } from "../types"; 
 
@@ -35,7 +35,6 @@ const Receipt = () => {
       </div>
     );
   }
-  
 
   const selectedDishes: SelectedDish[] = JSON.parse(dishesParam);
   const selectedDrinks: SelectedDrink[] = JSON.parse(drinksParam);
@@ -109,10 +108,4 @@ const Receipt = () => {
   );
 };
 
-export default function ReceiptPage() {
-   return (
-      <Suspense>
-
-      </Suspense>
-    );
-  }
+export default Receipt;
