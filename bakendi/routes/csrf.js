@@ -7,7 +7,8 @@ const csrf = require('csurf');
 // Initialize CSRF protection middleware
 const csrfProtection = csrf({ cookie: true });
 
-router.get('/csrf-token', csrfProtection, (req, res) => {
+// Define the route at '/' since it's mounted at '/api/csrf-token'
+router.get('/', csrfProtection, (req, res) => {
     res.json({ csrfToken: req.csrfToken() });
 });
 
