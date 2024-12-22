@@ -1,13 +1,20 @@
 // src/app/utils/api.ts
 
-import { SelectedDish, SelectedDrink, Order, NewOrder, RegisterResponse, LoginResponse } from "../types";
+import {
+  SelectedDish,
+  SelectedDrink,
+  Order,
+  NewOrder,
+  RegisterResponse,
+  LoginResponse,
+} from "../types";
 
 // Ef locally þá nota þetta.
 // const API_BASE_URL = "http://localhost:3001/api";
 
 // nota þetta fyrir prod
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001/api";
-
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001/api";
 
 // =====================
 // Authentication Functions
@@ -20,7 +27,11 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3
  * @param password User's password
  * @returns JWT token upon successful registration
  */
-export async function register(username: string, email: string, password: string): Promise<string> {
+export async function register(
+  username: string,
+  email: string,
+  password: string
+): Promise<string> {
   const response = await fetch(`${API_BASE_URL}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -41,7 +52,6 @@ export async function register(username: string, email: string, password: string
   }
 }
 
-
 /**
  * Log in an existing user
  * @param email User's email
@@ -49,7 +59,8 @@ export async function register(username: string, email: string, password: string
  * @returns JWT token upon successful login
  */
 export async function login(email: string, password: string): Promise<string> {
-  const response = await fetch(`${API_BASE_URL}/auth/login`, { // Updated endpoint
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    // Updated endpoint
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -83,7 +94,7 @@ export async function getOrders(token: string): Promise<Order[]> {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -112,7 +123,7 @@ export async function getOrderById(token: string, id: string): Promise<Order> {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -136,12 +147,15 @@ export async function getOrderById(token: string, id: string): Promise<Order> {
  * @param orderData Data for the new order
  * @returns The created order
  */
-export async function createOrder(token: string, orderData: NewOrder): Promise<Order> {
+export async function createOrder(
+  token: string,
+  orderData: NewOrder
+): Promise<Order> {
   const response = await fetch(`${API_BASE_URL}/orders/create-order`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(orderData),
   });
@@ -167,12 +181,16 @@ export async function createOrder(token: string, orderData: NewOrder): Promise<O
  * @param orderData Updated data for the order
  * @returns The updated order
  */
-export async function updateOrder(token: string, id: string, orderData: NewOrder): Promise<Order> {
+export async function updateOrder(
+  token: string,
+  id: string,
+  orderData: NewOrder
+): Promise<Order> {
   const response = await fetch(`${API_BASE_URL}/orders/order/id/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(orderData),
   });
@@ -196,12 +214,15 @@ export async function updateOrder(token: string, id: string, orderData: NewOrder
  * @param token JWT token for authentication
  * @param id Order ID
  */
-export async function deleteOrderById(token: string, id: string): Promise<void> {
+export async function deleteOrderById(
+  token: string,
+  id: string
+): Promise<void> {
   const response = await fetch(`${API_BASE_URL}/orders/order/id/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -216,17 +237,24 @@ export async function deleteOrderById(token: string, id: string): Promise<void> 
  * @param token JWT token for authentication
  * @param email User's email
  */
-export async function deleteOrdersByEmail(token: string, email: string): Promise<void> {
-  const response = await fetch(`${API_BASE_URL}/orders/order/email/${encodeURIComponent(email)}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
-    },
-  });
+export async function deleteOrdersByEmail(
+  token: string,
+  email: string
+): Promise<void> {
+  const response = await fetch(
+    `${API_BASE_URL}/orders/order/email/${encodeURIComponent(email)}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(errorData.error || "Failed to delete orders by email");
   }
 }
+export type { Order };

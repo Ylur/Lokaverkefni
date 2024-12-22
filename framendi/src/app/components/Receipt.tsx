@@ -35,6 +35,7 @@ const Receipt = () => {
       </div>
     );
   }
+  
 
   const selectedDishes: SelectedDish[] = JSON.parse(dishesParam);
   const selectedDrinks: SelectedDrink[] = JSON.parse(drinksParam);
