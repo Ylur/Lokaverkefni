@@ -1,8 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import Receipt from "../components/Receipt";
 
 export default function ReceiptPage() {
-  return <Receipt />;
+  return (
+    <Suspense>
+      <Receipt />
+    </Suspense>
+  );
 }
