@@ -1,37 +1,43 @@
-'use client'
-import React, { createContext, useState, useEffect, ReactNode } from "react";
+// src/app/context/AuthContext.tsx
 
-interface AuthContextType {
+import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
+
+interface AuthContextProps {
   token: string | null;
   setToken: (token: string | null) => void;
+  verifyToken: (token: string) => Promise<boolean>;
 }
 
-export const AuthContext = createContext<AuthContextType>({
+export const AuthContext = createContext<AuthContextProps>({
   token: null,
   setToken: () => {},
+  verifyToken: async () => false,
 });
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setTokenState] = useState<string | null>(null);
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const savedToken = localStorage.getItem("authToken");
-    if (savedToken) {
-      setTokenState(savedToken);
+    // Retrieve token from localStorage or cookies
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
     }
   }, []);
 
-  const setToken = (newToken: string | null) => {
-    if (newToken) {
-      localStorage.setItem("authToken", newToken);
-    } else {
-      localStorage.removeItem("authToken");
+  const verifyToken = async (token: string): Promise<boolean> => {
+    try {
+      const response = await axios.post("/api/verifyToken", { token });
+      return response.data.isValid;
+    } catch (error) {
+      console.error("Token verification failed:", error);
+      return false;
     }
-    setTokenState(newToken);
   };
 
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
+    <AuthContext.Provider value={{ token, setToken, verifyToken }}>
       {children}
     </AuthContext.Provider>
   );

@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+.loader {
+  border-top-color: #3498db;
+  animation: spinner 1.5s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 :root {
   --background: #3E6053;
   --foreground: #BA2329;
