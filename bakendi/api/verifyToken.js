@@ -1,10 +1,10 @@
 // bakendi/api/verifyToken.js
+// Fer yfir tokenið sem verður til
 
 const express = require("express");
+const router = express.Router();
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-
-const router = express.Router();
 
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
@@ -31,12 +31,10 @@ router.post("/", async (req, res) => {
         .status(401)
         .json({ isValid: false, message: "User not found." });
     }
-    res
-      .status(200)
-      .json({
-        isValid: true,
-        user: { id: user._id, email: user.email, username: user.username },
-      });
+    res.status(200).json({
+      isValid: true,
+      user: { id: user._id, email: user.email, username: user.username },
+    });
   } catch (error) {
     console.error("Token verification error:", error);
     res

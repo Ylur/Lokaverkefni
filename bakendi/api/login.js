@@ -3,7 +3,7 @@
 const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
-const helmet = require('helmet');
+const helmet = require('helmet'); // var þetta ekki Outdated?
 const connectToDatabase = require('../utils/connectToDatabase');
 const { login } = require('../controllers/authController');
 const { validateLogin } = require('../middleware/validateLogin');
@@ -18,7 +18,7 @@ router.use(helmet());
 // Configure CORS
 const allowedOrigins = [
   'https://lokaverkefni-three.vercel.app',
-  // Add other allowed origins if necessary
+  
 ];
 
 router.use(cors({
@@ -26,7 +26,7 @@ router.use(cors({
     // Allow requests with no origin (like mobile apps or curl requests)
     if(!origin) return callback(null, true);
     if(allowedOrigins.indexOf(origin) === -1){
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin #tekinn';
       return callback(new Error(msg), false);
     }
     return callback(null, true);
