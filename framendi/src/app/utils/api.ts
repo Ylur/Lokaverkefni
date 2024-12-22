@@ -2,8 +2,12 @@
 
 import { SelectedDish, SelectedDrink, Order, NewOrder, RegisterResponse, LoginResponse } from "../types";
 
-// Base URL for your backend API
-const API_BASE_URL = "http://localhost:3001/api";
+// Ef locally þá nota þetta.
+// const API_BASE_URL = "http://localhost:3001/api";
+
+// nota þetta fyrir prod
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001/api";
+
 
 // =====================
 // Authentication Functions
