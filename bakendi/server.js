@@ -14,8 +14,18 @@ const rateLimit = require('express-rate-limit');
 
 const authRoutes = require('./routes/auth');
 const ordersRoutes = require('./routes/orders');
+const csurf = require('csurf');
 
 const app = express();
+
+// Initialize CSRF protection
+const csrfProtection = csurf({
+    cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+    },
+});
 
 // Rate Limiting Middleware for Authentication Routes
 const authLimiter = rateLimit({
@@ -36,8 +46,8 @@ app.use(generalLimiter);
 app.use('/api/auth', authLimiter);
 
 // Routes
-app.use('/api/auth', authRoutes);       // Routes for /api/auth/register and /api/auth/login
-app.use('/api/orders', ordersRoutes);   // Routes for order management
+app.use('/api/auth', csrfProtection);      // Routes for /api/auth/register og /api/auth/login
+app.use('/api/orders', csrfProtection);   // Routes for order management
 app.use(generalLimiter);
 
 // Health Check Route

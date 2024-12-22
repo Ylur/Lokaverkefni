@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const verifyToken = async (): Promise<boolean> => {
     try {
-      const response = await axiosInstance.post("/verifyToken"); //next level shit right hörr
+      const response = await axiosInstance.post("/verifyToken"); // next level shit right hörr
       return response.data.isValid;
     } catch (error) {
       console.error("Token verification failed:", error);

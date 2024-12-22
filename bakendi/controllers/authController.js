@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { sendResetEmail } = require('../utils/email');
 const { validationResult } = require('express-validator');
+const bcrypt = require('bcrypt'); // For password hashing
 
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
@@ -13,13 +14,19 @@ if (!JWT_SECRET) {
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1h';
 
 /**
+ * Helper function to generate JWT
+ */
+const generateToken = (payload) => {
+    return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+};
+
+/**
  * Register a new user
  */
 const register = async (req, res) => {
     // Validate inputs
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log('Login Validation Errors:', errors.array());
         // Return the first validation error
         return res.status(400).json({ success: false, error: errors.array()[0].msg });
     }
@@ -30,16 +37,20 @@ const register = async (req, res) => {
         // Check if username or email already exists
         const existingUser = await User.findOne({ $or: [{ email }, { username }] });
         if (existingUser) {
-            console.log('No user found with email:', email);
+            console.log('Attempt to register with existing email:', email);
             return res.status(409).json({ success: false, error: 'Username or email already exists.' });
         }
 
+        // Hash password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
         // Create new user
-        const newUser = new User({ username, email, password });
+        const newUser = new User({ username, email, password: hashedPassword });
         await newUser.save();
 
         // Generate JWT
-        const token = jwt.sign({ id: newUser._id, email: newUser.email }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+        const token = generateToken({ id: newUser._id, email: newUser.email });
         console.log('JWT Token generated for user:', email);
 
         res.status(201).json({ success: true, token });
@@ -70,14 +81,14 @@ const login = async (req, res) => {
         }
 
         // Compare passwords
-        const isMatch = await user.comparePassword(password);
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            console.log('Invalid password for email:', email);
+            console.log('Invalid password attempt for email:', email);
             return res.status(401).json({ success: false, error: 'Invalid email or password.' });
         }
 
         // Generate JWT
-        const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+        const token = generateToken({ id: user._id, email: user.email });
 
         res.status(200).json({ success: true, token });
     } catch (error) {
@@ -106,15 +117,16 @@ const resetPasswordRequest = async (req, res) => {
             return res.status(400).json({ success: false, error: 'No user found with that email.' });
         }
 
-        // Generate reset token
+        // Generate reset token and hash it
         const resetToken = crypto.randomBytes(20).toString('hex');
+        const hashedResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
 
         // Set reset token and expiration on user
-        user.resetPasswordToken = resetToken;
+        user.resetPasswordToken = hashedResetToken;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
         await user.save();
 
-        // Send reset email
+        // Send reset email with the plain resetToken
         await sendResetEmail(user.email, resetToken);
 
         res.status(200).json({ success: true, message: 'Password reset email sent.' });
@@ -143,9 +155,12 @@ const resetPassword = async (req, res) => {
     }
 
     try {
-        // Find user by reset token and ensure token hasn't expired
+        // Hash the incoming token to compare with stored hashed token
+        const hashedResetToken = crypto.createHash('sha256').update(token).digest('hex');
+
+        // Find user by hashed reset token and ensure token hasn't expired
         const user = await User.findOne({
-            resetPasswordToken: token,
+            resetPasswordToken: hashedResetToken,
             resetPasswordExpires: { $gt: Date.now() },
         });
 
@@ -153,8 +168,12 @@ const resetPassword = async (req, res) => {
             return res.status(400).json({ success: false, error: 'Invalid or expired password reset token.' });
         }
 
-        // Update password
-        user.password = password; // This will trigger the pre-save hook to hash the password
+        // Hash the new password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        // Update password and remove reset token fields
+        user.password = hashedPassword;
         user.resetPasswordToken = undefined;
         user.resetPasswordExpires = undefined;
         await user.save();

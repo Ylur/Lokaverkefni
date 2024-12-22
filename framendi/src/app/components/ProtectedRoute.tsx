@@ -32,7 +32,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     return (
       <div className="flex items-center justify-center h-screen">
         <p className="text-xl">Loading...</p>
-        {/* Alternatively, use a spinner or other loading indicator */}
+        {/* TODO spice þetta upp með einhverju flottu loading dóti */}
       </div>
     );
   }
