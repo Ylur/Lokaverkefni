@@ -1,11 +1,16 @@
-// src/app/select-drinks/page.tsx
-
 "use client";
 
-import SelectDishes from "../components/SelectDishes";
+import React, { Suspense } from "react";
 
-const SelectDishesPage = () => {
-  return <SelectDishes />;
+// Lazy load the SelectDrinks component
+const SelectDishes = React.lazy(() => import("../components/SelectDishes"));
+
+const SelectDishesPage: React.FC = () => {
+  return (
+    <Suspense fallback={<div>Loading Select Drinks Page...</div>}>
+      <SelectDishes />
+    </Suspense>
+  );
 };
 
 export default SelectDishesPage;
