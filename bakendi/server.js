@@ -12,11 +12,11 @@ const csrf = require('csurf');
 
 
 // Import Routes
-const authRoutes = require("./routes/auth"); // Handles /api/auth/register and /api/auth/login
-const ordersRoutes = require("./routes/orders"); // Handles /api/orders
+const authRoutes = require("./api/auth"); // Handles /api/auth/register and /api/auth/login
+const ordersRoutes = require("./api/orders"); // Handles /api/orders
 const verifyTokenRoute = require("./api/verifyToken"); // Handles /api/verifyToken
 const logoutRoute = require("./api/logout"); // Handles /api/logout
-const csrfRoutes = require("./routes/csrf"); // CSRF token route
+const csrfRoutes = require("./api/csrf"); // CSRF token route
 
 // Import Middleware
 const errorHandler = require("./middleware/errorHandler");
