@@ -1,4 +1,4 @@
-// bakendi/routes/orders.js
+// bakendi/api/orders.js
 //þessi fæll sér um allt order-related routes, creating, updating, fetching, og deleting orders.
 
 const express = require("express");
