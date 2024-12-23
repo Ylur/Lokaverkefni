@@ -1,16 +1,39 @@
-// bakendi/routes/csrf.js
-//Handles CSRF token generation
+// bakendi/api/csrf.js
 
-const express = require('express');
-const router = express.Router();
-const csrf = require('csurf');
+const { cors, runMiddleware } = require("../utils/cors");
+const csrf = require("csurf");
+const cookieParser = require("cookie-parser");
 
-// Initialize CSRF protection middleware
 const csrfProtection = csrf({ cookie: true });
 
-// Define the route at '/' since it's mounted at '/api/csrf-token'
-router.get('/', csrfProtection, (req, res) => {
-    res.json({ csrfToken: req.csrfToken() });
-});
+module.exports = async (req, res) => {
+  try {
+    // Apply CORS middleware
+    await runMiddleware(req, res, cors);
 
-module.exports = router;
+    // Apply Cookie Parser middleware
+    await runMiddleware(req, res, cookieParser());
+
+    // Only allow GET requests
+    if (req.method !== "GET") {
+      res.setHeader("Allow", ["GET"]);
+      return res
+        .status(405)
+        .json({ success: false, error: "Method Not Allowed" });
+    }
+
+    // Apply CSRF protection
+    await new Promise((resolve, reject) => {
+      csrfProtection(req, res, (err) => {
+        if (err) return reject(err);
+        resolve();
+      });
+    });
+
+    // Send CSRF token
+    res.status(200).json({ csrfToken: req.csrfToken() });
+  } catch (error) {
+    console.error("Error in csrf handler:", error);
+    res.status(500).json({ success: false, error: "Internal Server Error" });
+  }
+};

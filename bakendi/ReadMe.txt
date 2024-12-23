@@ -20,3 +20,7 @@ tree -I "node_modules|.git"
 npm install --save-dev nodemon - til að restarta server eftir code changes
 
 api/ sér um öll functions
+
+Express er webframework og ekki notað í serverless eins og á vercel
+TL;DR
+Key Takeaway: Do not use Express routers or middleware inside Vercel serverless functions.
