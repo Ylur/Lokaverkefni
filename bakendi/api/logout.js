@@ -1,4 +1,5 @@
 // bakendi/api/logout.js
+//Handles logout
 
 const express = require('express');
 const router = express.Router();

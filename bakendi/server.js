@@ -1,4 +1,5 @@
 // server.js
+// fyrir local dev eingöngu.
 
 require("dotenv").config();
 const express = require("express");

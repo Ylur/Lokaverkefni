@@ -1,4 +1,5 @@
 // bakendi/routes/auth.js
+// Handles authentication routes
 
 const express = require("express");
 const router = express.Router();

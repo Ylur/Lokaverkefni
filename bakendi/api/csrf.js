@@ -1,4 +1,5 @@
 // bakendi/routes/csrf.js
+//Handles CSRF token generation
 
 const express = require('express');
 const router = express.Router();
