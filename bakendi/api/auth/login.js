@@ -4,9 +4,9 @@ const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet'); // var þetta ekki Outdated?
-const connectToDatabase = require('../utils/connectToDatabase');
-const { login } = require('../controllers/authController');
-const { validateLogin } = require('../middleware/validateLogin');
+const connectToDatabase = require('../../utils/connectToDatabase');
+const { login } = require('../../controllers/authController');
+const { validateLogin } = require('../../middleware/validateLogin');
 
 const router = express.Router();
 

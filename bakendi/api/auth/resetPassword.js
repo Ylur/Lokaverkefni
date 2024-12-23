@@ -6,8 +6,8 @@ const cors = require('cors')({
     credentials: true,
   });
   
-  const connectToDatabase = require('../utils/connectToDatabase');
-  const { resetPassword } = require('../controllers/authController');
+  const connectToDatabase = require('../../utils/connectToDatabase');
+  const { resetPassword } = require('../../controllers/authController');
   
   module.exports = async (req, res) => {
     await cors(req, res, async () => {
