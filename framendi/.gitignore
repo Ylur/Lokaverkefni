@@ -118,3 +118,4 @@ out/
 # bakendi/.gitignore
 
 server.js
+.vercel
