@@ -4,7 +4,8 @@ const Cors = require('cors');
 
 // Define CORS options
 const corsOptions = {
-  origin: 'https://lokaverkefni-three.vercel.app', // Frontend URL
+  origin: 'https://lokaverkefni-framendi.vercel.app/', // Frontend URL 
+
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 };
