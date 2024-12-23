@@ -1,15 +1,15 @@
 // bakendi/api/auth/login.js
 
 const { body, validationResult } = require("express-validator");
-const { cors, runMiddleware } = require("../../utils/cors");
+const { applyMiddlewares } = require("../../utils/middleware");
+const { cors } = require("../../utils/cors");
 const connectToDatabase = require("../../utils/connectToDatabase");
 const { login } = require("../../controllers/authController");
-const { validateLogin } = require("../../middleware/validateLogin");
 
 module.exports = async (req, res) => {
   try {
-    // Apply CORS middleware
-    await runMiddleware(req, res, cors);
+    // Apply middlewares: CORS and Cookie Parser
+    await applyMiddlewares(req, res, [cors, require("cookie-parser")()]);
 
     // Only allow POST requests
     if (req.method !== "POST") {

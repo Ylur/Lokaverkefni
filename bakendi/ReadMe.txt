@@ -24,3 +24,10 @@ api/ sér um öll functions
 Express er webframework og ekki notað í serverless eins og á vercel
 TL;DR
 Key Takeaway: Do not use Express routers or middleware inside Vercel serverless functions.
+
+Varðandi Middleware:
+
+In a serverless environment like Vercel's, each API route operates as an independent function. 
+Unlike traditional Express.js applications, you cannot chain middleware directly. 
+Therefore, centralizing middleware allows you to apply common functionalities (like CORS, cookie parsing, etc.) 
+across all your serverless functions efficiently.

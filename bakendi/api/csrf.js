@@ -1,18 +1,17 @@
 // bakendi/api/csrf.js
 
-const { cors, runMiddleware } = require("../utils/cors");
+const { applyMiddlewares } = require("../utils/middleware");
 const csrf = require("csurf");
-const cookieParser = require("cookie-parser");
 
 const csrfProtection = csrf({ cookie: true });
 
 module.exports = async (req, res) => {
   try {
-    // Apply CORS middleware
-    await runMiddleware(req, res, cors);
-
-    // Apply Cookie Parser middleware
-    await runMiddleware(req, res, cookieParser());
+    // Apply middlewares: CORS, Cookie Parser, and CSRF
+    await applyMiddlewares(req, res, [
+      require("../utils/cors").cors,
+      require("cookie-parser")(),
+    ]);
 
     // Only allow GET requests
     if (req.method !== "GET") {

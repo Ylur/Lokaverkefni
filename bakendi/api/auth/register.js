@@ -1,18 +1,22 @@
 // bakendi/api/auth/register.js
 
 const { body, validationResult } = require("express-validator");
-const { cors, runMiddleware } = require('../../utils/cors');
-const connectToDatabase = require('../../utils/connectToDatabase');
-const { register } = require('../../controllers/authController');
+const { applyMiddlewares } = require("../../utils/middleware");
+const { cors } = require("../../utils/cors");
+const connectToDatabase = require("../../utils/connectToDatabase");
+const { register } = require("../../controllers/authController");
 
 module.exports = async (req, res) => {
   try {
-    // Apply CORS middleware
-    await runMiddleware(req, res, cors);
+    // Apply middlewares: CORS and Cookie Parser
+    await applyMiddlewares(req, res, [cors, require("cookie-parser")()]);
 
-    if (req.method !== 'POST') {
-      res.setHeader('Allow', ['POST']);
-      return res.status(405).json({ success: false, error: 'Method Not Allowed' });
+    // Only allow POST requests
+    if (req.method !== "POST") {
+      res.setHeader("Allow", ["POST"]);
+      return res
+        .status(405)
+        .json({ success: false, error: "Method Not Allowed" });
     }
 
     // Run validations

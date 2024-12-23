@@ -1,12 +1,13 @@
 // bakendi/api/auth/logout.js
 // Handles logout
 
-const { cors, runMiddleware } = require('../../utils/cors');
+const { applyMiddlewares } = require('../../utils/middleware');
+const { cors } = require('../../utils/cors');
 
 module.exports = async (req, res) => {
   try {
-    // Apply CORS middleware
-    await runMiddleware(req, res, cors);
+    // Apply middlewares: CORS and Cookie Parser
+    await applyMiddlewares(req, res, [cors, cookieParser()]);
 
     // Only allow POST requests
     if (req.method !== 'POST') {

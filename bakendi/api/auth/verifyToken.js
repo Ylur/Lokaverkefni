@@ -1,7 +1,8 @@
 // bakendi/api/auth/verifyToken.js
 // Verifies JWT token from HTTP-only cookie
 
-const { cors, runMiddleware } = require("../../utils/cors");
+const { applyMiddlewares } = require("../../utils/middleware");
+const { cors } = require("../../utils/cors");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 
@@ -12,8 +13,8 @@ if (!JWT_SECRET) {
 
 module.exports = async (req, res) => {
   try {
-    // Apply CORS middleware
-    await runMiddleware(req, res, cors);
+    // Apply middlewares: CORS and Cookie Parser
+    await applyMiddlewares(req, res, [cors, require("cookie-parser")()]);
 
     // Only allow POST requests
     if (req.method !== "POST") {
