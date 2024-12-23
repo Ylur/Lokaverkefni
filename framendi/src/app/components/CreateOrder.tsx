@@ -4,14 +4,15 @@
 
 import React, { useState, useContext } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createOrder } from "../utils/api"; 
+import { createOrder } from "../utils/api";
 import { AuthContext } from "../context/AuthContext";
-import { SelectedDish, SelectedDrink, NewOrder } from "../types"; 
+import { SelectedDish, SelectedDrink, NewOrder } from "../types";
 
 const CreateOrder = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { token } = useContext(AuthContext);
+  
 
   const emailParam = searchParams.get("email");
   const dishesParam = searchParams.get("dishes");
@@ -20,12 +21,18 @@ const CreateOrder = () => {
   // Ensure email is a string; if not, handle appropriately
   if (!emailParam) {
     // Optionally, redirect to a different page or show an error
-    return <p className="text-red-500">Email is missing. Cannot create order.</p>;
+    return (
+      <p className="text-red-500">Email is missing. Cannot create order.</p>
+    );
   }
 
   const email: string = emailParam;
-  const selectedDishes: SelectedDish[] = dishesParam ? JSON.parse(dishesParam) : [];
-  const selectedDrinks: SelectedDrink[] = drinksParam ? JSON.parse(drinksParam) : [];
+  const selectedDishes: SelectedDish[] = dishesParam
+    ? JSON.parse(dishesParam)
+    : [];
+  const selectedDrinks: SelectedDrink[] = drinksParam
+    ? JSON.parse(drinksParam)
+    : [];
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -53,9 +60,13 @@ const CreateOrder = () => {
       const order = await createOrder(token, orderData);
       // Redirect to Receipt with order details
       router.push(
-        `/receipt?email=${encodeURIComponent(order.email)}&date=${encodeURIComponent(order.date)}&dishes=${encodeURIComponent(
+        `/receipt?email=${encodeURIComponent(
+          order.email
+        )}&date=${encodeURIComponent(order.date)}&dishes=${encodeURIComponent(
           JSON.stringify(order.dishes)
-        )}&drinks=${encodeURIComponent(JSON.stringify(order.drinks))}&total=${encodeURIComponent(order.total.toString())}`
+        )}&drinks=${encodeURIComponent(
+          JSON.stringify(order.drinks)
+        )}&total=${encodeURIComponent(order.total.toString())}`
       );
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred.");
@@ -69,7 +80,8 @@ const CreateOrder = () => {
     const drinkPrice = 8;
 
     const dishTotal = selectedDishes.reduce(
-      (sum: number, dish: SelectedDish) => sum + dish.quantity * dishPricePerPerson,
+      (sum: number, dish: SelectedDish) =>
+        sum + dish.quantity * dishPricePerPerson,
       0
     );
 

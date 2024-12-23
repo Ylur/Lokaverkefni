@@ -8,6 +8,7 @@ import axiosInstance from "../utils/axiosInstance";
 interface AuthContextProps {
   isAuthenticated: boolean;
   setIsAuthenticated: (auth: boolean) => void;
+  token: string | null; // Included token
   setToken: (token: string | null) => void;
   verifyToken: () => Promise<boolean>;
 }
@@ -15,6 +16,7 @@ interface AuthContextProps {
 export const AuthContext = createContext<AuthContextProps>({
   isAuthenticated: false,
   setIsAuthenticated: () => {},
+  token: null, // Initialize with null
   setToken: () => {},
   verifyToken: async () => false,
 });
@@ -62,7 +64,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, setToken, verifyToken }}
+      value={{
+        isAuthenticated,
+        setIsAuthenticated,
+        token,
+        setToken,
+        verifyToken,
+      }}
     >
       {children}
     </AuthContext.Provider>
