@@ -7,11 +7,12 @@ const { register } = require('../../controllers/authController');
 
 module.exports = async (req, res) => {
   try {
+    // Apply CORS middleware
     await runMiddleware(req, res, cors);
 
     if (req.method !== 'POST') {
-      res.status(405).json({ success: false, error: 'Method Not Allowed' });
-      return;
+      res.setHeader('Allow', ['POST']);
+      return res.status(405).json({ success: false, error: 'Method Not Allowed' });
     }
 
     // Run validations
@@ -37,11 +38,13 @@ module.exports = async (req, res) => {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).json({ success: false, errors: errors.array() });
-      return;
+      return res.status(400).json({ success: false, errors: errors.array() });
     }
 
+    // Connect to MongoDB
     await connectToDatabase();
+
+    // Call the register controller
     await register(req, res);
   } catch (error) {
     console.error("Error in register handler:", error);
