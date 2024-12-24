@@ -6,6 +6,7 @@ const { applyMiddlewares } = require("../../utils/middleware");
 const { cors } = require("../../utils/cors");
 const connectToDatabase = require("../../utils/connectToDatabase");
 const { login } = require("../../controllers/authController");
+const NextCors = require('nextjs-cors').default;
 
 module.exports = async (req, res) => {
   try {

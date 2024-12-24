@@ -4,7 +4,7 @@
 const { cors, runMiddleware } = require("../../utils/cors");
 const csrf = require("csurf");
 const cookieParser = require("cookie-parser");
-
+const NextCors = require('nextjs-cors').default;
 const csrfProtection = csrf({ cookie: true });
 
 module.exports = async (req, res) => {

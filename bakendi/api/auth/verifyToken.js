@@ -6,6 +6,7 @@ const NextCors = require("nextjs-cors");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 const connectToDatabase = require("../../utils/connectToDatabase");
+const NextCors = require('nextjs-cors').default;
 
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {

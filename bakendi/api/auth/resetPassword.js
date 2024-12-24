@@ -8,6 +8,7 @@ await runMiddleware(req, res, bodyParser.json()); */
 const { cors, runMiddleware } = require("../../utils/cors");
 const connectToDatabase = require("../../utils/connectToDatabase");
 const { resetPassword } = require("../../controllers/authController");
+const NextCors = require('nextjs-cors').default;
 
 module.exports = async (req, res) => {
   try {

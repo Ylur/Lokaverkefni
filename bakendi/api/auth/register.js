@@ -7,6 +7,8 @@ const { cors } = require("../../utils/cors");
 const connectToDatabase = require("../../utils/connectToDatabase");
 const { register } = require("../../controllers/authController");
 
+const NextCors = require('nextjs-cors').default;
+
 module.exports = async (req, res) => {
   try {
     // Apply middlewares: CORS and Cookie Parser
@@ -48,6 +50,7 @@ module.exports = async (req, res) => {
 
     // Connect to MongoDB
     await connectToDatabase();
+    logger.info("Connected to MongoDB successfully.");
 
     // Call the register controller
     await register(req, res);

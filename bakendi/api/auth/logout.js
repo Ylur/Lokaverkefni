@@ -4,6 +4,7 @@
 const { applyMiddlewares } = require("../../utils/middleware");
 const { cors } = require("../../utils/cors");
 const cookieParser = require("cookie-parser");
+const NextCors = require('nextjs-cors').default;
 
 module.exports = async (req, res) => {
   try {
