@@ -207,5 +207,7 @@ export async function deleteOrderById(id: string): Promise<void> {
     throw new Error(errorData.error || "Failed to delete order");
   }
 }
+console.log("API_BASE_URL:", API_BASE_URL);
+
 export type { Order };
 
