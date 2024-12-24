@@ -1,64 +1,71 @@
-// src/app/context/AuthContext.tsx
-
 "use client";
 
 import React, { createContext, useState, useEffect } from "react";
-import axiosInstance from "../utils/axiosInstance";
 
+/**
+ * The shape of our AuthContext.
+ * We track `isAuthenticated` and optionally provide a `verifyToken()` function
+ * that calls the backend to confirm if the user is still logged in.
+ */
 interface AuthContextProps {
   isAuthenticated: boolean;
-  setIsAuthenticated: (auth: boolean) => void;
-  token: string | null; // Included token
-  setToken: (token: string | null) => void;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   verifyToken: () => Promise<boolean>;
 }
 
+/**
+ * Default values for the AuthContext.
+ */
 export const AuthContext = createContext<AuthContextProps>({
   isAuthenticated: false,
   setIsAuthenticated: () => {},
-  token: null, // Initialize with null
-  setToken: () => {},
   verifyToken: async () => false,
 });
 
+/**
+ * An AuthProvider component that:
+ * 1. Tracks a boolean isAuthenticated
+ * 2. Optionally calls /auth/verifyToken (or similar) to see if the user's cookie is valid
+ * 3. Doesn't store any token in localStorage—relies on the server's HTTP-only cookie
+ */
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [token, setTokenState] = useState<string | null>(null); // Manage token state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // OPTIONAL: If you want to verify the cookie automatically on mount
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      setToken(storedToken);
-    }
+    (async () => {
+      const valid = await verifyToken();
+      setIsAuthenticated(valid);
+    })();
   }, []);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      if (token) {
-        const valid = await verifyToken();
-        setIsAuthenticated(valid);
-      }
-    };
-    checkAuth();
-  }, [token]);
-
+  /**
+   * Verify the user's cookie by calling your backend's verify endpoint.
+   * Adjust the URL/method to match your actual backend route:
+   *   e.g. POST /auth/verifyToken with credentials: "include"
+   */
   const verifyToken = async (): Promise<boolean> => {
     try {
-      const response = await axiosInstance.post("/verifyToken", { token });
-      return response.data.isValid;
+      const res = await fetch(
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL ||
+          "https://lokaverkefni-bakendi.vercel.app/api"
+        }/auth/verifyToken`,
+        {
+          method: "POST",
+          credentials: "include", // Important for sending cookies
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (!res.ok) {
+        // e.g. 401 or 403 if token is invalid
+        return false;
+      }
+      const data = await res.json();
+      return data.isValid === true; // or however your backend responds
     } catch (error) {
       console.error("Token verification failed:", error);
       return false;
-    }
-  };
-
-  const setToken = (newToken: string | null) => {
-    setTokenState(newToken);
-    // Optionally, store token in localStorage or cookies
-    if (newToken) {
-      localStorage.setItem("token", newToken);
-    } else {
-      localStorage.removeItem("token");
     }
   };
 
@@ -67,8 +74,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         isAuthenticated,
         setIsAuthenticated,
-        token,
-        setToken,
         verifyToken,
       }}
     >
