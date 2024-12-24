@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const SALT_WORK_FACTOR = 10; // Number of salt rounds for bcrypt
+const SALT_WORK_FACTOR = 10; // Number of salt rounds for bcrypt, má alveg hækka í 12 t.d.
 
 const UserSchema = new mongoose.Schema({
     username: {

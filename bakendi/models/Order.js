@@ -1,4 +1,6 @@
 // bakendi/models/Order.js
+// klárt fyrir serverless
+// TODO mögulega skoða að bæta við additional data ( price, description)
 
 const mongoose = require('mongoose');
 
@@ -15,7 +17,7 @@ const SelectedDrinkSchema = new mongoose.Schema({
 });
 
 const OrderSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Reference to User
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     email: { type: String, required: true, lowercase: true, trim: true },
     date: { type: Date, default: Date.now },
     dishes: [SelectedDishSchema],
