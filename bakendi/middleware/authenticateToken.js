@@ -1,7 +1,7 @@
 // bakendi/middleware/authenticateToken.js
 // HTTP-Only Cookies Integration uppfærsla
 // token inní cookie
-//TODO frontend is sending the cookie with fetch or axios using { credentials: 'include' }, if you’re doing a cross-site request.
+//Klárt fyrir serverless
 
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");

@@ -2,15 +2,12 @@
 //validationResult(req) sér um að logga villur
 //klárt fyrir serverless
 
-
-
-
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { sendResetEmail } = require('../utils/email');
 const { validationResult } = require('express-validator');
-const bcrypt = require('bcrypt'); // For password hashing
+const bcrypt = require('bcrypt');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
@@ -19,22 +16,24 @@ if (!JWT_SECRET) {
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1h';
 
 /**
- * leitat eftir JWT og flaggar ef það er ekki tilstaðar.
+ * Helper function to generate JWT
  */
 const generateToken = (payload) => {
     return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
 };
 
 /**
- *Nýskráning
-  ath hvort user/email sé til nú þegar.
-    hashar psw með bcrypt + býr til jwt token við skráningu
+ * Register a new user
+ * 1. Validate inputs
+ * 2. Check if user or email already exists
+ * 3. Hash password
+ * 4. Create new user
+ * 5. Generate JWT
+ * 6. Set cookie and send success response
  */
 const register = async (req, res) => {
-    // Validate inputs
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        // Return the first validation error
         return res.status(400).json({ success: false, error: errors.array()[0].msg });
     }
 
@@ -44,7 +43,6 @@ const register = async (req, res) => {
         // Check if username or email already exists
         const existingUser = await User.findOne({ $or: [{ email }, { username }] });
         if (existingUser) {
-            console.log('Attempt to register with existing email:', email);
             return res.status(409).json({ success: false, error: 'Username or email already exists.' });
         }
 
@@ -58,9 +56,18 @@ const register = async (req, res) => {
 
         // Generate JWT
         const token = generateToken({ id: newUser._id, email: newUser.email });
-        console.log('JWT Token generated for user:', email);
 
-        res.status(201).json({ success: true, token });
+        // *** Set the JWT as an HTTP-only cookie ***
+        // Important: "sameSite: 'none'" + "secure: true" if cross-site in production
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', 
+            sameSite: "none", // or "strict"/"lax" depending on your needs
+            maxAge: 1000 * 60 * 60, // 1 hour in ms (same as your JWT expiry)
+        });
+
+        // Optionally, you don’t need to return the token in JSON if you’re using cookies
+        return res.status(201).json({ success: true, message: "User registered successfully" });
     } catch (error) {
         console.error('Error during registration:', error);
         res.status(500).json({ success: false, error: 'Internal server error during registration.' });
@@ -68,14 +75,16 @@ const register = async (req, res) => {
 };
 
 /**
- * Athuga hvort notandi sé til nú þegar og ber psw saman með bcrypt.compare
- * skilar svo jwt token
+ * Log in an existing user
+ * 1. Validate inputs
+ * 2. Check if user exists
+ * 3. Compare passwords
+ * 4. Generate JWT
+ * 5. Set cookie and send success response
  */
 const login = async (req, res) => {
-    // Validate inputs
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        // Return the first validation error
         return res.status(400).json({ success: false, error: errors.array()[0].msg });
     }
 
@@ -91,14 +100,22 @@ const login = async (req, res) => {
         // Compare passwords
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            console.log('Invalid password attempt for email:', email);
             return res.status(401).json({ success: false, error: 'Invalid email or password.' });
         }
 
         // Generate JWT
         const token = generateToken({ id: user._id, email: user.email });
 
-        res.status(200).json({ success: true, token });
+        // *** Set the JWT as an HTTP-only cookie ***
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', 
+            sameSite: "none", 
+            maxAge: 1000 * 60 * 60, // 1 hour
+        });
+
+        // Optionally, remove the token from JSON response
+        return res.status(200).json({ success: true, message: "Logged in successfully" });
     } catch (error) {
         console.error('Error during login:', error);
         res.status(500).json({ success: false, error: 'Internal server error during login.' });
@@ -106,22 +123,17 @@ const login = async (req, res) => {
 };
 
 /**
- * Request Password Reset.
- * Býr til random token og vistar það í doc.
- * Skutlar email á notanda með sendResetEmail (60% of the time it works...everytime)
+ * Request Password Reset
  */
 const resetPasswordRequest = async (req, res) => {
-    // Validate inputs
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        // Return the first validation error
         return res.status(400).json({ success: false, error: errors.array()[0].msg });
     }
 
     const { email } = req.body;
 
     try {
-        // Find user by email
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ success: false, error: 'No user found with that email.' });
@@ -131,7 +143,6 @@ const resetPasswordRequest = async (req, res) => {
         const resetToken = crypto.randomBytes(20).toString('hex');
         const hashedResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
 
-        // Set reset token and expiration on user
         user.resetPasswordToken = hashedResetToken;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
         await user.save();
@@ -147,17 +158,14 @@ const resetPasswordRequest = async (req, res) => {
 };
 
 /**
- * Reset Password.
- * Samþykkir jwt tokenið og skiptir út lykilorði
+ * Reset Password
  */
 const resetPassword = async (req, res) => {
     const { token } = req.params;
     const { password } = req.body;
 
-    // Validate inputs
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        // Return the first validation error
         return res.status(400).json({ success: false, error: errors.array()[0].msg });
     }
 
@@ -166,10 +174,8 @@ const resetPassword = async (req, res) => {
     }
 
     try {
-        // Hash the incoming token to compare with stored hashed token
         const hashedResetToken = crypto.createHash('sha256').update(token).digest('hex');
 
-        // Find user by hashed reset token and ensure token hasn't expired
         const user = await User.findOne({
             resetPasswordToken: hashedResetToken,
             resetPasswordExpires: { $gt: Date.now() },
@@ -179,11 +185,9 @@ const resetPassword = async (req, res) => {
             return res.status(400).json({ success: false, error: 'Invalid or expired password reset token.' });
         }
 
-        // Hash the new password
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        // Update password and remove reset token fields
         user.password = hashedPassword;
         user.resetPasswordToken = undefined;
         user.resetPasswordExpires = undefined;
