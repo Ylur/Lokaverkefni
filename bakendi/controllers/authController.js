@@ -1,4 +1,9 @@
 // bakendi/controllers/authController.js
+//validationResult(req) sér um að logga villur
+//klárt fyrir serverless
+
+
+
 
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
@@ -14,14 +19,16 @@ if (!JWT_SECRET) {
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1h';
 
 /**
- * Helper function to generate JWT
+ * leitat eftir JWT og flaggar ef það er ekki tilstaðar.
  */
 const generateToken = (payload) => {
     return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
 };
 
 /**
- * Register a new user
+ *Nýskráning
+  ath hvort user/email sé til nú þegar.
+    hashar psw með bcrypt + býr til jwt token við skráningu
  */
 const register = async (req, res) => {
     // Validate inputs
@@ -61,7 +68,8 @@ const register = async (req, res) => {
 };
 
 /**
- * Authenticate user and get token
+ * Athuga hvort notandi sé til nú þegar og ber psw saman með bcrypt.compare
+ * skilar svo jwt token
  */
 const login = async (req, res) => {
     // Validate inputs
@@ -98,7 +106,9 @@ const login = async (req, res) => {
 };
 
 /**
- * Request Password Reset
+ * Request Password Reset.
+ * Býr til random token og vistar það í doc.
+ * Skutlar email á notanda með sendResetEmail (60% of the time it works...everytime)
  */
 const resetPasswordRequest = async (req, res) => {
     // Validate inputs
@@ -137,7 +147,8 @@ const resetPasswordRequest = async (req, res) => {
 };
 
 /**
- * Reset Password
+ * Reset Password.
+ * Samþykkir jwt tokenið og skiptir út lykilorði
  */
 const resetPassword = async (req, res) => {
     const { token } = req.params;

@@ -1,4 +1,5 @@
 // bakendi/middleware/rateLimiter.js
+// klárt fyrir serverless EN e"nsure you call app.use(generalLimiter) or use your “runMiddleware” approach in each route that needs it"
 
 const rateLimit = require("express-rate-limit");
 
