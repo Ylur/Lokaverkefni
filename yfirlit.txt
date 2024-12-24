@@ -1,0 +1,40 @@
+tree -I "node_modules|.git" > structure.txt
+
+Lokaverkefni/
+├── bakendi/               # Back-End
+│   ├── api/               # API routes for serverless functions
+│   ├── controllers/       # Business logic for handling requests
+│   ├── middleware/        # Middleware functions (e.g., CORS, auth)
+│   ├── models/            # Database models (e.g., Mongoose)
+│   ├── utils/             # Utility functions
+│   ├── package.json       # Back-end dependencies and scripts
+│   ├── vercel.json        # Vercel configuration for back-end
+│   └── .env               # Environment variables for the back-end
+├── framendi/              # Front-End
+│   ├── src/               # Source code for the front-end
+│   │   ├── app/           # App directory (Next.js 13+)
+│   │   ├── components/    # Reusable React components
+│   │   ├── context/       # React context for shared state
+│   │   ├── utils/         # Utility functions (e.g., API calls)
+│   │   ├── styles/        # Global and component-specific styles
+│   │   └── pages/         # Pages directory (if using older Next.js)
+│   ├── public/            # Static assets (images, fonts, etc.)
+│   ├── package.json       # Front-end dependencies and scripts
+│   ├── vercel.json        # Vercel configuration for front-end
+│   └── .env.local         # Environment variables for the front-end
+├── package.json           # Root package.json for workspace management
+├── .gitignore             # Git ignore file
+└── README.md              # Overview and instructions for the project
+
+
+MONOREPO - yfirlit og tilgangur
+
+Back-End (bakendi):
+
+Runs on Express.
+Provides APIs for authentication, orders, etc.
+Deploys as serverless functions on Vercel.
+Front-End (framendi):
+
+Built with Next.js.
+Provides the user interface and interacts with the back-end APIs.
