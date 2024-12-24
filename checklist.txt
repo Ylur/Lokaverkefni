@@ -1,0 +1,33 @@
+ Final Checklist
+Frontend Configuration:
+
+ .env.local exists in the frontend project with NEXT_PUBLIC_API_BASE_URL set.
+ Environment variable is set in Vercel frontend project settings.
+ All API calls use process.env.NEXT_PUBLIC_API_BASE_URL.
+ next.config.ts is updated to use images.remotePatterns.
+ Frontend is rebuilt and redeployed after changes.
+Backend Configuration:
+
+ Backend is deployed on Vercel at https://lokaverkefni-bakendi.vercel.app/api.
+ Environment variables (MONGO_URI, JWT_SECRET) are correctly set in Vercel backend project.
+ CORS is properly configured to allow requests from https://www.appgo.is and https://framendi.vercel.app.
+ API endpoints (/auth/login, /auth/register, /auth/verifyToken, /auth/logout, etc.) are correctly implemented and accessible.
+Deployment:
+
+ Frontend and backend are both deployed on Vercel.
+ DNS settings for www.appgo.is and appgo.is are correctly configured.
+ No DNS propagation issues (wait a few hours if recently updated).
+Testing:
+
+ Register and login flows are tested both locally and in production.
+ Protected routes redirect unauthenticated users to the login page.
+ Logout functionality correctly clears authentication state and cookies.
+TypeScript and Code Quality:
+
+ All necessary types are correctly exported and imported.
+ No TypeScript errors remain in the codebase.
+ Components use the correct and consistent API base URL.
+Error Monitoring:
+
+ Frontend shows meaningful error messages to users.
+ Backend logs capture errors for debugging purposes.

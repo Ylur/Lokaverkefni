@@ -1,13 +1,23 @@
+// klárt fyrir serverless
 // next.config.ts
 
-import { NextConfig } from 'next';
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  reactStrictMode: true,
   images: {
-    domains: ['www.themealdb.com', 'www.thecocktaildb.com'], // Add your external image domains here
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "www.themealdb.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.thecocktaildb.com",
+        pathname: "/**",
+      },
+    ],
   },
-  // Other configurations...
 };
 
 export default nextConfig;

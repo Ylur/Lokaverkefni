@@ -1,81 +1,72 @@
+// src/app/components/HomePage.tsx
 
 "use client";
 
-import React, { useState, useContext, FormEvent, useCallback } from "react";
-import { useRouter } from "next/router";
-import TopMenu from "./components/TopMenu";
-import CarouselComponent from "./components/CarouselComponent";
-import { OrderContext } from "./contexts/OrderContext";
-import Image from "next/image";
+import React, { useContext } from "react";
+import DishPreview from "./components/DishPreview"; 
+import { AuthContext } from "./context/AuthContext";
+import Login from "./components/Login";
+import Link from "next/link";
 
 const HomePage: React.FC = () => {
-  const router = useRouter();
-  const { setOrderData } = useContext(OrderContext)!;
-  const [emailInput, setEmailInput] = useState("");
-
-  const images = ["/images/1.jpg", "/images/2.jpg", "/images/3.jpg"];
-
-  const handleEmailCheck = useCallback(
-    async (email: string) => {
-      try {
-        const response = await fetch(
-          `http://localhost:3001/api/orders?email=${email}`
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setOrderData(data);
-          router.push("/select-drink");
-        } else {
-          alert("No order found for this email.");
-        }
-      } catch (error) {
-        console.error("Error fetching order:", error);
-      }
-    },
-    [router, setOrderData]
-  );
-
-  const handleEmailSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    handleEmailCheck(emailInput);
-  };
+  const { isAuthenticated } = useContext(AuthContext);
 
   return (
-    <div>
-      <TopMenu />
-      <header className="text-center my-8">
-        <Image src="/logo.png" alt="Restaurant Logo" width={375} height={360} />
-        <h1 className="text-4xl font-bold text-[#3E6053]">Welcome Lil Bits</h1>
-      </header>
-
-      <CarouselComponent images={images} />
-
-      <div className="text-center my-8">
-        <button
-          onClick={() => router.push("/select-drink")}
-          className="bg-[#C16757] text-white px-4 py-2 rounded hover:bg-[#BA2329]"
-        >
-          Start Order
-        </button>
+    <>
+      {/* Hero Section */}
+      <div
+        className="relative bg-cover bg-center h-96"
+        style={{ backgroundImage: 'url("/photos/lb.png")' }}
+      >
+        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <div className="relative flex items-center justify-center h-full">
+          <div className="text-center text-white">
+            <h1 className="text-5xl font-bold">Welcome to LiL Bits</h1>
+            <p className="mt-4 text-lg">Where LiL Food Meets LiL Company.</p>
+          </div>
+        </div>
       </div>
 
-      <form onSubmit={handleEmailSubmit} className="text-center">
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={emailInput}
-          onChange={(e) => setEmailInput(e.target.value)}
-          required
-          className="border p-2 rounded w-64"
-        />
-        <button
-          type="submit"
-          className="ml-2 bg-[#C16757] text-white px-4 py-2 rounded hover:bg-[#BA2329]"
-        >
-          Check Order
-        </button>
-      </form>
-    </div>
+      {/* Main Content */}
+      <div className="container mx-auto p-8">
+        {!isAuthenticated ? (
+          // If user is not authenticated, show the Login component
+          <section>
+            <h2 className="text-3xl font-bold text-center mb-6">
+              Please Log In
+            </h2>
+            <Login />
+            <div className="text-center mt-4">
+              <p>
+                Don't have an account?{" "}
+                <Link
+                  href="/register"
+                  className="text-blue-500 hover:underline"
+                >
+                  Register here
+                </Link>
+              </p>
+            </div>
+          </section>
+        ) : (
+          // If user is authenticated, show the main content
+          <section>
+            <h2 className="text-3xl font-bold text-center mb-6">
+              Our Popular Dishes
+            </h2>
+            <DishPreview />
+            <div className="text-center mt-8">
+              <Link
+                href="/menu"
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                View Full Menu
+              </Link>
+            </div>
+          </section>
+        )}
+      </div>
+    </>
   );
 };
 

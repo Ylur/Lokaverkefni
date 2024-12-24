@@ -1,40 +1,122 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# =====================
+# Logs
+# =====================
+logs/
+*.log
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+# =====================
+# Dependency Directories
+# =====================
+node_modules/
+vendor/
+.node_modules/
 
-# testing
-/coverage
+# =====================
+# Environment Files
+# =====================
+.env
+.env.local
+.env.development.local
+.env.production.local
+.env.build
 
-# next.js
-/.next/
-/out/
+# =====================
+# Build Output
+# =====================
+.next/
+out/
+dist/
+build/
+.cache/
 
-# production
-/build
-
-# misc
+# =====================
+# System Files
+# =====================
 .DS_Store
-*.pem
+Thumbs.db
+desktop.ini
+.AppleDouble
+.LSOverride
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# =====================
+# Editor Directories and Files
+# =====================
 
-# env files (can opt-in for commiting if needed)
-.env*
+# VS Code
+.vscode/
+*.code-workspace
 
-# vercel
-.vercel
+# JetBrains IDEs
+.idea/
+*.iml
 
-# typescript
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# =====================
+# OS-specific Files
+# =====================
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# =====================
+# Temporary Files
+# =====================
+*.tmp
+*.temp
+
+# =====================
+# CI/CD Artifacts
+# =====================
+*.pid
+*.seed
+*.pid.lock
+
+# =====================
+# Cache and Coverage
+# =====================
+.cache/
+coverage/
+
+# =====================
+# Parcel Cache
+# =====================
+.cache/
+
+# =====================
+# TypeScript Build Outputs
+# =====================
 *.tsbuildinfo
-next-env.d.ts
+
+# =====================
+# Lock Files
+# =====================
+# Choose one based on the package manager you're using
+# Uncomment the ones applicable to your project
+
+# npm
+package-lock.json
+
+# Yarn
+yarn.lock
+
+# pnpm
+pnpm-lock.yaml
+
+# =====================
+# Next.js Specific
+# =====================
+.next/
+out/
+.vercel/
+
+# bakendi/.gitignore
+
+server.js
+.vercel
+cookies.txt
