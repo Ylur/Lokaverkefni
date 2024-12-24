@@ -1,17 +1,27 @@
 // bakendi/api/auth/login.js
-// klárt fyrir serverless
 
 const { body, validationResult } = require("express-validator");
-const { applyMiddlewares } = require("../../utils/middleware");
-const { cors } = require("../../utils/cors");
+const NextCors = require("nextjs-cors").default;
+const cookieParser = require("cookie-parser");
 const connectToDatabase = require("../../utils/connectToDatabase");
 const { login } = require("../../controllers/authController");
-const NextCors = require('nextjs-cors').default;
 
 module.exports = async (req, res) => {
   try {
-    // Apply middlewares: CORS and Cookie Parser
-    await applyMiddlewares(req, res, [cors, require("cookie-parser")()]);
+    // Apply CORS middleware
+    await NextCors(req, res, {
+      origin: [
+        "http://localhost:3000",
+        "https://lokaverkefni-framendi.vercel.app",
+        "https://www.appgo.is",
+      ],
+      methods: ["GET", "POST", "OPTIONS"],
+      credentials: true,
+      allowedHeaders: ["Content-Type", "Authorization"],
+    });
+
+    // Apply cookie-parser
+    cookieParser()(req, res, () => {});
 
     // Only allow POST requests
     if (req.method !== "POST") {
@@ -21,13 +31,9 @@ module.exports = async (req, res) => {
         .json({ success: false, error: "Method Not Allowed" });
     }
 
-    // Run input validations
+    // Validate inputs
     await Promise.all([
-      body("email")
-        .isEmail()
-        .withMessage("Valid email is required.")
-        .normalizeEmail()
-        .run(req),
+      body("email").isEmail().withMessage("Valid email is required.").run(req),
       body("password").notEmpty().withMessage("Password is required.").run(req),
     ]);
 

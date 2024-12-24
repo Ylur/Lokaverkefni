@@ -2,6 +2,7 @@
 // klárt fyrir serverless
 
 const Cors = require("cors");
+const allowedOrigins = process.env.CORS_ORIGIN.split(",");
 
 // Define CORS options
 const corsOptions = {
