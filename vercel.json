@@ -1,0 +1,13 @@
+{
+    "projects": [
+      {
+        "name": "Framendi",
+        "rootDirectory": "framendi"
+      },
+      {
+        "name": "Bakendi",
+        "rootDirectory": "bakendi"
+      }
+    ]
+  }
+  
