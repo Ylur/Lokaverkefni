@@ -55,3 +55,10 @@ Suspense bætt við
 https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
 
 "Reading search parameters through useSearchParams() without a Suspense boundary will opt the entire page into client-side rendering. This could cause your page to be blank until the client-side JavaScript has loaded"
+
+
+
+TODO
+Are You Actually Using axiosInstance?
+
+If your code never imports axiosInstance for calls, it might be dead code. Or maybe you planned to transition from fetch to Axios. Check if you really want two approaches.
