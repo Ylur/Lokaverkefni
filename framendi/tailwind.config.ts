@@ -1,3 +1,4 @@
+// klárt fyrir serverless
 import type { Config } from "tailwindcss";
 
 const config: Config = {

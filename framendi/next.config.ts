@@ -1,3 +1,4 @@
+// klárt fyrir serverless
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
