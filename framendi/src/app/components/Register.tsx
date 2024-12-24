@@ -1,18 +1,19 @@
-// src/app/components/Register.tsx
 "use client";
 
 import React, { useState, useContext } from "react";
-import { register } from "../utils/api";
-import { AuthContext } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
+import { AuthContext } from "../context/AuthContext";
 
-const Register = () => {
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "https://lokaverkefni-bakendi.vercel.app/api";
+
+export default function Register() {
   const [username, setUsername] = useState("");
-  const [email, setEmail]    = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError]    = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  // We no longer store a token; we just track `isAuthenticated`
   const { setIsAuthenticated } = useContext(AuthContext);
   const router = useRouter();
 
@@ -21,58 +22,55 @@ const Register = () => {
     setError(null);
 
     try {
-      const data = await register(username, email, password);
-      if (data.success) {
-        // Mark user as authenticated in context
-        setIsAuthenticated(true);
-        // Redirect or do something else
-        router.push("/");
+      const res = await fetch(`${API_BASE_URL}/auth/register`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Registration failed");
       }
+
+      // Since the server sets the cookie automatically, we can just call setIsAuthenticated(true).
+      setIsAuthenticated(true);
+      router.push("/"); // or wherever you want
     } catch (err: any) {
-      setError(err.message || "Registration failed");
+      setError(err.message);
     }
   };
 
   return (
-    <form onSubmit={handleRegister} className="max-w-md mx-auto p-8 border border-secondary rounded">
-      <h2 className="text-xl mb-4">Register</h2>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
+    <form onSubmit={handleRegister}>
+      <h2>Register</h2>
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <label className="block mb-2">Username:</label>
+      <label>Username:</label>
       <input
-        type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        className="border p-2 rounded w-full mb-4"
-        placeholder="Your username"
         required
       />
 
-      <label className="block mb-2">Email:</label>
+      <label>Email:</label>
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="border p-2 rounded w-full mb-4"
-        placeholder="you@example.com"
         required
       />
 
-      <label className="block mb-2">Password:</label>
+      <label>Password:</label>
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="border p-2 rounded w-full mb-4"
-        placeholder="Your password"
         required
       />
 
-      <button type="submit" className="bg-secondary text-primary py-2 px-4 rounded w-full">
-        Register
-      </button>
+      <button type="submit">Register</button>
     </form>
   );
-};
-
-export default Register;
+}
