@@ -10,14 +10,14 @@ interface ProtectedRouteProps {
   children: ReactNode;
 }
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { isAuthenticated, verifyToken } = useContext(AuthContext);
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const { isAuthenticated, verifyAuth } = useContext(AuthContext);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const checkAuth = async () => {
-      const valid = await verifyToken();
+      const valid = await verifyAuth();
       if (!valid) {
         router.push("/login");
       } else {
@@ -26,13 +26,12 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     };
 
     checkAuth();
-  }, [isAuthenticated, verifyToken, router]);
+  }, [isAuthenticated, verifyAuth, router]);
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
         <p className="text-xl">Loading...</p>
-        {/* TODO spice þetta upp með einhverju flottu loading dóti */}
       </div>
     );
   }

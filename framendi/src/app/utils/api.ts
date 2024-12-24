@@ -54,22 +54,19 @@ export async function register(
 }
 
 /**
- * Logs in an existing user. The backend sets an HTTP-only cookie if successful.
+ * Logs in a user by sending credentials to the backend.
+ * The backend sets an HTTP-only cookie upon successful authentication.
  *
- * @param email - The user’s email
- * @param password - The user’s password
- * @returns The raw backend response (e.g., { success: boolean, ... })
+ * @param {string} email - The user's email.
+ * @param {string} password - The user's password.
+ * @returns {Promise<void>} - Resolves on successful login, rejects with an error message on failure.
+ * @throws {Error} - Throws an error if the login fails.
  */
-export async function login(
-  email: string,
-  password: string
-): Promise<LoginResponse> {
+export async function login(email: string, password: string): Promise<void> {
   const res = await fetch(`${API_BASE_URL}/auth/login`, {
     method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    credentials: "include", // Important for sending and receiving cookies
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
 
@@ -84,18 +81,21 @@ export async function login(
 }
 
 /**
- * Logs out the current user by clearing the HTTP-only cookie on the backend.
+ * Logs out a user by calling the backend logout endpoint.
+ *
+ * @returns {Promise<void>} - Resolves on successful logout, rejects with an error message on failure.
+ * @throws {Error} - Throws an error if the logout fails.
  */
 export async function logout(): Promise<void> {
-  // Adjust if your backend expects some route or payload
   const res = await fetch(`${API_BASE_URL}/auth/logout`, {
     method: "POST",
-    credentials: "include",
+    credentials: "include", // Important for sending cookies
+    headers: { "Content-Type": "application/json" },
   });
 
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData.error || "Logout failed");
+  const data = await res.json();
+  if (!res.ok || !data.success) {
+    throw new Error(data.error || "Logout failed");
   }
 }
 
@@ -104,23 +104,25 @@ export async function logout(): Promise<void> {
    =================================== */
 
 /**
- * Fetch all orders for the authenticated user (cookie-based).
+ * Retrieves all orders associated with the authenticated user.
+ * Authentication is handled via HTTP-only cookies.
+ *
+ * @returns {Promise<Order[]>} - An array of orders.
+ * @throws {Error} - Throws an error if fetching orders fails.
  */
 export async function getOrders(): Promise<Order[]> {
   const res = await fetch(`${API_BASE_URL}/orders`, {
     method: "GET",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    credentials: "include", // Important for sending cookies
+    headers: { "Content-Type": "application/json" },
   });
 
   const data = await res.json();
-  if (!res.ok || !data.success || !Array.isArray(data.orders)) {
-    throw new Error(data.error || "Failed to fetch orders");
+  if (!res.ok || !data.success) {
+    throw new Error(data.error || "Failed to fetch orders.");
   }
 
-  return data.orders;
+  return data.orders as Order[];
 }
 
 /**
@@ -205,3 +207,5 @@ export async function deleteOrderById(id: string): Promise<void> {
     throw new Error(errorData.error || "Failed to delete order");
   }
 }
+export type { Order };
+

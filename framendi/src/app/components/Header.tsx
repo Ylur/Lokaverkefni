@@ -1,3 +1,5 @@
+// src/app/components/Header.tsx
+
 "use client";
 
 import React, { FC, useContext } from "react";
@@ -5,15 +7,36 @@ import Link from "next/link";
 import Image from "next/image";
 import { AuthContext } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
-import Login from "../components/Login";
 
 const Header: FC = () => {
-  const { token, setToken } = useContext(AuthContext);
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const router = useRouter();
 
-  const handleLogout = () => {
-    setToken(null); // Clear the token from context and localStorage
-    router.push("/"); // Redirect to homepage after logout
+  const handleLogout = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL || "https://lokaverkefni-bakendi.vercel.app/api"}/auth/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await res.json();
+      if (data.success) {
+        setIsAuthenticated(false);
+        router.push("/login"); // Redirect to login after logout
+      } else {
+        console.error("Logout failed:", data.error);
+        // Optionally, display an error message to the user
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred during logout:", error);
+      // Optionally, display an error message to the user
+    }
   };
 
   return (
@@ -58,16 +81,12 @@ const Header: FC = () => {
 
         {/* Right-Side Authentication Links */}
         <div className="flex items-center space-x-4 text-2xl">
-          {!token ? (
+          {!isAuthenticated ? (
             <>
-              <Link 
-                href="/login" className="text-accent hover:text-gray-700">
+              <Link href="/login" className="text-accent hover:text-gray-700">
                 Login
               </Link>
-              <Link
-                href="/register"
-                className="text-accent hover:text-gray-700"
-              >
+              <Link href="/register" className="text-accent hover:text-gray-700">
                 Register
               </Link>
             </>

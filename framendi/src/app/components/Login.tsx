@@ -1,27 +1,38 @@
 // src/app/components/Login.tsx
 
+"use client";
+
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { login, LoginResponse, APIError } from "../utils/api";
+import { login } from "../utils/api";
 import { FaUser, FaLock } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const Login: React.FC = () => {
-  const { setToken } = useContext(AuthContext);
+  const { setIsAuthenticated } = useContext(AuthContext);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
 
     try {
-      const token = await login(email, password);
-      setToken(token);
-      // Redirect or perform other actions upon successful login
-    } catch (err) {
+      // Call the login function; it sets the cookie if successful
+      await login(email, password);
+
+      // Update authentication state
+      setIsAuthenticated(true);
+
+      // Redirect to the homepage or dashboard
+      router.push("/"); // Adjust the route as needed
+    } catch (err: any) {
       if (err instanceof Error) {
         setError(err.message);
+      } else if (typeof err === "string") {
+        setError(err);
       } else {
         setError("An unknown error occurred.");
       }
@@ -29,31 +40,55 @@ const Login: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="email">Email:</label>
-        <FaUser />
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-md mx-auto p-8 border border-primary rounded"
+    >
+      <h2 className="text-xl mb-4">Login</h2>
+      {error && <p className="text-red-500 mb-4">{error}</p>}
+
+      <div className="mb-4">
+        <label htmlFor="email" className="block mb-1">
+          Email:
+        </label>
+        <div className="flex items-center border p-2 rounded">
+          <FaUser className="mr-2" />
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full outline-none"
+            placeholder="you@example.com"
+          />
+        </div>
       </div>
-      <div>
-        <label htmlFor="password">Password:</label>
-        <FaLock />
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+
+      <div className="mb-4">
+        <label htmlFor="password" className="block mb-1">
+          Password:
+        </label>
+        <div className="flex items-center border p-2 rounded">
+          <FaLock className="mr-2" />
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full outline-none"
+            placeholder="Your password"
+          />
+        </div>
       </div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <button type="submit">Login</button>
+
+      <button
+        type="submit"
+        className="bg-primary text-white py-2 px-4 rounded w-full"
+      >
+        Login
+      </button>
     </form>
   );
 };

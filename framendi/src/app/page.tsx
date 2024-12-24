@@ -1,19 +1,19 @@
+// src/app/components/HomePage.tsx
 
 "use client";
 
 import React, { useContext } from "react";
-import DishPreview from "./components/DishPreview";
+import DishPreview from "./components/DishPreview"; 
 import { AuthContext } from "./context/AuthContext";
 import Login from "./components/Login";
 import Link from "next/link";
 
-const HomePage = () => {
-  const { token } = useContext(AuthContext);
+const HomePage: React.FC = () => {
+  const { isAuthenticated } = useContext(AuthContext);
 
   return (
     <>
-
-
+      {/* Hero Section */}
       <div
         className="relative bg-cover bg-center h-96"
         style={{ backgroundImage: 'url("/photos/HL.png")' }}
@@ -27,8 +27,9 @@ const HomePage = () => {
         </div>
       </div>
 
+      {/* Main Content */}
       <div className="container mx-auto p-8">
-        {!token ? (
+        {!isAuthenticated ? (
           // If user is not authenticated, show the Login component
           <section>
             <h2 className="text-3xl font-bold text-center mb-6">

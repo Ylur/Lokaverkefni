@@ -1,16 +1,18 @@
+// src/app/context/AuthContext.tsx
+
 "use client";
 
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, ReactNode } from "react";
 
 /**
  * The shape of our AuthContext.
- * We track `isAuthenticated` and optionally provide a `verifyToken()` function
- * that calls the backend to confirm if the user is still logged in.
+ * We track `isAuthenticated` and provide `verifyAuth()` and `logout()` functions.
  */
 interface AuthContextProps {
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-  verifyToken: () => Promise<boolean>;
+  verifyAuth: () => Promise<boolean>;
+  logout: () => Promise<void>;
 }
 
 /**
@@ -19,32 +21,31 @@ interface AuthContextProps {
 export const AuthContext = createContext<AuthContextProps>({
   isAuthenticated: false,
   setIsAuthenticated: () => {},
-  verifyToken: async () => false,
+  verifyAuth: async () => false,
+  logout: async () => {},
 });
 
 /**
  * An AuthProvider component that:
  * 1. Tracks a boolean isAuthenticated
- * 2. Optionally calls /auth/verifyToken (or similar) to see if the user's cookie is valid
- * 3. Doesn't store any token in localStorage—relies on the server's HTTP-only cookie
+ * 2. Calls /auth/verifyToken to see if the user's cookie is valid
+ * 3. Provides login and logout functions to manage authentication state
  */
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  // OPTIONAL: If you want to verify the cookie automatically on mount
   useEffect(() => {
+    // Verify authentication status on mount
     (async () => {
-      const valid = await verifyToken();
+      const valid = await verifyAuth();
       setIsAuthenticated(valid);
     })();
   }, []);
 
   /**
-   * Verify the user's cookie by calling your backend's verify endpoint.
-   * Adjust the URL/method to match your actual backend route:
-   *   e.g. POST /auth/verifyToken with credentials: "include"
+   * Verify if the user is authenticated by checking with the backend.
    */
-  const verifyToken = async (): Promise<boolean> => {
+  const verifyAuth = async (): Promise<boolean> => {
     try {
       const res = await fetch(
         `${
@@ -58,14 +59,43 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
       );
       if (!res.ok) {
-        // e.g. 401 or 403 if token is invalid
         return false;
       }
       const data = await res.json();
-      return data.isValid === true; // or however your backend responds
+      return data.isValid === true;
     } catch (error) {
-      console.error("Token verification failed:", error);
+      console.error("Authentication verification failed:", error);
       return false;
+    }
+  };
+
+  /**
+   * Logs out the user by calling the backend logout endpoint and updating state.
+   */
+  const logout = async (): Promise<void> => {
+    try {
+      const res = await fetch(
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL ||
+          "https://lokaverkefni-bakendi.vercel.app/api"
+        }/auth/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await res.json();
+      if (data.success) {
+        setIsAuthenticated(false);
+      } else {
+        console.error("Logout failed:", data.error);
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred during logout:", error);
     }
   };
 
@@ -74,7 +104,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         isAuthenticated,
         setIsAuthenticated,
-        verifyToken,
+        verifyAuth,
+        logout,
       }}
     >
       {children}
