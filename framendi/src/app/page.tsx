@@ -16,7 +16,7 @@ const HomePage: React.FC = () => {
       {/* Hero Section */}
       <div
         className="relative bg-cover bg-center h-96"
-        style={{ backgroundImage: 'url("/photos/HL.png")' }}
+        style={{ backgroundImage: 'url("/photos/lb.png")' }}
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative flex items-center justify-center h-full">
