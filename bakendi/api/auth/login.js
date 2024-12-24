@@ -1,4 +1,5 @@
 // bakendi/api/auth/login.js
+// klárt fyrir serverless
 
 const { body, validationResult } = require("express-validator");
 const { applyMiddlewares } = require("../../utils/middleware");

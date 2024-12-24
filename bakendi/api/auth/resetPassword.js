@@ -1,4 +1,9 @@
 // bakendi/api/auth/resetPassword.js
+// klárt fyrir serverless
+//TODO skoða hvort ég þurfi cookie /body parser
+/* const bodyParser = require('body-parser');
+eitthvað svona
+await runMiddleware(req, res, bodyParser.json()); */
 
 const { cors, runMiddleware } = require("../../utils/cors");
 const connectToDatabase = require("../../utils/connectToDatabase");

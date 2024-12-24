@@ -1,10 +1,12 @@
 // bakendi/api/auth/verifyToken.js
 // Verifies JWT token from HTTP-only cookie
+// klárt fyrir serverless
 
 const { applyMiddlewares } = require("../../utils/middleware");
 const { cors } = require("../../utils/cors");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
+const connectToDatabase = require("../../utils/connectToDatabase");
 
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
@@ -24,6 +26,8 @@ module.exports = async (req, res) => {
         .json({ success: false, error: "Method Not Allowed" });
     }
 
+    await connectToDatabase();
+
     const token = req.cookies.token;
 
     if (!token) {
@@ -34,6 +38,8 @@ module.exports = async (req, res) => {
 
     try {
       const decoded = jwt.verify(token, JWT_SECRET);
+      await connectToDatabase();
+
       const user = await User.findById(decoded.id).select("-password");
       if (!user) {
         return res

@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
     // 1. Apply CORS
     await runMiddleware(req, res, cors);
 
-    // 2. Apply token authentication
+    // 2. Apply token authentication, þarf að logga þig inn til að panta. TODO kannski fjarlæga?
     await runMiddleware(req, res, authenticateToken);
 
     // 3. Handle the HTTP method

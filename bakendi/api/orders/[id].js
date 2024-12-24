@@ -1,4 +1,6 @@
 // bakendi/api/orders/[id].js
+// nota  await connectToDatabase(); uppá serverless cold start
+// klárt fyrir serverless
 
 const { body, validationResult } = require("express-validator");
 const connectToDatabase = require("../../utils/connectToDatabase");
@@ -20,7 +22,7 @@ module.exports = async (req, res) => {
     await runMiddleware(req, res, authenticateToken);
 
     const {
-      query: { id }, // next.js style param for [id].js
+      query: { id },
       method,
     } = req;
 
