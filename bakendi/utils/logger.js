@@ -4,7 +4,7 @@
 const { createLogger, format, transports } = require("winston");
 
 const logger = createLogger({
-  level: "info",
+  level: "info, warn, error, debug",
   format: format.combine(
     format.timestamp({
       format: "YYYY-MM-DD HH:mm:ss",
@@ -19,8 +19,8 @@ const logger = createLogger({
     // - Write all logs with level `error` and below to `error.log`
     // - Write all logs with level `info` and below to `combined.log`
     //
-    new transports.File({ filename: "logs/error.log", level: "error" }),
-    new transports.File({ filename: "logs/combined.log" }),
+    //new transports.File({ filename: "logs/error.log", level: "error" }),
+    //new transports.File({ filename: "logs/combined.log" }),
   ],
 });
 
