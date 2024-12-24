@@ -144,25 +144,24 @@ export async function getOrderById(id: string): Promise<Order> {
 }
 
 /**
- * Create a new order (cookie-based).
- * @param orderData The new order details (dishes, drinks, total, etc.)
+ * Create a new order.
+ * Authentication is handled via HTTP-only cookies.
  */
-export async function createOrder(orderData: NewOrder): Promise<Order> {
+export async function createOrder(orderData: NewOrder) {
   const res = await fetch(`${API_BASE_URL}/orders`, {
     method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    credentials: "include", // Important for sending cookies
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(orderData),
   });
 
   const data = await res.json();
-  if (!res.ok || !data.success || !data.order) {
+  if (!res.ok) {
+    // Handle multiple errors if necessary
     throw new Error(data.error || "Failed to create order");
   }
 
-  return data.order;
+  return data; // Expected to return the created order
 }
 
 /**

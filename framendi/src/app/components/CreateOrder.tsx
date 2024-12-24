@@ -11,8 +11,7 @@ import { SelectedDish, SelectedDrink, NewOrder } from "../types";
 const CreateOrder = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { token } = useContext(AuthContext);
-  
+  const { isAuthenticated } = useContext(AuthContext);
 
   const emailParam = searchParams.get("email");
   const dishesParam = searchParams.get("dishes");
@@ -38,7 +37,7 @@ const CreateOrder = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleCreateOrder = async () => {
-    if (!token) {
+    if (!isAuthenticated) {
       setError("You must be logged in to create an order.");
       return;
     }
@@ -57,7 +56,7 @@ const CreateOrder = () => {
     };
 
     try {
-      const order = await createOrder(token, orderData);
+      const order = await createOrder(orderData);
       // Redirect to Receipt with order details
       router.push(
         `/receipt?email=${encodeURIComponent(
