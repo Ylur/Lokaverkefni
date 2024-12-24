@@ -8,7 +8,7 @@ const corsOptions = {
   origin: [
     "http://localhost:3000",
     "https://lokaverkefni-framendi.vercel.app",
-    "https://your-custom-domain.com",
+    "https://appgo.is",
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
@@ -24,6 +24,7 @@ const cors = Cors(corsOptions);
  * @param {Object} res - The outgoing response object.
  * @param {Function} fn - The middleware function to run.
  */
+
 const runMiddleware = (req, res, fn) => {
   return new Promise((resolve, reject) => {
     fn(req, res, (result) => {
