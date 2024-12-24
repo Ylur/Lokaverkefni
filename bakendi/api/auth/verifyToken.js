@@ -1,9 +1,8 @@
 // bakendi/api/auth/verifyToken.js
 // Verifies JWT token from HTTP-only cookie
-// klárt fyrir serverless
+// Configured for serverless
 
-const { applyMiddlewares } = require("../../utils/middleware");
-const { cors } = require("../../utils/cors");
+const NextCors = require("nextjs-cors");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 const connectToDatabase = require("../../utils/connectToDatabase");
@@ -14,18 +13,28 @@ if (!JWT_SECRET) {
 }
 
 module.exports = async (req, res) => {
+  // Run the cors middleware
+  await NextCors(req, res, {
+    // Options
+    methods: ["POST", "OPTIONS"],
+    origin: [
+      "http://localhost:3000",
+      "https://lokaverkefni-framendi.vercel.app",
+      "https://www.appgo.is",
+    ],
+    optionsSuccessStatus: 200, // Some legacy browsers choke on 204
+    credentials: true,
+  });
+
+  // Only allow POST requests
+  if (req.method !== "POST") {
+    res.setHeader("Allow", ["POST"]);
+    return res
+      .status(405)
+      .json({ success: false, error: "Method Not Allowed" });
+  }
+
   try {
-    // Apply middlewares: CORS and Cookie Parser
-    await applyMiddlewares(req, res, [cors, require("cookie-parser")()]);
-
-    // Only allow POST requests
-    if (req.method !== "POST") {
-      res.setHeader("Allow", ["POST"]);
-      return res
-        .status(405)
-        .json({ success: false, error: "Method Not Allowed" });
-    }
-
     await connectToDatabase();
 
     const token = req.cookies.token;
@@ -38,7 +47,6 @@ module.exports = async (req, res) => {
 
     try {
       const decoded = jwt.verify(token, JWT_SECRET);
-      await connectToDatabase();
 
       const user = await User.findById(decoded.id).select("-password");
       if (!user) {

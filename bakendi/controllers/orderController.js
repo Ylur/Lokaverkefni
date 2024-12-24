@@ -13,12 +13,10 @@ const getAllOrders = async (req, res) => {
     res.status(200).json({ success: true, orders });
   } catch (error) {
     console.error("Error fetching orders:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Internal server error while fetching orders.",
-      });
+    res.status(500).json({
+      success: false,
+      error: "Internal server error while fetching orders.",
+    });
   }
 };
 
@@ -38,12 +36,10 @@ const getOrderById = async (req, res) => {
     res.status(200).json({ success: true, order });
   } catch (error) {
     console.error("Error fetching order by ID:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Internal server error while fetching the order.",
-      });
+    res.status(500).json({
+      success: false,
+      error: "Internal server error while fetching the order.",
+    });
   }
 };
 
@@ -55,12 +51,10 @@ const createOrder = async (req, res) => {
 
   // Basic validation
   if (!dishes || !drinks || !total) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        error: "Dishes, drinks, and total are required.",
-      });
+    return res.status(400).json({
+      success: false,
+      error: "Dishes, drinks, and total are required.",
+    });
   }
 
   try {
@@ -77,12 +71,10 @@ const createOrder = async (req, res) => {
     res.status(201).json({ success: true, order: newOrder });
   } catch (error) {
     console.error("Error creating order:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Internal server error while creating the order.",
-      });
+    res.status(500).json({
+      success: false,
+      error: "Internal server error while creating the order.",
+    });
   }
 };
 
@@ -111,12 +103,10 @@ const updateOrder = async (req, res) => {
     res.status(200).json({ success: true, order });
   } catch (error) {
     console.error("Error updating order:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Internal server error while updating the order.",
-      });
+    res.status(500).json({
+      success: false,
+      error: "Internal server error while updating the order.",
+    });
   }
 };
 
@@ -142,12 +132,10 @@ const deleteOrderById = async (req, res) => {
       .json({ success: true, message: "Order deleted successfully." });
   } catch (error) {
     console.error("Error deleting order:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Internal server error while deleting the order.",
-      });
+    res.status(500).json({
+      success: false,
+      error: "Internal server error while deleting the order.",
+    });
   }
 };
 
