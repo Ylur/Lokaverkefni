@@ -1,8 +1,9 @@
 // bakendi/utils/middleware.js
+//klárt fyrir serverless
 
-const { runMiddleware } = require('./cors');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+const { runMiddleware } = require("./cors");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 
 /**
  * Apply multiple middleware functions sequentially.

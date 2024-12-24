@@ -1,7 +1,8 @@
 // bakendi/utils/connectToDatabase.js
+// Orðið klárt fyrir  serverless + Mongoose
 
-const mongoose = require('mongoose');
-const logger = require('./logger');
+const mongoose = require("mongoose");
+const logger = require("./logger");
 
 let isConnected = false;
 
@@ -14,15 +15,20 @@ const connectWithRetry = async (retries = 5, delay = 3000) => {
         serverSelectionTimeoutMS: 5000, // 5 seconds
       });
       isConnected = mongoose.connection.readyState;
-      logger.info('Connected to MongoDB successfully!');
+      logger.info("Connected to MongoDB successfully!");
       break;
     } catch (error) {
-      logger.error(`MongoDB connection failed. Retries left: ${retries - 1}`, error);
+      logger.error(
+        `MongoDB connection failed. Retries left: ${retries - 1}`,
+        error
+      );
       retries -= 1;
       if (retries === 0) {
-        throw new Error('Unable to connect to MongoDB after multiple attempts.');
+        throw new Error(
+          "Unable to connect to MongoDB after multiple attempts."
+        );
       }
-      await new Promise(res => setTimeout(res, delay));
+      await new Promise((res) => setTimeout(res, delay));
     }
   }
 };
