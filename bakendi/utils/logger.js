@@ -14,7 +14,7 @@ const logger = createLogger({
   ),
   defaultMeta: { service: "lokaverkefni-service" },
   transports: [
-    // File transports are commented out to prevent filesystem writes
+    // Removed file transports to prevent filesystem writes
     // new transports.File({ filename: "logs/error.log", level: "error" }),
     // new transports.File({ filename: "logs/combined.log" }),
   ],

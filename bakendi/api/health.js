@@ -1,7 +1,7 @@
 // bakendi/api/health.js
 
-const NextCors = require('nextjs-cors').default; // Access the default export
-const logger = require('../../utils/logger'); // Adjust the path if necessary
+const NextCors = require('nextjs-cors').default; // Correct import for CommonJS
+const logger = require('../../utils/logger');
 
 module.exports = async (req, res) => {
   await NextCors(req, res, {

@@ -2,7 +2,7 @@
   "name": "bakendi",
   "version": "1.0.0",
   "scripts": {
-    "dev": "nodemon testConnection.js"
+    "dev": "vercel dev"
   },
   "keywords": [],
   "author": "",
