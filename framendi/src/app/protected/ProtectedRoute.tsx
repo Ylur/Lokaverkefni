@@ -1,3 +1,5 @@
+// src/app/components/ProtectedRoute.tsx
+
 "use client";
 
 import React, { ReactNode, useContext, useEffect, useState } from "react";
@@ -8,18 +10,28 @@ interface ProtectedRouteProps {
   children: ReactNode;
 }
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { token } = useContext(AuthContext);
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const { isAuthenticated, verifyAuth } = useContext(AuthContext);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (!token) {
-      router.push("/login");
-    } else {
-      setIsLoading(false);
-    }
-  }, [token, router]);
+    const checkAuthentication = async () => {
+      try {
+        const isValid = await verifyAuth();
+        if (!isValid) {
+          router.push("/login");
+        } else {
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error("Authentication check failed:", error);
+        router.push("/login");
+      }
+    };
+
+    checkAuthentication();
+  }, [isAuthenticated, verifyAuth, router]);
 
   if (isLoading) {
     return (
