@@ -1,18 +1,11 @@
 {
   "private": true,
-  "workspaces": [
-    "bakendi",
-    "framendi"
-  ],
- "scripts": {
-  "start:bakendi": "cd bakendi && npm run dev",
-  "start:framendi": "cd framendi && npm run dev",
-  "dev": "npm run start:bakendi & npm run start:framendi",
-  "deploy:bakendi": "cd bakendi && vercel --prod",
-  "deploy:framendi": "cd framendi && vercel --prod"
-},
-    "dependencies": {
-    "next": "^15.1.2"
+  "workspaces": ["bakendi", "framendi"],
+  "scripts": {
+    "start:bakendi": "cd bakendi && npm run dev",
+    "start:framendi": "cd framendi && npm run dev",
+    "dev": "npm run start:bakendi & npm run start:framendi",
+    "deploy:bakendi": "cd bakendi && vercel --prod",
+    "deploy:framendi": "cd framendi && vercel --prod"
   }
 }
-
