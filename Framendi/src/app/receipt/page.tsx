@@ -1,76 +1,103 @@
+// src/app/receipt/page.tsx
+
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import ReceiptComponent from "../components/orders/ReceiptComponent";
 
 export default function ReceiptPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const id = searchParams.get("id");
-  const [order, setOrder] = useState<any>(null);
+
   const [message, setMessage] = useState("");
+  const [finalOrder, setFinalOrder] = useState<any>(null);
+
+  // Pull query params from the URL
+  const email = searchParams.get("email");
+  const date = searchParams.get("date");
+  const time = searchParams.get("time");
+  const people = searchParams.get("people");
+  const dishesParam = searchParams.get("dishes");
+  const drinksParam = searchParams.get("drinks");
 
   useEffect(() => {
-    if (!id) return;
-    async function fetchOrder() {
+    // Quick check for required info
+    if (!email || !date || !time || !people || !dishesParam || !drinksParam) {
+      setMessage("Missing booking info or items from previous steps.");
+      return;
+    }
+
+    // Parse the JSON parameters
+    let dishes: any[] = [];
+    let drinks: any[] = [];
+    try {
+      dishes = JSON.parse(dishesParam);
+      drinks = JSON.parse(drinksParam);
+    } catch (err) {
+      setMessage("Error parsing dishes or drinks from query params.");
+      return;
+    }
+
+    // Calculate total (replace with your real pricing logic)
+    let total = 0;
+    dishes.forEach((dish) => {
+      total += dish.quantity * 9.99;
+    });
+    drinks.forEach((drink) => {
+      total += drink.quantity * 4.99;
+    });
+
+    // Build the final order object
+    const order = {
+      email,
+      dishes,
+      drinks,
+      total,
+      date,
+      time,
+      people: Number(people),
+    };
+
+    // Post the order to the *local* Next.js API route
+    async function postOrder() {
       try {
-        const res = await fetch(`/api/orders/${id}`);
+        const res = await fetch("/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(order),
+        });
         const data = await res.json();
+
         if (!res.ok || !data.success) {
-          throw new Error(data.error || "Order not found");
+          // If the server returns an error, show it
+          const errorMessages =
+            data.errors?.map((e: any) => e.msg).join(", ") ||
+            data.error ||
+            "Failed to create order";
+          throw new Error(errorMessages);
         }
-        setOrder(data.order);
+
+        // Success: set the final order for display
+        setFinalOrder(data.order);
       } catch (err: any) {
-        setMessage(err.message || "Error fetching order");
+        setMessage(err.message || "Error creating order.");
       }
     }
-    fetchOrder();
-  }, [id]);
 
-  if (!id) {
-    return <div>No order ID provided.</div>;
-  }
+    postOrder();
+  }, [email, date, time, people, dishesParam, drinksParam]);
 
+  // Display error message if any
   if (message) {
-    return <div className="text-red-500">{message}</div>;
+    return <div className="p-4 text-center text-red-500">{message}</div>;
   }
 
-  if (!order) {
-    return <div>Loading order...</div>;
+  // Show processing message while waiting for the response
+  if (!finalOrder) {
+    return <div className="p-4 text-center">Processing your order...</div>;
   }
 
-  return (
-    <div className="max-w-md mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Receipt</h1>
-      <p><strong>Order ID:</strong> {order._id}</p>
-      <p><strong>Email:</strong> {order.email}</p>
-      <p><strong>Date:</strong> {order.date}</p>
-      <p><strong>Time:</strong> {order.time}</p>
-      <p><strong>People:</strong> {order.people}</p>
-      <p><strong>Status:</strong> {order.status}</p>
-
-      <h2 className="text-xl font-semibold mt-4">Dishes</h2>
-      {order.dishes?.map((dish: any, i: number) => (
-        <p key={i}>
-          {dish.strMeal} (x{dish.quantity})
-        </p>
-      ))}
-
-      <h2 className="text-xl font-semibold mt-4">Drinks</h2>
-      {order.drinks?.map((drink: any, i: number) => (
-        <p key={i}>
-          {drink.strDrink} (x{drink.quantity})
-        </p>
-      ))}
-
-      <p className="mt-2 font-bold">Total: ${order.total}</p>
-
-      <button
-        onClick={() => router.push("/older-orders")}
-        className="bg-blue-500 text-white px-4 py-2 mt-4 rounded"
-      >
-        See Older Orders
-      </button>
-    </div>
-  );
+  // Display the final receipt using your existing <ReceiptComponent>
+  return <ReceiptComponent finalOrder={finalOrder} />;
 }
