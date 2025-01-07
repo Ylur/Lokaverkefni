@@ -1,1 +1,44 @@
+# Dependencies
 node_modules
+.pnp
+.pnp.js
+
+# Next.js build output
+.next/
+out/
+
+# Build artifacts
+dist/
+*.log
+*.lock
+
+# Typescript build artifacts
+*.tsbuildinfo
+
+# Tailwind, PostCSS
+.postcssrc
+tailwind.config.js
+tailwind.config.cjs
+tailwind.config.mjs
+tailwind.config.ts
+
+# Vercel / Netlify / other deployment configs
+.vercel/
+.netlify/
+
+# Local environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Mac / OS metadata
+.DS_Store
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
