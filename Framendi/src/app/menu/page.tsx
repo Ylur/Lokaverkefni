@@ -103,15 +103,13 @@ const MenuPage: FC = () => {
 
   return (
     <>
-
-
       <div
         className="relative bg-cover bg-center h-96"
         style={{ backgroundImage: 'url("/photos/lb.png")' }}
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative flex items-center justify-center h-full">
-          <div className="text-center text-accent">
+          <div className="text-center text-white">
             <h1 className="text-5xl font-bold">Our LiL menu</h1>
           </div>
         </div>
@@ -123,7 +121,6 @@ const MenuPage: FC = () => {
         {renderMenuSection("Sandwiches", sandwiches)}
         {renderMenuSection("Sides", sides)}
       </div>
-
     </>
   );
 };

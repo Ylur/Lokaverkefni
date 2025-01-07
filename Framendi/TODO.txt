@@ -1,0 +1,12 @@
+FÁRANLEGA MIKILVÆGT SAUÐURINN ÞINN
+
+router.push(): Used for client-side navigation within the frontend. It should not be used to call backend APIs.
+router.push() only for navigating between frontend pages.
+
+
+fetch(): Used to make HTTP requests to backend APIs or any external services.
+Use fetch() with NEXT_PUBLIC_API_BASE_URL for all backend API interactions.
+
+
+CURLS til að prófa
+curl "http://localhost:3000/api/orders?email=test@example.com"

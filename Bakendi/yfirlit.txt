@@ -1,0 +1,30 @@
+PROD pælingar
+tree -I "node_modules|.git" > structure.txt
+
+LV BK
+├── bakendi/               # Back-End
+│   ├── api/               # API routes for serverless functions
+│   ├── controllers/       # Business logic for handling requests
+│   ├── middleware/        # Middleware functions (e.g., CORS, auth)
+│   ├── models/            # Database models (e.g., Mongoose)
+│   ├── utils/             # Utility functions
+│   ├── package.json       # Back-end dependencies and scripts
+│   ├── vercel.json        # Vercel configuration for back-end
+│   └── .env               # Environment variables for the back-end
+├── package.json           # Root package.json for workspace management
+├── .gitignore             # Git ignore file
+└── README.md              # Overview and instructions for the project
+
+
+MONOREPO - yfirlit og tilgangur -> BREYTT ÚR MONO
+
+Back-End (bakendi):
+
+Runs on Express.
+Provides APIs for authentication, orders, etc.
+Deploys as serverless functions on Vercel.
+
+Front-End (framendi):
+
+Built with Next.js.
+Provides the user interface and interacts with the back-end APIs.

@@ -1,5 +1,5 @@
-// klárt fyrir serverless
-import type { Config } from "tailwindcss";
+// tailwind.config.ts
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [

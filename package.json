@@ -1,5 +1,7 @@
 {
     "private": true,
-    "workspaces": ["bakendi", "framendi"]
-  }
-  
+    "workspaces": [
+        "bakendi",
+        "framendi"
+    ]
+}

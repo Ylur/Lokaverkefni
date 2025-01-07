@@ -1,9 +1,12 @@
+//framendi/src/app/select-dish/page.tsx
+
 "use client";
 
 import React, { Suspense } from "react";
 
 // Lazy load the SelectDrinks component
-const SelectDishes = React.lazy(() => import("../components/SelectDishes"));
+const SelectDishes = React.lazy(() => import("../components/orders/SelectDishes"));
+
 
 const SelectDishesPage: React.FC = () => {
   return (

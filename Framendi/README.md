@@ -18,6 +18,15 @@ Dish total is calculated based on price per person and quantity.
 Drinks total is calculated from the hardcoded values.
 Grand total combines the dish total and drinks total.
 
+
+
+VIRKNIN Á PÖNTUNARFERLI
+1. **SelectDish** → user picks dishes, hits Next → pass `dishes` as JSON in query.  
+2. **SelectDrinks** → user picks drinks, hits Next → pass `dishes` + `drinks` in query.  
+3. **Booking** → user sets date/time/people/email, hits Next → pass `dishes`, `drinks`, plus booking info in query.  
+4. **Receipt** → read **all** from query, do a final **POST** to store in DB or JSON, then display the final info.
+
+
 tree -I "node_modules|.git"
 
 

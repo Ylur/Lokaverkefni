@@ -1,32 +1,54 @@
 // src/app/dashboard/page.tsx
 
+//Semsagt ef `user === null`, we show your existing `Login` component. 
+//If `user !== null`, we show **both** the `CreateOrder` form and the `OrdersList` on the same page.
+
+// framendi/src/app/dashboard/page.tsx
+// src/app/dashboard/page.tsx
+
 "use client";
 
-import React from "react";
-import ProtectedRoute from "../protected/ProtectedRoute";
-import OrdersList from "../components/OrdersList"; // Component to display user orders, ef þú ert loggaður inn
-import CreateOrder from "../components/CreateOrder"; // Component to create a new order, ef þú ert loggaður inn
+import React, { useContext } from "react";
+import Link from "next/link";
+import { AuthContext } from "../context/AuthContext";
+import OrdersList from "../components/orders/OrdersList";
+import BlogPostLoggedIn from "../components/common/Carousel";
+import Login from "../components/auth/Login"; 
+import ResetPassword from "../components/auth/resetPassword";
 
-const DashboardPage = () => {
+export default function DashboardPage() {
+  const { user } = useContext(AuthContext);
+
+  // If user is not logged in, display the Login component.
+  if (user === null) {
+    return <Login />;
+  }
+
+  // If user is logged in, display the dashboard contents.
   return (
-    <ProtectedRoute>
-      <div className="container mx-auto p-8">
-        <h1 className="text-3xl font-bold mb-6">Your Dashboard</h1>
-        
-        {/* Create Order Section */}
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Create a New Order</h2>
-          <CreateOrder />
-        </section>
-        
-        {/* Orders List Section */}
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">Your Orders</h2>
-          <OrdersList />
-        </section>
-      </div>
-    </ProtectedRoute>
-  );
-};
+    <div className="flex align-self mt-8 container mx-auto">
+      <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
 
-export default DashboardPage;
+      <div className="flex flex-wrap gap-4">
+
+        <div className="flex-1 bg-primary p-1 rounded shadow">
+          <OrdersList />
+        </div>
+        <div className="flex-1 bg-primary p-4 rounded shadow flex items-center justify-center">
+          <Link
+            href="/select-dish"
+            className="bg-blue-500 text-white px-4 rounded"
+          >
+            Create an Order
+          </Link>
+        </div>
+        <div className="flex-1 bg-primary p-1 rounded shadow">
+          <ResetPassword />
+        </div>
+        <div className="flex-4 bg-primary p-4 rounded shadow">
+          <BlogPostLoggedIn />
+        </div>
+      </div>
+    </div>
+  );
+}

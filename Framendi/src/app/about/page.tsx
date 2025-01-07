@@ -2,7 +2,6 @@
 
 import React, { FC } from "react";
 
-
 const AboutPage: FC = () => {
   return (
     <>
@@ -29,9 +28,7 @@ const AboutPage: FC = () => {
         >
           <div className="absolute inset-0 bg-primary"></div>
           <div className="relative flex items-center justify-center h-full">
-            <div className="text-center text-white">
-              
-            </div>
+            <div className="text-center text-white"></div>
           </div>
         </div>
       </div>
