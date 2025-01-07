@@ -46,7 +46,7 @@ const ReceiptComponent: React.FC<ReceiptComponentProps> = ({ finalOrder }) => {
 
       <div className="mt-4 text-center">
         <button
-          onClick={() => router.push("/dashboard")}
+          onClick={() => router.push("/")}
           className="bg-green-600 text-white px-4 py-2 rounded"
         >
           Done
