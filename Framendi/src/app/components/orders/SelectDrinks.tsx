@@ -8,45 +8,52 @@ interface Drink {
   strDrink: string;
   strDrinkThumb: string;
 }
+
 interface SelectedDrink {
   idDrink: string;
   strDrink: string;
   quantity: number;
 }
 
-export default function SelectDrinksPage() {
+/**
+ * Similar logic to SelectDishes, but for random drinks from thecocktaildb.
+ */
+export default function SelectDrinks() {
   const [drinks, setDrinks] = useState<Drink[]>([]);
   const [selected, setSelected] = useState<SelectedDrink[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  const email = searchParams.get("email") || "";
+  // Grab any previously selected dishes from the URL
   const storedDishes = searchParams.get("dishes");
+  const email = searchParams.get("email") || "";
 
   useEffect(() => {
     async function fetchRandomDrinks() {
-      const fetchedDrinks: Drink[] = [];
+      const fetched: Drink[] = [];
       for (let i = 0; i < 3; i++) {
-        const res = await fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php");
+        const res = await fetch(
+          "https://www.thecocktaildb.com/api/json/v1/1/random.php"
+        );
         const data = await res.json();
         if (data.drinks && data.drinks.length > 0) {
-          fetchedDrinks.push(data.drinks[0]);
+          fetched.push(data.drinks[0]);
         }
       }
-      setDrinks(fetchedDrinks);
+      setDrinks(fetched);
     }
     fetchRandomDrinks();
   }, []);
 
   function toggleDrink(drink: Drink) {
     setSelected((prev) => {
-      const existing = prev.find((d) => d.idDrink === drink.idDrink);
-      if (existing) {
-        // remove
+      const exists = prev.find((d) => d.idDrink === drink.idDrink);
+      if (exists) {
         return prev.filter((d) => d.idDrink !== drink.idDrink);
       } else {
-        // add with quantity = 1
-        return [...prev, { idDrink: drink.idDrink, strDrink: drink.strDrink, quantity: 1 }];
+        return [
+          ...prev,
+          { idDrink: drink.idDrink, strDrink: drink.strDrink, quantity: 1 },
+        ];
       }
     });
   }
@@ -62,20 +69,19 @@ export default function SelectDrinksPage() {
       alert("No dishes selected. Please go back.");
       return;
     }
-    const dishes = JSON.parse(storedDishes);
-
+    // Build query params
     const params = new URLSearchParams();
     if (email) params.set("email", email);
-    params.set("dishes", JSON.stringify(dishes));
+    params.set("dishes", storedDishes);
     params.set("drinks", JSON.stringify(selected));
 
-    // Next step: create-order page
-    router.push(`/create-order?${params.toString()}`);
+    // The next step is "Booking" instead of "Create Order".
+    router.push(`/booking?${params.toString()}`);
   }
 
   return (
-    <div className="container mx-auto p-8">
-      <h1 className="text-2xl font-bold mb-4">Select Drinks</h1>
+    <div className="mt-4">
+      <h1 className="text-xl font-bold mb-4">Select Drinks</h1>
       {drinks.length === 0 ? (
         <p>Loading drinks...</p>
       ) : (
@@ -85,22 +91,27 @@ export default function SelectDrinksPage() {
             const selectedDrink = selected.find((d) => d.idDrink === drink.idDrink);
 
             return (
-              <div key={drink.idDrink} className="p-4 bg-white shadow rounded">
+              <div
+                key={drink.idDrink}
+                className="p-4 border rounded bg-white shadow"
+              >
                 <img
                   src={drink.strDrinkThumb}
                   alt={drink.strDrink}
-                  className="w-full h-auto object-cover"
+                  className="w-full h-auto object-cover mb-2"
                 />
-                <h2 className="font-semibold text-lg mt-2">{drink.strDrink}</h2>
+                <h2 className="font-semibold text-lg">{drink.strDrink}</h2>
                 <button
                   onClick={() => toggleDrink(drink)}
-                  className="bg-blue-500 text-white px-2 py-1 mt-2"
+                  className={`mt-2 px-2 py-1 text-white ${
+                    isSelected ? "bg-red-500" : "bg-green-500"
+                  }`}
                 >
                   {isSelected ? "Remove" : "Select"}
                 </button>
                 {isSelected && selectedDrink && (
                   <div className="mt-2">
-                    <label>Qty: </label>
+                    <label className="mr-2">Qty:</label>
                     <input
                       type="number"
                       min={1}
@@ -108,7 +119,7 @@ export default function SelectDrinksPage() {
                       onChange={(e) =>
                         updateQuantity(drink.idDrink, Number(e.target.value))
                       }
-                      className="border px-1"
+                      className="border px-1 w-16"
                     />
                   </div>
                 )}
@@ -117,8 +128,11 @@ export default function SelectDrinksPage() {
           })}
         </div>
       )}
-      <button onClick={handleNext} className="bg-green-600 text-white px-4 py-2 mt-4">
-        Next (Create Order)
+      <button
+        onClick={handleNext}
+        className="bg-blue-600 text-white px-4 py-2 mt-4 rounded"
+      >
+        Next (Booking)
       </button>
     </div>
   );

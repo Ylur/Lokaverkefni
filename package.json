@@ -1,7 +1,11 @@
 {
+    "scripts": {
+    "dev": "concurrently \"npm run dev --prefix bakendi\" \"npm run dev --prefix framendi\""
+        },
     "private": true,
     "workspaces": [
         "bakendi",
         "framendi"
     ]
+    
 }

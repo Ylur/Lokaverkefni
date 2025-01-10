@@ -1,20 +1,23 @@
-// src/app/components/orders/ReceiptComponent.tsx
-
 "use client";
 
 import React from "react";
 import { useRouter } from "next/navigation";
 
 interface ReceiptComponentProps {
-  finalOrder: any;
+  finalOrder: any; // Adjust with a stronger Type if you like
 }
 
+/**
+ * Displays the final order. 
+ * Includes a "Done" button that goes back to homepage or wherever you'd like.
+ */
 const ReceiptComponent: React.FC<ReceiptComponentProps> = ({ finalOrder }) => {
   const router = useRouter();
 
   return (
-    <div className="max-w-md mx-auto p-4">
+    <div className="max-w-md mx-auto p-4 bg-white border rounded">
       <h1 className="text-2xl font-bold mb-4">Receipt</h1>
+
       <p>
         <strong>Email:</strong> {finalOrder.email}
       </p>

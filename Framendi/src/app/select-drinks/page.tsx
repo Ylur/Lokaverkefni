@@ -1,18 +1,18 @@
-// framendi/src/app/select-drinks/page.tsx
-
 "use client";
 
 import React, { Suspense } from "react";
-
-// Lazy load the SelectDrinks component
+import MiniOrderFlow from "../components/common/MiniOrderFlow";
+// Lazy-load the actual selection UI
 const SelectDrinks = React.lazy(() => import("../components/orders/SelectDrinks"));
 
-const SelectDrinksPage: React.FC = () => {
+export default function SelectDrinksPage() {
   return (
-    <Suspense fallback={<div>Loading Select Drinks Page...</div>}>
-      <SelectDrinks />
-    </Suspense>
+    <div className="container mx-auto p-4">
+      {/* Step = 2 => "Select Drinks" */}
+      <MiniOrderFlow step={2} />
+      <Suspense fallback={<div>Loading Drinks...</div>}>
+        <SelectDrinks />
+      </Suspense>
+    </div>
   );
-};
-
-export default SelectDrinksPage;
+}

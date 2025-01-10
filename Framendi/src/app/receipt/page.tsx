@@ -1,28 +1,31 @@
-// src/app/receipt/page.tsx
-
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import MiniOrderFlow from "../components/common/MiniOrderFlow";
 import ReceiptComponent from "../components/orders/ReceiptComponent";
 
+/**
+ * Final step (Step #4): Show user the final order details.
+ * In your original code, you also posted to /api/orders here.
+ * That approach is fine or you can do it earlier. 
+ * We'll show a simple "display" approach, but you can adapt it to call your backend.
+ */
 export default function ReceiptPage() {
   const searchParams = useSearchParams();
-  const router = useRouter();
-
   const [message, setMessage] = useState("");
   const [finalOrder, setFinalOrder] = useState<any>(null);
 
-  // Pull query params from the URL
-  const email = searchParams.get("email");
-  const date = searchParams.get("date");
-  const time = searchParams.get("time");
-  const people = searchParams.get("people");
-  const dishesParam = searchParams.get("dishes");
-  const drinksParam = searchParams.get("drinks");
-
   useEffect(() => {
-    // Quick check for required info
+    // Grab parameters from the URL
+    const email = searchParams.get("email");
+    const date = searchParams.get("date");
+    const time = searchParams.get("time");
+    const people = searchParams.get("people");
+    const dishesParam = searchParams.get("dishes");
+    const drinksParam = searchParams.get("drinks");
+
+    // Basic validation
     if (!email || !date || !time || !people || !dishesParam || !drinksParam) {
       setMessage("Missing booking info or items from previous steps.");
       return;
@@ -39,27 +42,29 @@ export default function ReceiptPage() {
       return;
     }
 
-    // Calculate total (replace with your real pricing logic)
+    // Calculate a rough total
     let total = 0;
     dishes.forEach((dish) => {
-      total += dish.quantity * 9.99;
+      total += dish.quantity * 10; // $10 per dish, adjust as needed
     });
     drinks.forEach((drink) => {
-      total += drink.quantity * 4.99;
+      total += drink.quantity * 5; // $5 per drink, adjust as needed
     });
 
-    // Build the final order object
+    // Build the final object
     const order = {
       email,
-      dishes,
-      drinks,
-      total,
       date,
       time,
       people: Number(people),
+      dishes,
+      drinks,
+      total,
     };
 
-    // Post the order to the *local* Next.js API route
+    // Optionally, you can POST to your local /api/orders to store in DB:
+    // (Uncomment if you'd like to do so automatically)
+    /*
     async function postOrder() {
       try {
         const res = await fetch("/api/orders", {
@@ -70,15 +75,9 @@ export default function ReceiptPage() {
         const data = await res.json();
 
         if (!res.ok || !data.success) {
-          // If the server returns an error, show it
-          const errorMessages =
-            data.errors?.map((e: any) => e.msg).join(", ") ||
-            data.error ||
-            "Failed to create order";
-          throw new Error(errorMessages);
+          throw new Error(data.error || "Failed to create order");
         }
-
-        // Success: set the final order for display
+        // On success, store the created order data
         setFinalOrder(data.order);
       } catch (err: any) {
         setMessage(err.message || "Error creating order.");
@@ -86,18 +85,36 @@ export default function ReceiptPage() {
     }
 
     postOrder();
-  }, [email, date, time, people, dishesParam, drinksParam]);
+    */
 
-  // Display error message if any
+    // If you're not auto-creating it in the DB here, just set finalOrder:
+    setFinalOrder(order);
+  }, [searchParams]);
+
+  // Display errors or a loading message
   if (message) {
-    return <div className="p-4 text-center text-red-500">{message}</div>;
+    return (
+      <div className="p-4">
+        <MiniOrderFlow step={4} />
+        <p className="text-red-500">{message}</p>
+      </div>
+    );
   }
 
-  // Show processing message while waiting for the response
   if (!finalOrder) {
-    return <div className="p-4 text-center">Processing your order...</div>;
+    return (
+      <div className="p-4">
+        <MiniOrderFlow step={4} />
+        <p>Loading your final order...</p>
+      </div>
+    );
   }
 
-  // Display the final receipt using your existing <ReceiptComponent>
-  return <ReceiptComponent finalOrder={finalOrder} />;
+  // If we have a final order, display it in your <ReceiptComponent>
+  return (
+    <div className="p-4">
+      <MiniOrderFlow step={4} />
+      <ReceiptComponent finalOrder={finalOrder} />
+    </div>
+  );
 }
