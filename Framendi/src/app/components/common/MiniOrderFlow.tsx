@@ -1,33 +1,29 @@
-/* framendi/src/app/components/common/MiniOrderFlow.tsx */
+// app/components/common/MiniOrderFlow.tsx
 "use client";
+
 import React from "react";
 
-/**
- * Props for MiniOrderFlow
- * - 'step' is the current step (1..4), read-only
- * - No callbacks or buttons included
- */
+/** Only displays the current step # in a simple wizard-like list. */
 interface MiniOrderFlowProps {
-  step: number; // 1 = dishes, 2 = drinks, 3 = booking, 4 = receipt, etc.
+  step: number; // 1..4, or 0 if we’re not in a step
 }
 
 export default function MiniOrderFlow({ step }: MiniOrderFlowProps) {
-  // Define the step labels without links or functions
   const steps = [
     { label: "Select Dishes", stepNumber: 1 },
     { label: "Select Drinks", stepNumber: 2 },
-    { label: "Booking Details", stepNumber: 3 },
+    { label: "Booking", stepNumber: 3 },
     { label: "Receipt", stepNumber: 4 },
   ];
 
   return (
-    <div className="p-4 border rounded mb-4">
-      <h2 className="text-xl font-semibold mb-2">Order Flow Status</h2>
+    <div className="p-4 border rounded">
+      <h2 className="text-lg font-semibold mb-3">Order Flow</h2>
       <ul className="space-y-1">
         {steps.map(({ label, stepNumber }) => (
           <li
             key={stepNumber}
-            className={stepNumber === step ? "font-bold" : "opacity-70"}
+            className={stepNumber === step ? "font-bold" : "opacity-60"}
           >
             {label}
           </li>
