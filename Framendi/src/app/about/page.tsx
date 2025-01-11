@@ -1,6 +1,7 @@
 "use client";
 
 import React, { FC } from "react";
+import Image from "next/image";
 
 const AboutPage: FC = () => {
   return (
@@ -24,7 +25,7 @@ const AboutPage: FC = () => {
         <br />
         <div
           className="relative bg-cover bg-center h-96"
-          style={{ backgroundImage: 'url("/photos/lb.png")' }}
+          style={{ backgroundImage: 'url("/public/photos/lb.png")' }}
         >
           <div className="absolute inset-0 bg-primary"></div>
           <div className="relative flex items-center justify-center h-full">

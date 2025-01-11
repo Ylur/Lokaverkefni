@@ -19,6 +19,9 @@ const Header: React.FC = () => {
               <Link href="/menu">Menu</Link>
             </li>
             <li>
+              <Link href="/about">About us</Link>
+            </li>
+            <li>
               <Link href="/contact">Contact</Link>
             </li>
             <li>

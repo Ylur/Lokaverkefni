@@ -9,8 +9,8 @@ interface Slide {
 }
 
 interface CarouselProps {
-  // Optional: a callback if you want each slide to trigger something 
-  // like moving to the next order flow step
+  // Optional: callback so each slide trigger something 
+  
   onSlideChange?: (newIndex: number) => void;
 }
 
@@ -28,8 +28,8 @@ export default function Carousel({ onSlideChange }: CarouselProps) {
     const intervalId = setInterval(() => {
       setCurrentIndex((prevIndex) => {
         // Move to the next slide, or wrap back to 0
-        const newIndex = prevIndex === slides.length - 1 ? 0 : prevIndex + 1;
-        // If you want each slide change to trigger an order flow step, call the callback
+        const newIndex = prevIndex === slides.length - 1 ? 0 : prevIndex + 2;
+        //  each slide change to trigger an order flow step, call the callback
         if (onSlideChange) {
           onSlideChange(newIndex);
         }

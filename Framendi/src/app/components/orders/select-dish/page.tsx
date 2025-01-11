@@ -9,7 +9,6 @@ const SelectDishes = React.lazy(() => import("../SelectDishes"));
 export default function SelectDishesPage() {
   return (
     <div className="container mx-auto p-4">
-      {/* Step = 1 => "Select Dishes" */}
       <MiniOrderFlow step={1} />
       <Suspense fallback={<div>Loading Dishes...</div>}>
         <SelectDishes />
