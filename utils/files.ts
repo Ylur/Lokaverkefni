@@ -1,9 +1,9 @@
-// bakendi/utils/files.ts
-
+//Users/ingiharalds/Next/LV MRepo/utils/files.ts
 import fs from "fs";
 import path from "path";
 
-const ordersFilePath = path.join(process.cwd(), "orders.json");
+// Update the path to point to the data directory
+const ordersFilePath = path.join(process.cwd(), "src", "data", "orders.json");
 
 /**
  * Reads orders from `orders.json`. Returns an array of orders.

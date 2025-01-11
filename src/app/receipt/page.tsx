@@ -62,8 +62,8 @@ export default function ReceiptPage() {
       total,
     };
 
-    // Optionally, you can POST to your local /api/orders to store in DB:
-    // (Uncomment if you'd like to do so automatically)
+    // Optionally, POST to local /api/orders to store in DB:
+    // 
     /*
     async function postOrder() {
       try {
@@ -87,7 +87,7 @@ export default function ReceiptPage() {
     postOrder();
     */
 
-    // If you're not auto-creating it in the DB here, just set finalOrder:
+    // for dev - set finalOrder:
     setFinalOrder(order);
   }, [searchParams]);
 

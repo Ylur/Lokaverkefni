@@ -1,6 +1,45 @@
 Tilraun 293 á lokaverkefni.
 
+
+
+Orderflow:
 Homepage->Dish page->Drink page->Booking page -> Receipt page.
+Creating new orders:
+const newOrder = {
+  _id: Date.now().toString(),
+  email,
+  dishes: dishes || [],
+  drinks: drinks || [],
+  total: total || 0,
+  date: date || null,
+  time: time || null,
+  people: people || 1,
+  status: "pending",
+  createdAt: new Date().toISOString(),
+};
+
+Saved:
+orders.push(newOrder);
+writeOrdersFile(orders);
+
+Looking up orders:
+let orders = readOrdersFile();
+This function (imported from utils/files) reads the current list of orders from a JSON file.
+function handleGetOrders(req: NextApiRequest, res: NextApiResponse) {
+  const email = req.query.email as string | undefined;
+  let orders = readOrdersFile(); // read from JSON
+
+  if (email) {
+    orders = orders.filter((o) => o.email === email);
+  }
+
+  return res.status(200).json({ success: true, orders });
+}
+
+
+
+
+
 
 Framendi sækir upplýsingar í /api/orders
 

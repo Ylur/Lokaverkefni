@@ -4,10 +4,6 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import MiniOrderFlow from "../components/common/MiniOrderFlow";
 
-/**
- * Let user enter an email, fetch existing orders from /api/orders?email=...
- * Then show list of orders with "Update" or "Re-Order" buttons.
- */
 export default function OlderOrdersPage() {
   const [email, setEmail] = useState("");
   const [orders, setOrders] = useState<any[]>([]);
@@ -24,11 +20,9 @@ export default function OlderOrdersPage() {
     }
 
     try {
-      // If the API is served by the same Next.js, use fetch("/api/orders...")
-      // Otherwise, use process.env.NEXT_PUBLIC_API_BASE_URL or such
-      // Hardcode the backend URL (local dev):
+      // Use relative path now that backend is integrated
       const res = await fetch(
-        `http://localhost:3001/api/orders?email=${encodeURIComponent(email)}`,
+        `/api/orders?email=${encodeURIComponent(email)}`,
         {
           method: "GET",
         }
@@ -49,19 +43,19 @@ export default function OlderOrdersPage() {
   }
 
   function handleReOrder(order: any) {
-    // For example, build a query to go to /booking or /receipt with old items
     const params = new URLSearchParams();
     params.set("email", order.email);
     params.set("dishes", JSON.stringify(order.dishes));
     params.set("drinks", JSON.stringify(order.drinks));
-    // Optionally skip to booking or re-show the dish/drink steps
+    // Update route if needed; for integrated backend, adjust path accordingly
     router.push(`/booking?${params.toString()}`);
+    // If your booking page is under /orders, use:
+    // router.push(`/orders/booking?${params.toString()}`);
   }
 
   return (
     <div className="max-w-md mx-auto p-4">
-      {/* The flow steps might not strictly apply here, but let's show the "mini flow" anyway */}
-      <MiniOrderFlow step={0 /* or omit step if it's not in the wizard */} />
+      <MiniOrderFlow step={0} />
 
       <h1 className="text-2xl font-bold mb-4">Older Orders</h1>
       <div className="mb-2">
