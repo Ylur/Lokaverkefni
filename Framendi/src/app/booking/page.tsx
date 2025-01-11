@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import MiniOrderFlow from "../components/common/MiniOrderFlow";
+import MiniOrderFlow from "src/app/components/common/MiniOrderFlow";
 
 /**
  * Booking step (Step #3):

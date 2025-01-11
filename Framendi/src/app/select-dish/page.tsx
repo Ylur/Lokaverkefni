@@ -2,9 +2,9 @@
 "use client";
 
 import React, { Suspense } from "react";
-import MiniOrderFlow from "../../common/MiniOrderFlow";
+import MiniOrderFlow from "src/app/components/common/MiniOrderFlow";
 // Lazy-load the actual selection UI
-const SelectDishes = React.lazy(() => import("../SelectDishes"));
+const SelectDishes = React.lazy(() => import("../components/orders/SelectDishes"));
 
 export default function SelectDishesPage() {
   return (

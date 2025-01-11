@@ -33,7 +33,7 @@ export default function HomePage() {
         {/* Link to the FIRST STEP of your flow, 
             which might be /orders/select-dish or just /orders for an index page. */}
         <a
-          href="/components/orders/select-dish"
+          href="/orders/select-dish"
           className="inline-block bg-green-600 text-white px-4 py-2 rounded"
         >
           Create Order
