@@ -1,11 +1,13 @@
 {
     "scripts": {
-    "dev": "concurrently \"npm run dev --prefix bakendi\" \"npm run dev --prefix framendi\""
-        },
+        "dev": "concurrently \"npm run dev --prefix bakendi\" \"npm run dev --prefix framendi\""
+    },
     "private": true,
     "workspaces": [
-        "bakendi",
         "framendi"
-    ]
-    
+        
+    ],
+    "devDependencies": {
+        "concurrently": "^9.1.2"
+    }
 }

@@ -24,11 +24,15 @@ export default function OlderOrdersPage() {
     }
 
     try {
-      // If your API is served by the same Next.js, just fetch("/api/orders...")
+      // If the API is served by the same Next.js, use fetch("/api/orders...")
       // Otherwise, use process.env.NEXT_PUBLIC_API_BASE_URL or such
-      const res = await fetch(`/api/orders?email=${encodeURIComponent(email)}`, {
-        method: "GET",
-      });
+      // Hardcode the backend URL (local dev):
+      const res = await fetch(
+        `http://localhost:3001/api/orders?email=${encodeURIComponent(email)}`,
+        {
+          method: "GET",
+        }
+      );
 
       const data = await res.json();
       if (!res.ok || !data.success) {
@@ -50,7 +54,7 @@ export default function OlderOrdersPage() {
     params.set("email", order.email);
     params.set("dishes", JSON.stringify(order.dishes));
     params.set("drinks", JSON.stringify(order.drinks));
-    // Optionally skip to booking or re-show the dish/drink steps 
+    // Optionally skip to booking or re-show the dish/drink steps
     router.push(`/booking?${params.toString()}`);
   }
 

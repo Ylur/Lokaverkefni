@@ -20,7 +20,7 @@ export default function CreateOrderPage() {
   const drinks = storedDrinks ? JSON.parse(storedDrinks) : [];
 
   function calculateTotal() {
-    // Very rough example: $10 per dish + $5 per drink x quantity
+    // random cost since its not given in pdf
     let total = 0;
     for (let d of dishes) {
       total += 10 * (d.quantity || 1);
