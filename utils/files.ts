@@ -1,8 +1,7 @@
-//Users/ingiharalds/Next/LV MRepo/utils/files.ts
 import fs from "fs";
 import path from "path";
 
-// Update the path to point to the data directory
+// Update the path to point to the correct location of orders.json
 const ordersFilePath = path.join(process.cwd(), "src", "data", "orders.json");
 
 /**
