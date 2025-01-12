@@ -103,3 +103,81 @@ A transporter is created using the Gmail service (you can adjust this based on y
 The email is configured to be sent to the user's email (to: email) with a subject and body that confirms the password reset.
 Email Sending After Password Reset:
 Once the user's password is updated in the database, an email is sent to confirm the reset. The process occurs before sending the final successful API response.
+
+
+checklisti 
+Frontend Configuration:
+
+ .env.local exists in the frontend project with NEXT_PUBLIC_API_BASE_URL set.
+ Environment variable is set in Vercel frontend project settings.
+ All API calls use process.env.NEXT_PUBLIC_API_BASE_URL.
+ next.config.ts is updated to use images.remotePatterns.
+ Frontend is rebuilt and redeployed after changes.
+Backend Configuration:
+
+ Backend is deployed on Vercel at https://lokaverkefni-bakendi.vercel.app/api.
+ Environment variables (MONGO_URI, JWT_SECRET) are correctly set in Vercel backend project.
+ CORS is properly configured to allow requests from https://www.appgo.is and https://framendi.vercel.app.
+ API endpoints (/auth/login, /auth/register, /auth/verifyToken, /auth/logout, etc.) are correctly implemented and accessible.
+Deployment:
+
+ Frontend and backend are both deployed on Vercel.
+ DNS settings for www.appgo.is and appgo.is are correctly configured.
+ No DNS propagation issues (wait a few hours if recently updated).
+Testing:
+
+ Register and login flows are tested both locally and in production.
+ Protected routes redirect unauthenticated users to the login page.
+ Logout functionality correctly clears authentication state and cookies.
+TypeScript and Code Quality:
+
+ All necessary types are correctly exported and imported.
+ No TypeScript errors remain in the codebase.
+ Components use the correct and consistent API base URL.
+Error Monitoring:
+
+ Frontend shows meaningful error messages to users.
+ Backend logs capture errors for debugging purposes.
+
+
+
+ Bakenda structure:
+
+
+Authentication Routes (/api/register and /api/login):
+
+Register: POST /api/register
+Login: POST /api/login
+Order Management Routes (/api/orders):
+
+Get All Orders: GET /api/orders
+Get Order by ID: GET /api/orders/order/id/:id
+Create Order: POST /api/orders/create-order
+Update Order: PUT /api/orders/order/id/:id
+Delete Order by ID: DELETE /api/orders/order/id/:id
+Delete All Orders by Email: DELETE /api/orders/order/email/:email
+
+Til að búa til JWT secret notaði ég crypt sem er innbyggt í node: node -e "console.log(require('crypto').randomBytes(64).toString('hex'));"
+Gott ráð er að breyta þessu reglulega.
+Aldrei harðkóða og nota frekar t.d.
+
+Vercel Environment Variables: Securely manage environment variables in Vercel.
+HashiCorp Vault: A tool for securely accessing secrets.
+AWS Secrets Manager: Manage secrets within AWS infrastructure.
+Azure Key Vault: Securely store and access secrets in Azure.
+Google Secret Manager: Manage secrets within Google Cloud Platform.
+
+Bjó til email til að nota fyrir registering og senda email frá.
+lokaverkefni0@gmail.com
+
+Suspense bætt við
+https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+
+"Reading search parameters through useSearchParams() without a Suspense boundary will opt the entire page into client-side rendering. This could cause your page to be blank until the client-side JavaScript has loaded"
+
+
+
+TODO
+Are You Actually Using axiosInstance?
+
+If your code never imports axiosInstance for calls, it might be dead code. Or maybe you planned to transition from fetch to Axios. Check if you really want two approaches.

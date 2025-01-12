@@ -2,9 +2,9 @@ import React, { FC } from "react";
 
 const ContactForm: FC = () => {
   return (
-    <form className="max-w-lg mx-auto bg-secondary shadow-md rounded p-8 mt-8">
+    <form className="max-w-lg mx-auto bg-gray-200 shadow-md rounded p-8 mt-8">
       <div className="mb-4">
-        <label htmlFor="name" className="block text-accent">
+        <label htmlFor="name" className="block text-primary">
           Name:
         </label>
         <input
@@ -17,7 +17,7 @@ const ContactForm: FC = () => {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="email" className="block text-accent">
+        <label htmlFor="email" className="block text-primary">
           Email:
         </label>
         <input
@@ -29,8 +29,8 @@ const ContactForm: FC = () => {
         />
       </div>
 
-      <div className="mb-4">
-        <label htmlFor="request" className="block text-accent">
+      <div className="mb-4 overflow-visible">
+        <label htmlFor="request" className="block text-primary">
           Request Type:
         </label>
         <select
@@ -45,7 +45,7 @@ const ContactForm: FC = () => {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="message" className="block text-accent">
+        <label htmlFor="message" className="block text-primary">
           Message:
         </label>
         <textarea
@@ -56,7 +56,7 @@ const ContactForm: FC = () => {
         ></textarea>
       </div>
 
-      <button type="submit" className="bg-accent text-primary p-2 rounded">
+      <button type="submit" className="bg-white text-primary p-2 rounded">
         Submit
       </button>
     </form>

@@ -7,7 +7,6 @@ const AboutPage: FC = () => {
     <>
       <div className="container mx-auto p-8">
         <h1 className="text-4xl font-bold text-center mb-10">About Us</h1>
-
         <p className="text-lg text-accent text-center leading-relaxed">
           Welcome to <span className="font-bold">Lil bits.</span> <br />
           <br />
@@ -23,8 +22,6 @@ const AboutPage: FC = () => {
         </p>
         <br />
         <br />
-
-        <div className="absolute inset-0 bg-primary"></div>
         <div className="relative flex items-center justify-center h-full">
           <div className="text-center text-white"></div>
         </div>

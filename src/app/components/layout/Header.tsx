@@ -40,7 +40,10 @@ const Header: React.FC = () => {
               </Link>
             </li>
             <li>
-              <Link href="/older-orders" className={linkClass("/older-orders")}>
+              <Link
+                href="/orders/older-orders"
+                className={linkClass("/orders/older-orders")}
+              >
                 Previous Orders
               </Link>
             </li>
