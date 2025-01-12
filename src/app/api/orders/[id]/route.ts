@@ -64,7 +64,6 @@ export async function DELETE(
   props: { params: Promise<{ id: string }> }
 ) {
   const params = await props.params;
-  await DELETE;
 
   const { id } = params;
   let orders = readOrdersFile();

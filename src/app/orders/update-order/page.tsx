@@ -1,8 +1,9 @@
+// src/app/orders/update-order/page.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import MiniOrderFlow from "../components/common/MiniOrderFlow";
+import MiniOrderFlow from "src/app/components/common/MiniOrderFlow";
 
 /**
  * Loads an existing order from /api/orders/:id

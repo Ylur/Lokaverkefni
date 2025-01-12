@@ -1,4 +1,4 @@
-// framendi/src/app/older-orders/page.tsx
+// src/app/components/orders/OrdersList.tsx
 
 "use client";
 
@@ -19,16 +19,14 @@ export default function OlderOrdersPage() {
     }
 
     try {
-    
       const res = await fetch(
-        `${
-          process.env.NEXT_PUBLIC_API_BASE_URL
-        }/api/orders?email=${encodeURIComponent(email)}`,
+        `/api/orders?email=${encodeURIComponent(email)}`,
         {
           method: "GET",
           credentials: "include",
         }
       );
+      
 
       const data = await res.json();
       if (!res.ok || !data.success) {

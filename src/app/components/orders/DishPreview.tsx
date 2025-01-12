@@ -1,3 +1,4 @@
+// src/app/components/orders/DishPreview.tsx
 "use client";
 
 import React, { FC } from "react";

@@ -1,3 +1,4 @@
+//src/app/components/orders/ReceiptComponent.tsx
 "use client";
 
 import React from "react";

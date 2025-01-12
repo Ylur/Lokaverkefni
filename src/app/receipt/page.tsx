@@ -5,19 +5,13 @@ import { useSearchParams } from "next/navigation";
 import MiniOrderFlow from "../components/common/MiniOrderFlow";
 import ReceiptComponent from "../components/orders/ReceiptComponent";
 
-/**
- * Final step (Step #4): Show user the final order details.
- * In your original code, you also posted to /api/orders here.
- * That approach is fine or you can do it earlier. 
- * We'll show a simple "display" approach, but you can adapt it to call your backend.
- */
 export default function ReceiptPage() {
   const searchParams = useSearchParams();
   const [message, setMessage] = useState("");
   const [finalOrder, setFinalOrder] = useState<any>(null);
 
   useEffect(() => {
-    // Grab parameters from the URL
+    // Extract parameters from the URL
     const email = searchParams.get("email");
     const date = searchParams.get("date");
     const time = searchParams.get("time");
@@ -42,16 +36,16 @@ export default function ReceiptPage() {
       return;
     }
 
-    // Calculate a rough total
+    // Calculate total (adjust prices as needed)
     let total = 0;
     dishes.forEach((dish) => {
-      total += dish.quantity * 10; // $10 per dish, adjust as needed
+      total += dish.quantity * 10; 
     });
     drinks.forEach((drink) => {
-      total += drink.quantity * 5; // $5 per drink, adjust as needed
+      total += drink.quantity * 5; 
     });
 
-    // Build the final object
+    // Build the final order object dynamically, capturing the email and other details
     const order = {
       email,
       date,
@@ -62,11 +56,32 @@ export default function ReceiptPage() {
       total,
     };
 
-    // for dev - set finalOrder:
-    setFinalOrder(order);
+    // Function to submit the order via POST
+    const submitOrder = async () => {
+      try {
+        const response = await fetch("/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(order),
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to submit order.");
+        }
+
+        // On success, store the returned order
+        setFinalOrder(data.order);
+      } catch (error: any) {
+        setMessage(error.message || "Error submitting order.");
+      }
+    };
+
+    // Submit the order once the component mounts and dependencies are ready
+    submitOrder();
   }, [searchParams]);
 
-  // Display errors or a loading message
+  // Display error message if any
   if (message) {
     return (
       <div className="p-4">
@@ -76,6 +91,7 @@ export default function ReceiptPage() {
     );
   }
 
+  // Show loading state until the order is set
   if (!finalOrder) {
     return (
       <div className="p-4">
@@ -85,7 +101,7 @@ export default function ReceiptPage() {
     );
   }
 
-  // If we have a final order, display it in your <ReceiptComponent>
+  // Once the order is successfully saved, display the receipt
   return (
     <div className="p-4">
       <MiniOrderFlow step={4} />

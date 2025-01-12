@@ -1,1 +1,50 @@
-[]
+[
+  {
+    "_id": "971f1206-9d94-49e7-901f-ead998cb7263",
+    "email": "tester@tester.com",
+    "dishes": [
+      {
+        "idMeal": "52826",
+        "strMeal": "Braised Beef Chilli",
+        "quantity": 1
+      }
+    ],
+    "drinks": [
+      {
+        "idDrink": "12560",
+        "strDrink": "Afterglow",
+        "quantity": 1
+      }
+    ],
+    "total": 42,
+    "date": "2025-01-15",
+    "time": "18:53",
+    "people": 1,
+    "status": "pending",
+    "createdAt": "2025-01-12T17:58:07.057Z"
+  },
+  {
+    "_id": "98da4fb3-e42d-437a-883a-45dc64b9da6c",
+    "email": "test@test.com",
+    "dishes": [
+      {
+        "idMeal": "52782",
+        "strMeal": "Lamb tomato and sweet spices",
+        "quantity": 1
+      }
+    ],
+    "drinks": [
+      {
+        "idDrink": "14167",
+        "strDrink": "Vodka Martini",
+        "quantity": 1
+      }
+    ],
+    "total": 15,
+    "date": "2025-01-12",
+    "time": "20:13",
+    "people": 1,
+    "status": "pending",
+    "createdAt": "2025-01-12T18:11:50.402Z"
+  }
+]

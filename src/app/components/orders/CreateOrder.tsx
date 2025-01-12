@@ -1,5 +1,4 @@
 // src/app/components/orders/CreateOrder.tsx
-
 "use client";
 
 import React, { useState } from "react";
@@ -20,8 +19,9 @@ const CreateOrder: React.FC = () => {
     e.preventDefault();
     setMessage("");
 
-    // Build the data to match your backend's validation
+    // Build the data to match backend's validation
     const orderData = {
+      email: "",
       dishes: [
         {
           idMeal: `custom-${Date.now()}`,

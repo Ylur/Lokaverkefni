@@ -2,8 +2,13 @@
 import fs from "fs";
 import path from "path";
 
-// Use environment variable for file path, or default if not set
-const ordersFilePath = path.resolve(process.env.ORDERS_FILE_PATH || "src/data/orders.json");
+// Use environment variable for file path, 
+// const ordersFilePath = process.env.ORDERS_FILE_PATH 
+ // ? path.resolve(process.cwd(), process.env.ORDERS_FILE_PATH) 
+//  : path.join(process.cwd(), 'src', 'data', 'orders.json');
+
+// or default if not set
+const ordersFilePath = path.join(process.cwd(), 'src', 'data', 'orders.json');
 console.log("Using orders file path:", ordersFilePath);
 
 
