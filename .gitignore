@@ -43,3 +43,4 @@ tailwind.config.ts
 *.swo
 *.swn
 .DS_Store
+.DS_Store

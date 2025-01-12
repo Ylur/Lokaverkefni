@@ -9,17 +9,16 @@ import OlderOrdersPage from "./components/orders/OrdersList";
 export default function HomePage() {
   return (
     <div className="flex flex-wrap h-screen">
-      {/* Top-Left Section */}
       <div className="flex justify-center items-center w-full md:w-1/2 p-4 border border-gray-300">
         <Carousel />
       </div>
 
-      {/* Top-Right Section */}
+
       <div className="flex justify-center items-center w-full md:w-1/2 p-4 border border-gray-300">
         <OlderOrdersPage />
       </div>
 
-      {/* Bottom-Left Section */}
+
       <div className="flex flex-col justify-center items-center w-full md:w-1/2 p-4 border border-gray-300 text-center">
         <h2 className="text-xl font-semibold mb-3">Start / Create Order</h2>
         <p className="mb-3">
@@ -33,7 +32,7 @@ export default function HomePage() {
         </a>
       </div>
 
-      {/* Bottom-Right Section */}
+
       <div className="flex justify-center items-center w-full md:w-1/2 p-4 border border-gray-300">
         <DrinkCarousel />
       </div>

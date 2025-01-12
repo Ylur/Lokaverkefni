@@ -27,7 +27,7 @@ export default function Carousel({ onSlideChange }: CarouselProps) {
             "https://www.thecocktaildb.com/api/json/v1/1/random.php"
           );
           const data = await res.json();
-          // Check the correct property 'drinks' and use correct field names
+          // making sure api matches
           if (data.drinks && data.drinks.length > 0) {
             fetched.push({
               src: data.drinks[0].strDrinkThumb,

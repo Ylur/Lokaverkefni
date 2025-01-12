@@ -19,7 +19,7 @@ const CreateOrder: React.FC = () => {
     e.preventDefault();
     setMessage("");
 
-    // Build the data to match backend's validation
+    // Build the data to match "backend's" validation
     const orderData = {
       email: "",
       dishes: [
@@ -39,7 +39,7 @@ const CreateOrder: React.FC = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderData),
-        // credentials: "include", // Typically only needed if using cookies or sessions
+        // credentials: "include", //  only needed if using cookies or sessions, Prod
       });
 
       const data = await res.json();
