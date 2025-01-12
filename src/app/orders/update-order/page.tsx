@@ -1,9 +1,9 @@
-// src/app/orders/update-order/page.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import MiniOrderFlow from "src/app/components/common/MiniOrderFlow";
+import DishPreview from "src/app/components/orders/DishPreview";
 
 /**
  * Loads an existing order from /api/orders/:id
@@ -53,8 +53,7 @@ export default function UpdateOrderPage() {
         throw new Error(data.error || "Failed to update order");
       }
       alert("Order updated!");
-      // Go back to older-orders
-      router.push("/older-orders");
+      router.push("/orders/older-orders");
     } catch (err: any) {
       alert(err.message || "Update failed");
     }
@@ -75,8 +74,7 @@ export default function UpdateOrderPage() {
   if (!order) {
     return (
       <div className="max-w-md mx-auto p-4">
-        {/* "step" is optional here, not strictly in your wizard flow */}
-        <MiniOrderFlow step={0} /> 
+        <MiniOrderFlow step={0} />
         <h1 className="text-2xl font-bold">Update Order</h1>
         {message && <p className="text-red-500">{message}</p>}
       </div>
@@ -85,7 +83,6 @@ export default function UpdateOrderPage() {
 
   return (
     <div className="max-w-md mx-auto p-4">
-      <MiniOrderFlow step={0} />
       <h1 className="text-2xl font-bold mb-4">Update Order #{order._id}</h1>
       {message && <p className="text-red-500 mb-2">{message}</p>}
 
@@ -149,6 +146,16 @@ export default function UpdateOrderPage() {
             />
           </div>
         ))}
+      </div>
+
+      {/* Display dynamic dish previews based on dish IDs */}
+      <div className="mb-4">
+        <h2 className="font-semibold mt-4">Dish Previews:</h2>
+        <div className="flex flex-wrap gap-4">
+          {order.dishes?.map((dish: any, idx: number) => (
+            <DishPreview key={idx} dishId={dish.idMeal} />
+          ))}
+        </div>
       </div>
 
       <button
