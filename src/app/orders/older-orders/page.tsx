@@ -3,7 +3,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import MiniOrderFlow from "src/app/components/common/MiniOrderFlow";
+
 
 export default function OlderOrdersPage() {
   const [email, setEmail] = useState("");
@@ -35,7 +35,7 @@ export default function OlderOrdersPage() {
 
       // If no orders are returned, redirect to the No Orders page
       if (data.orders.length === 0) {
-        router.push("/no-orders");
+        router.push("/orders/no-orders");
       } else {
         setOrders(data.orders);
       }
@@ -73,8 +73,6 @@ export default function OlderOrdersPage() {
 
   return (
     <div className="max-w-md mx-auto p-4">
-      <MiniOrderFlow step={0} />
-
       <h1 className="text-2xl font-bold mb-4">Older Orders</h1>
       <div className="mb-2">
         <label>Email to search:</label>

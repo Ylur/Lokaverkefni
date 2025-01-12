@@ -1,4 +1,3 @@
-// src/app/orders/layout.tsx
 "use client";
 
 import React from "react";
@@ -10,12 +9,17 @@ export default function OrdersLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-row">
-      <aside className="w-1/4 p-4 bg-gray-100">
+    <div className="flex flex-col md:flex-row">
+      <aside 
+        className="w-full md:w-1/4 p-4 bg-gray-100" 
+        aria-label="Order Steps Navigation"
+      >
         <MiniOrderFlow step={0} />
       </aside>
 
-      <main className="w-3/4 p-4">{children}</main>
+      <main className="w-full md:w-3/4 p-4">
+        {children}
+      </main>
     </div>
   );
 }
