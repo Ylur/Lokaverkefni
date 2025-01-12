@@ -44,3 +44,4 @@ tailwind.config.ts
 *.swn
 .DS_Store
 .DS_Store
+.unimportedrc.json
