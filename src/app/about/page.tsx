@@ -6,8 +6,8 @@ const AboutPage: FC = () => {
   return (
     <>
       <div className="container mx-auto p-8">
-        <h1 className="text-4xl font-bold text-center mb-10">About Us</h1>
-        <p className="text-lg text-accent text-center leading-relaxed">
+        <h1 className="text-4xl text-primary font-bold text-center mb-10">About Us</h1>
+        <p className="text-lg text-primary text-center leading-relaxed">
           Welcome to <span className="font-bold">Lil bits.</span> <br />
           <br />
           <br />
@@ -16,7 +16,7 @@ const AboutPage: FC = () => {
           <br />
           <br />
         </p>
-        <p className="text-lg text-accent mt-4 text-center">
+        <p className="text-lg text-primary mt-4 text-center">
           Come join us at <span className="font-bold">Lil bits</span>, where
           good food meets great company!
         </p>

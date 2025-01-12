@@ -23,11 +23,11 @@ export default function Carousel({ onSlideChange }: CarouselProps) {
       // Fetch 3 random drinks for the carousel
       for (let i = 0; i < 3; i++) {
         try {
-          const res = await fetch(
+          const res = await fetch(  
             "https://www.thecocktaildb.com/api/json/v1/1/random.php"
           );
           const data = await res.json();
-          // making sure api matches
+          // making sure api matc
           if (data.drinks && data.drinks.length > 0) {
             fetched.push({
               src: data.drinks[0].strDrinkThumb,
