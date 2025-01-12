@@ -1,7 +1,6 @@
 "use client";
 
 import React, { FC } from "react";
-import Hero from "../components/common/Hero";
 
 
 const AboutPage: FC = () => {
@@ -23,7 +22,6 @@ const AboutPage: FC = () => {
           Come join us at <span className="font-bold">Lil bits</span>, where
           good food meets great company!
         </p>
-        <Hero />
         <br />
         <br />
         

@@ -3,7 +3,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import MiniOrderFlow from "../components/common/MiniOrderFlow";
+import MiniOrderFlow from "src/app/components/common/MiniOrderFlow";
 
 export default function OlderOrdersPage() {
   const [email, setEmail] = useState("");
