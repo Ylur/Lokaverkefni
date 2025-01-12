@@ -1,3 +1,4 @@
+// src/app/types.ts
 /**
  * Represents a selected dish in an order.
  */
@@ -26,6 +27,7 @@ export interface Order {
   dishes: SelectedDish[];
   drinks: SelectedDrink[];
   total: number;
+  status: string; // Added status property
 }
 
 /**
@@ -68,4 +70,16 @@ export interface LoginResponse extends AuthResponse {
 export interface APIError extends AuthResponse {
   statusCode?: number; // HTTP status code
   debugInfo?: string; // Debugging information
+}
+
+export interface Meal {
+  idMeal: string;
+  strMeal: string;
+  strMealThumb: string;
+}
+
+export interface SelectedMeal {
+  idMeal: string;
+  strMeal: string;
+  quantity: number;
 }
