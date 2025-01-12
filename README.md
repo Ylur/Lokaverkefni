@@ -1,5 +1,6 @@
 Tilraun 293 á lokaverkefni.
-
+ORDERS_FILE_PATH=src/data/orders.json
+C:\Users\Notandi\Lokaverkefni-1\.env.local
 
 
 Orderflow:
