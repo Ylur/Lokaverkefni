@@ -45,7 +45,8 @@ export default function OlderOrdersPage() {
   }
 
   function handleUpdate(orderId: string) {
-    router.push(`/update-order?id=${orderId}`);
+    router.push(`/orders/update-order?id=${orderId}`);
+
   }
 
   function handleReOrder(order: any) {
