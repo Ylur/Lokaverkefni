@@ -65,6 +65,22 @@ export default function OlderOrdersPage() {
     }
   }
 
+  const data = await res.json();
+  if (!res.ok || !data.success) {
+    throw new Error(data.error || "Failed to fetch older orders");
+  }
+
+  // If no orders are returned, push to the No Orders page
+  if (data.orders.length === 0) {
+    router.push('/no-orders'); // Navigate to NoOrdersPage
+  } else {
+    setOrders(data.orders);
+  }
+} catch (err: any) {
+  setMessage(err.message || "Error fetching older orders");
+}
+}
+
   return (
     <div className="max-w-md mx-auto p-4">
       <MiniOrderFlow step={0} />

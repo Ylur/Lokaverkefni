@@ -75,7 +75,6 @@ export default function BookingPage() {
 
   return (
     <div className="container mx-auto p-4">
-      {/* Step = 3 => "Booking Details" */}
       <MiniOrderFlow step={3} />
 
       <h1 className="text-2xl font-bold mb-4">Booking Details</h1>
@@ -107,6 +106,9 @@ export default function BookingPage() {
           className="border p-2 w-full"
           value={time}
           onChange={(e) => setTime(e.target.value)}
+          min="16:00"
+          max="23:00"
+          step="1800" //30min fresti
         />
       </div>
 
