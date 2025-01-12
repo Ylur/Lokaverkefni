@@ -8,7 +8,6 @@ export default function BookingPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Extract existing data from the URL
   const initialEmail = searchParams.get("email") || "";
   const initialDishes = searchParams.get("dishes");
   const initialDrinks = searchParams.get("drinks");
@@ -18,30 +17,25 @@ export default function BookingPage() {
   const [time, setTime] = useState("");
   const [people, setPeople] = useState(1);
 
-  // Get today's date in YYYY-MM-DD format for date validation
   const today = new Date().toISOString().split("T")[0];
 
   function validate() {
-    // Email validation
     if (!email.includes("@") || !email.includes(".")) {
       alert("Please enter a valid email address.");
       return false;
     }
-    // People count validation
     if (people < 1 || people > 10) {
       alert("Number of people must be between 1 and 10.");
       return false;
     }
-    // Date validation
     if (!date) {
       alert("Please select a date.");
       return false;
     }
     if (date < today) {
-      alert("Date cant be in the past.");
+      alert("Date must not be in the past.");
       return false;
     }
-    // Time validation
     if (!time) {
       alert("Please select a time (between 16:00 and 23:00).");
       return false;
@@ -50,15 +44,13 @@ export default function BookingPage() {
       alert("Time must be between 16:00 and 23:00.");
       return false;
     }
-    // If booking for today, ensure time is in the future
     if (date === today) {
       const now = new Date();
       const [selectedHour, selectedMinute] = time.split(":").map(Number);
       const selectedDateTime = new Date();
       selectedDateTime.setHours(selectedHour, selectedMinute, 0, 0);
-      // Compare the selected time with current time
       if (selectedDateTime < now) {
-        alert("You cannot book in the past.");
+        alert("You cannot book for a time in the past.");
         return false;
       }
     }
@@ -109,11 +101,25 @@ export default function BookingPage() {
           />
         </div>
         <div className="mb-4">
+          {/* Einnig hægt að nota svona.
+
+          <label className="block font-semibold mb-1">Time (16:00-23:00):</label>
+<select
+  className="border p-2 w-full"
+  value={time}
+  onChange={(e) => setTime(e.target.value)}
+>
+  {["16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00"].map((t) => (
+    <option key={t} value={t}>{t}</option>
+  ))}
+</select>
+*/}
           <label className="block font-semibold mb-1">
             Time (16:00-23:00):
           </label>
           <input
             type="time"
+            list="half-hour-times"
             lang="en-GB"
             className="border p-2 w-full"
             value={time}
@@ -122,6 +128,27 @@ export default function BookingPage() {
             max="23:00"
             step="1800"
           />
+          <datalist id="half-hour-times">
+            {[
+              "16:00",
+              "16:30",
+              "17:00",
+              "17:30",
+              "18:00",
+              "18:30",
+              "19:00",
+              "19:30",
+              "20:00",
+              "20:30",
+              "21:00",
+              "21:30",
+              "22:00",
+              "22:30",
+              "23:00",
+            ].map((t) => (
+              <option key={t} value={t} />
+            ))}
+          </datalist>
         </div>
         <div className="mb-4">
           <label className="block font-semibold mb-1">
