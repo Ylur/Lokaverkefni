@@ -1,6 +1,6 @@
 
 
-// In-memory store or import from a single store
+//in memory backup ef order.json er ekki að virka
 let orders: any[] = [];
 
 // GET all

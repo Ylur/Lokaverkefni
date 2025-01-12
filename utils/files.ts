@@ -1,9 +1,13 @@
+// src/utils/files.ts
 import fs from "fs";
 import path from "path";
 
-// var í brasi með path, skipti yfir í env.local
+// Use environment variable for file path, or default if not set
 const ordersFilePath = path.resolve(process.env.ORDERS_FILE_PATH || "src/data/orders.json");
+console.log("Using orders file path:", ordersFilePath);
 
+
+// Function to read the json files that stores orders
 export function readOrdersFile(): any[] {
   try {
     const data = fs.readFileSync(ordersFilePath, "utf-8");

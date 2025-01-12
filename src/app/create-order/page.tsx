@@ -33,6 +33,7 @@ export default function CreateOrderPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    console.log("Submitting order:", { email, dishes, drinks, date, time, people });
     setMessage("");
 
     if (!email) {
