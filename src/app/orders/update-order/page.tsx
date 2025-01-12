@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import DishPreview from "src/app/components/orders/DishPreview";
 import {
@@ -12,6 +12,13 @@ import {
 } from "src/app/types";
 
 export default function UpdateOrderPage() {
+  return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <UpdateOrder />
+      </Suspense>
+    );
+  }
+  function UpdateOrder() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const id = searchParams.get("id");

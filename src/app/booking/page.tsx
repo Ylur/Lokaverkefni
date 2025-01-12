@@ -1,10 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import MiniOrderFlow from "src/app/components/common/MiniOrderFlow";
 
 export default function BookingPage() {
+   return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Booking />
+      </Suspense>
+    );
+  }
+  function Booking() {
   const searchParams = useSearchParams();
   const router = useRouter();
 

@@ -1,10 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import ReceiptComponent from "../components/orders/ReceiptComponent";
 
 export default function ReceiptPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ReceiptContent />
+    </Suspense>
+  );
+}
+
+function ReceiptContent() {
   const searchParams = useSearchParams();
   const [message, setMessage] = useState("");
   const [finalOrder, setFinalOrder] = useState<any>(null);
