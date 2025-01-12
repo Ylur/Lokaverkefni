@@ -16,8 +16,8 @@
     },
     "devDependencies": {
         "@types/node": "^20.17.10",
-        "@types/react": "^19.0.4",
-        "@types/react-dom": "^19.0.2",
+        "@types/react": "^19.0.5",
+        "@types/react-dom": "^19.0.3",
         "@types/uuid": "^10.0.0",
         "autoprefixer": "^10.4.20",
         "postcss": "^8.4.49",

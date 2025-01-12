@@ -47,7 +47,6 @@ export default function DishDetailPage(props: { params: Promise<{ id: string }> 
       <h1>{dish.strMeal}</h1>
       <img src={dish.strMealThumb} alt={dish.strMeal} />
       <p>{dish.strInstructions}</p>
-      {/* Display additional details as needed */}
     </div>
   );
 }

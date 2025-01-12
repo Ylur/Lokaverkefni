@@ -1,7 +1,8 @@
 "use client";
 
-import React, { FC, JSX } from "react";
+import React, { FC, JSX, useEffect, useState } from "react";
 import Image from "next/image";
+
 
 interface MenuItem {
   name: string;
@@ -10,73 +11,30 @@ interface MenuItem {
 }
 
 const MenuPage: FC = () => {
-  const starters: MenuItem[] = [
-    {
-      name: "Chicken Caesar Salad",
-      description:
-        "Romaine Lettuce, Grilled Chicken, Parmesan Cheese, and Caesar Dressing",
-      image: "/photos/Dish1.png",
-    },
-    {
-      name: "Classic Cobb Salad",
-      description:
-        "Grilled Chicken, Avocado, Bacon, Hard-Boiled Eggs, Tomatoes, and Blue Cheese Dressing",
-      image: "/photos/Dish2.png",
-    },
-    {
-      name: "Asian Chicken Salad",
-      description:
-        "Shredded Chicken, Mandarin Oranges, Crispy Wontons, and Sesame Ginger Dressing",
-      image: "/photos/Dish3.png",
-    },
-  ];
+  const [starters, setStarters] = useState<MenuItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const mainCourses: MenuItem[] = [
-    {
-      name: "Southwest Chicken Salad",
-      description:
-        "Grilled Chicken, Corn, Black Beans, Avocado, Tomatoes, and Chipotle Ranch Dressing",
-      image: "/photos/Dish4.png",
-    },
-    {
-      name: "Grilled Chicken Salad",
-      description:
-        "Mixed Greens, Grilled Chicken, Cherry Tomatoes, Red Onion, and Balsamic Vinaigrette",
-      image: "/photos/Dish5.png",
-    },
-    {
-      name: "Greek Chicken Salad",
-      description:
-        "Grilled Chicken, Feta Cheese, Cucumbers, Kalamata Olives, and Lemon-Olive Oil Dressing",
-      image: "/photos/Dish6.png",
-    },
-    {
-      name: "Buffalo Chicken Salad",
-      description:
-        "Crispy Chicken Tenders, Mixed Greens, Carrots, Celery, Blue Cheese Crumbles, and Buffalo Ranch Dressing",
-      image: "/photos/Dish7.png",
-    },
-  ];
+  useEffect(() => {
+    async function fetchMenu() {
+      try {
+        // Fetch starters from TheMealDB API as an example
+        const response = await fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Starter");
+        const data = await response.json();
+        const starterItems: MenuItem[] = data.meals.map((meal: any) => ({
+          name: meal.strMeal,
+          image: meal.strMealThumb,
+          description: "", // The filter endpoint doesn't provide descriptions
+        }));
 
-  const sandwiches: MenuItem[] = [
-    {
-      name: "Grilled Chicken Panini",
-      description: "Mozzarella Cheese, Roasted Red Peppers, and Pesto Mayo",
-      image: "/photos/Dish8.png",
-    },
-    {
-      name: "Chicken Salad Sandwich",
-      description:
-        "Shredded Chicken, Grapes, Almonds, and Lettuce on Whole Wheat Bread",
-      image: "/photos/Dish9.png",
-    },
-  ];
-
-  const sides: MenuItem[] = [
-    { name: "Sweet Potato Fries", image: "/photos/Dish1.png" },
-    { name: "Garlic Parmesan Fries", image: "/photos/Dish2.png" },
-    { name: "Grilled Vegetables", image: "/photos/Dish3.png" },
-  ];
+        setStarters(starterItems);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching menu data:", error);
+        setLoading(false);
+      }
+    }
+    fetchMenu();
+  }, []);
 
   const renderMenuSection = (title: string, items: MenuItem[]): JSX.Element => (
     <section className="mb-8">
@@ -100,7 +58,6 @@ const MenuPage: FC = () => {
       </div>
     </section>
   );
-
   return (
     <>
       <div
@@ -114,15 +71,15 @@ const MenuPage: FC = () => {
           </div>
         </div>
       </div>
-
       <div className="container mx-auto p-8">
-        {renderMenuSection("Starters", starters)}
-        {renderMenuSection("Main Courses", mainCourses)}
-        {renderMenuSection("Sandwiches", sandwiches)}
-        {renderMenuSection("Sides", sides)}
+        {loading ? (
+          <p>Loading menu...</p>
+        ) : (
+          <>
+            {renderMenuSection("Starters", starters)}
+          </>
+        )}
       </div>
     </>
   );
 };
-
-export default MenuPage;

@@ -16,7 +16,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["framendi/src/*"]
+      "@/*": ["Lokaverkefni-1/src/*"]
     },
     "plugins": [
       {
