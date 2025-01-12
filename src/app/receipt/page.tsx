@@ -62,31 +62,6 @@ export default function ReceiptPage() {
       total,
     };
 
-    // Optionally, POST to local /api/orders to store in DB:
-    // 
-    /*
-    async function postOrder() {
-      try {
-        const res = await fetch("/api/orders", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(order),
-        });
-        const data = await res.json();
-
-        if (!res.ok || !data.success) {
-          throw new Error(data.error || "Failed to create order");
-        }
-        // On success, store the created order data
-        setFinalOrder(data.order);
-      } catch (err: any) {
-        setMessage(err.message || "Error creating order.");
-      }
-    }
-
-    postOrder();
-    */
-
     // for dev - set finalOrder:
     setFinalOrder(order);
   }, [searchParams]);

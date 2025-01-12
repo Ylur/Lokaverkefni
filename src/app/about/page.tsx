@@ -1,7 +1,6 @@
 "use client";
 
 import React, { FC } from "react";
-import Image from "next/image";
 import Hero from "../components/common/Hero";
 
 
@@ -10,7 +9,7 @@ const AboutPage: FC = () => {
     <>
       <div className="container mx-auto p-8">
         <h1 className="text-4xl font-bold text-center mb-10">About Us</h1>
-        <Hero />
+       
         <p className="text-lg text-accent text-center leading-relaxed">
           Welcome to <span className="font-bold">Lil bits.</span> <br />
           <br />
@@ -24,6 +23,7 @@ const AboutPage: FC = () => {
           Come join us at <span className="font-bold">Lil bits</span>, where
           good food meets great company!
         </p>
+        <Hero />
         <br />
         <br />
         

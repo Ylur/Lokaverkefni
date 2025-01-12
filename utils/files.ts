@@ -1,14 +1,9 @@
-// src/utils/files.ts
 import fs from "fs";
 import path from "path";
 
-// Update the path to point to the correct location of orders.json
-const ordersFilePath = path.join(process.cwd(), "src", "data", "orders.json");
+// var í brasi með path, skipti yfir í env.local
+const ordersFilePath = path.resolve(process.env.ORDERS_FILE_PATH || "src/data/orders.json");
 
-/**
- * Reads orders from `orders.json`. Returns an array of orders.
- * If the file doesn't exist or is malformed, returns [].
- */
 export function readOrdersFile(): any[] {
   try {
     const data = fs.readFileSync(ordersFilePath, "utf-8");
@@ -19,9 +14,6 @@ export function readOrdersFile(): any[] {
   }
 }
 
-/**
- * Writes the given array of orders to `orders.json`.
- */
 export function writeOrdersFile(orders: any[]): void {
   try {
     fs.writeFileSync(ordersFilePath, JSON.stringify(orders, null, 2), "utf-8");

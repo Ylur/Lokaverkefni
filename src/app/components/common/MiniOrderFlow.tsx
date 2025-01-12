@@ -14,6 +14,7 @@ export default function MiniOrderFlow({ step }: MiniOrderFlowProps) {
     { label: "Select Drinks", stepNumber: 2 },
     { label: "Booking", stepNumber: 3 },
     { label: "Receipt", stepNumber: 4 },
+    { label: "Reviewing", stepNumber: 5 },
   ];
 
   return (
