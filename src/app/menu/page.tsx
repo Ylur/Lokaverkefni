@@ -1,8 +1,7 @@
 "use client";
 
-import React, { FC, JSX, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Image from "next/image";
-
 
 interface MenuItem {
   name: string;
@@ -12,31 +11,62 @@ interface MenuItem {
 
 const MenuPage: FC = () => {
   const [starters, setStarters] = useState<MenuItem[]>([]);
+  const [drinks, setDrinks] = useState<MenuItem[]>([]);
+  const [dishes, setDishes] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    async function fetchMenu() {
+    async function fetchMenuData() {
       try {
-        // Fetch starters from TheMealDB API as an example
-        const response = await fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Starter");
-        const data = await response.json();
-        const starterItems: MenuItem[] = data.meals.map((meal: any) => ({
+        setLoading(true);
+        setError("");
+
+        // Fetch starters
+        const startersResponse = await fetch(
+          "https://www.themealdb.com/api/json/v1/1/filter.php?c=Starter"
+        );
+        const startersData = await startersResponse.json();
+        const startersItems: MenuItem[] = startersData.meals.map((meal: any) => ({
           name: meal.strMeal,
           image: meal.strMealThumb,
-          description: "", // The filter endpoint doesn't provide descriptions
         }));
+        setStarters(startersItems);
 
-        setStarters(starterItems);
+        // Fetch random drinks
+        const drinksResponse = await fetch(
+          "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail"
+        );
+        const drinksData = await drinksResponse.json();
+        const drinksItems: MenuItem[] = drinksData.drinks.map((drink: any) => ({
+          name: drink.strDrink,
+          image: drink.strDrinkThumb,
+        }));
+        setDrinks(drinksItems);
+
+        // Fetch random dishes
+        const dishesResponse = await fetch(
+          "https://www.themealdb.com/api/json/v1/1/filter.php?c=Beef"
+        );
+        const dishesData = await dishesResponse.json();
+        const dishesItems: MenuItem[] = dishesData.meals.map((dish: any) => ({
+          name: dish.strMeal,
+          image: dish.strMealThumb,
+        }));
+        setDishes(dishesItems);
+
         setLoading(false);
-      } catch (error) {
-        console.error("Error fetching menu data:", error);
+      } catch (err) {
+        console.error("Error fetching menu data:", err);
+        setError("Failed to load menu. Please try again later.");
         setLoading(false);
       }
     }
-    fetchMenu();
+
+    fetchMenuData();
   }, []);
 
-  const renderMenuSection = (title: string, items: MenuItem[]): JSX.Element => (
+  const renderMenuSection = (title: string, items: MenuItem[]) => (
     <section className="mb-8">
       <h2 className="text-2xl font-serif font-semibold mb-4">{title}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -58,6 +88,7 @@ const MenuPage: FC = () => {
       </div>
     </section>
   );
+
   return (
     <>
       <div
@@ -67,19 +98,25 @@ const MenuPage: FC = () => {
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative flex items-center justify-center h-full">
           <div className="text-center text-white">
-            <h1 className="text-5xl font-bold">Our LiL menu</h1>
+            <h1 className="text-5xl font-bold">Our LiL Menu</h1>
           </div>
         </div>
       </div>
       <div className="container mx-auto p-8">
         {loading ? (
           <p>Loading menu...</p>
+        ) : error ? (
+          <p className="text-red-500">{error}</p>
         ) : (
           <>
             {renderMenuSection("Starters", starters)}
+            {renderMenuSection("Dishes", dishes)}
+            {renderMenuSection("Drinks", drinks)}
           </>
         )}
       </div>
     </>
   );
 };
+
+export default MenuPage;
