@@ -1,30 +1,29 @@
-// app/page.tsx
 "use client";
 
 import React from "react";
 import "./globals.css";
 import Carousel from "./components/common/Carousel";
+import DrinkCarousel from "./components/common/DrinkCarousel"
 import OlderOrdersPage from "./components/orders/OrdersList";
 
 export default function HomePage() {
   return (
     <div className="flex flex-wrap h-screen">
       {/* Top-Left Section */}
-      <div className="w-full md:w-1/2 p-4 border border-gray-300">
+      <div className="flex justify-center items-center w-full md:w-1/2 p-4 border border-gray-300">
         <Carousel />
       </div>
 
       {/* Top-Right Section */}
-      <div className="w-full md:w-1/2 p-4 border border-gray-300">
+      <div className="flex justify-center items-center w-full md:w-1/2 p-4 border border-gray-300">
         <OlderOrdersPage />
       </div>
 
       {/* Bottom-Left Section */}
-      <div className="w-full md:w-1/2 p-4 border border-gray-300 text-center">
+      <div className="flex flex-col justify-center items-center w-full md:w-1/2 p-4 border border-gray-300 text-center">
         <h2 className="text-xl font-semibold mb-3">Start / Create Order</h2>
         <p className="mb-3">
-          Begin your journey by selecting dishes, drinks, and finalizing your
-          booking.
+          Begin your journey by selecting dishes, drinks, and finalizing your booking.
         </p>
         <a
           href="/select-dish"
@@ -35,8 +34,8 @@ export default function HomePage() {
       </div>
 
       {/* Bottom-Right Section */}
-      <div className="w-full md:w-1/2 p-4 border border-gray-300">
-        <Carousel />
+      <div className="flex justify-center items-center w-full md:w-1/2 p-4 border border-gray-300">
+        <DrinkCarousel />
       </div>
     </div>
   );

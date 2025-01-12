@@ -16,23 +16,26 @@ export default function Carousel({ onSlideChange }: CarouselProps) {
   const [slides, setSlides] = useState<Slide[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Fetch slides from the dish API on mount
+  // Fetch slides from the drink API on mount
   useEffect(() => {
     async function fetchSlides() {
       const fetched: Slide[] = [];
-      // Fetch 3 random dishes for the carousel
+      // Fetch 3 random drinks for the carousel
       for (let i = 0; i < 3; i++) {
         try {
-          const res = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
+          const res = await fetch(
+            "https://www.thecocktaildb.com/api/json/v1/1/random.php"
+          );
           const data = await res.json();
-          if (data.meals && data.meals.length > 0) {
+          // Check the correct property 'drinks' and use correct field names
+          if (data.drinks && data.drinks.length > 0) {
             fetched.push({
-              src: data.meals[0].strMealThumb,
-              alt: data.meals[0].strMeal,
+              src: data.drinks[0].strDrinkThumb,
+              alt: data.drinks[0].strDrink,
             });
           }
         } catch (error) {
-          console.error("Error fetching dish:", error);
+          console.error("Error fetching drink:", error);
         }
       }
       setSlides(fetched);
@@ -58,11 +61,10 @@ export default function Carousel({ onSlideChange }: CarouselProps) {
   }, [slides.length, onSlideChange]);
 
   // Determine which three slides to display based on currentIndex
-  const indicesToShow = slides.length > 0
-    ? [0, 1, 2].map(
-        (offset) => (currentIndex + offset) % slides.length
-      )
-    : [];
+  const indicesToShow =
+    slides.length > 0
+      ? [0, 1, 2].map((offset) => (currentIndex + offset) % slides.length)
+      : [];
 
   return (
     <div className="flex justify-center items-center overflow-hidden w-full h-[200px]">

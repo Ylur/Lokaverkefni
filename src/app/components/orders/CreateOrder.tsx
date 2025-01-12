@@ -30,11 +30,11 @@ const CreateOrder: React.FC = () => {
         },
       ],
       drinks: [],
-      total: 9.99 * Number(form.quantity), // just a placeholder calculation
+      total: 9.99 * Number(form.quantity), // placeholder / random prices set
     };
 
     try {
-      // Adjust the fetch URL as needed; here, it hits /api/orders on the same domain
+      // the fetch URL hits /api/orders on the same domain
       const res = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
