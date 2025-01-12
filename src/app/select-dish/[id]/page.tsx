@@ -1,7 +1,7 @@
 // src/app/dish/[id]/page.tsx
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, use } from "react";
 
 interface Dish {
   idMeal: string;
@@ -10,7 +10,8 @@ interface Dish {
   strInstructions: string;
 }
 
-export default function DishDetailPage({ params }: { params: { id: string } }) {
+export default function DishDetailPage(props: { params: Promise<{ id: string }> }) {
+  const params = use(props.params);
   const { id } = params;
   const [dish, setDish] = useState<Dish | null>(null);
   const [loading, setLoading] = useState(true);

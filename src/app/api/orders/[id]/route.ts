@@ -6,7 +6,8 @@ import { readOrdersFile, writeOrdersFile } from '../../../../../utils/files';
  * GET handler for /api/orders/{id}
  * Returns a specific order by ID.
  */
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
   const orders = readOrdersFile();
   const order = orders.find(o => o._id === id);
@@ -20,7 +21,8 @@ export async function GET(request: Request, { params }: { params: { id: string }
  * PUT handler for /api/orders/{id}
  * Updates fields of an existing order by ID.
  */
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
   const body = await request.json();
   const { dishes, drinks, total, status } = body;
@@ -45,9 +47,10 @@ export async function PUT(request: Request, { params }: { params: { id: string }
  * DELETE handler for /api/orders/{id}
  * Deletes an order by ID.
  */
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   await DELETE
-  
+
   const { id } = params;
   let orders = readOrdersFile();
   const initialLength = orders.length;

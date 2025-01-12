@@ -1,7 +1,7 @@
 // src/app/drink/[id]/page.tsx
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, use } from "react";
 
 interface Drink {
   idDrink: string;
@@ -11,11 +11,12 @@ interface Drink {
  
 }
 
-export default function DrinkDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function DrinkDetailPage(
+  props: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  const params = use(props.params);
   const { id } = params;
   const [drink, setDrink] = useState<Drink | null>(null);
   const [loading, setLoading] = useState(true);

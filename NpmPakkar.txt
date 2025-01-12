@@ -1,0 +1,2 @@
+NPM pakkar 
+next-async-request-api codemod can fix many of these cases automatically:
