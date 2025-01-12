@@ -1,4 +1,3 @@
-// app/components/common/MiniOrderFlow.tsx
 "use client";
 
 import React from "react";
@@ -18,13 +17,17 @@ export default function MiniOrderFlow({ step }: MiniOrderFlowProps) {
   ];
 
   return (
-    <div className="p-4 border rounded-full">
-      <h2 className="text-2xl font-semibold mb-3">Order status</h2>
-      <ul className="space-y-1">
+    <div className="p-4 border rounded-xl shadow-md w-full max-w-md mx-auto md:max-w-lg lg:max-w-xl bg-gray-200">
+      <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-4 text-center">
+        Order Status
+      </h2>
+      <ul className="space-y-2">
         {steps.map(({ label, stepNumber }) => (
           <li
             key={stepNumber}
-            className={stepNumber === step ? "font-bold" : "opacity-60"}
+            className={`${
+              stepNumber === step ? "font-bold text-blue-600" : "opacity-60"
+            } text-sm md:text-base lg:text-lg`}
           >
             {label}
           </li>

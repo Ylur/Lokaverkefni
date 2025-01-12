@@ -1,3 +1,4 @@
+// src/utils/files.ts
 import fs from "fs";
 import path from "path";
 
@@ -24,6 +25,7 @@ export function readOrdersFile(): any[] {
 export function writeOrdersFile(orders: any[]): void {
   try {
     fs.writeFileSync(ordersFilePath, JSON.stringify(orders, null, 2), "utf-8");
+    console.log("Orders successfully saved to", ordersFilePath);
   } catch (err) {
     console.error("Error writing orders file:", err);
   }

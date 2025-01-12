@@ -20,7 +20,6 @@ export default function OlderOrdersPage() {
     }
 
     try {
-      // Use relative path now that backend is integrated
       const res = await fetch(
         `/api/orders?email=${encodeURIComponent(email)}`,
         {
@@ -47,10 +46,23 @@ export default function OlderOrdersPage() {
     params.set("email", order.email);
     params.set("dishes", JSON.stringify(order.dishes));
     params.set("drinks", JSON.stringify(order.drinks));
-    // Update route if needed; for integrated backend, adjust path accordingly
+
     router.push(`/booking?${params.toString()}`);
-    // If your booking page is under /orders, use:
-    // router.push(`/orders/booking?${params.toString()}`);
+  }
+  async function handleDelete(orderId: string) {
+    try {
+      const res = await fetch(`/api/orders/${orderId}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to delete order");
+      }
+      // Removed the deleted order from UI
+      setOrders((prev) => prev.filter((o) => o._id !== orderId));
+    } catch (err: any) {
+      setMessage(err.message || "Error deleting order");
+    }
   }
 
   return (
@@ -96,6 +108,12 @@ export default function OlderOrdersPage() {
                   className="bg-green-600 text-white px-2 py-1"
                 >
                   Re-Order
+                </button>
+                <button
+                  onClick={() => handleDelete(o._id)}
+                  className="bg-red-600 text-white px-2 py-1"
+                >
+                  Delete
                 </button>
               </div>
             </li>

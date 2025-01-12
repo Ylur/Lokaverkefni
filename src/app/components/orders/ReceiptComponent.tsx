@@ -8,7 +8,7 @@ interface ReceiptComponentProps {
 }
 
 /**
- * Displays the final order. 
+ * Displays the final order.
  * Includes a "Done" button that goes back to homepage or wherever you'd like.
  */
 const ReceiptComponent: React.FC<ReceiptComponentProps> = ({ finalOrder }) => {
@@ -34,14 +34,23 @@ const ReceiptComponent: React.FC<ReceiptComponentProps> = ({ finalOrder }) => {
       <h2 className="text-xl font-semibold mt-4">Dishes:</h2>
       {finalOrder.dishes?.map((dish: any, i: number) => (
         <p key={i}>
-          {dish.strMeal} (x{dish.quantity})
+          <a href={`/dish/${dish.idMeal}`} className="text-blue-500 underline">
+            {dish.strMeal}
+          </a>{" "}
+          (x{dish.quantity})
         </p>
       ))}
 
       <h2 className="text-xl font-semibold mt-4">Drinks:</h2>
       {finalOrder.drinks?.map((drink: any, i: number) => (
         <p key={i}>
-          {drink.strDrink} (x{drink.quantity})
+          <a
+            href={`/drink/${drink.idDrink}`}
+            className="text-blue-500 underline"
+          >
+            {drink.strDrink}
+          </a>{" "}
+          (x{drink.quantity})
         </p>
       ))}
 
