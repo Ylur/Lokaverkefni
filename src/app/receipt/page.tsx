@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import MiniOrderFlow from "../components/common/MiniOrderFlow";
 import ReceiptComponent from "../components/orders/ReceiptComponent";
 
 export default function ReceiptPage() {
@@ -39,10 +38,10 @@ export default function ReceiptPage() {
     // Calculate total (adjust prices as needed)
     let total = 0;
     dishes.forEach((dish) => {
-      total += dish.quantity * 10; 
+      total += dish.quantity * 10;
     });
     drinks.forEach((drink) => {
-      total += drink.quantity * 5; 
+      total += drink.quantity * 5;
     });
 
     // Build the final order object dynamically, capturing the email and other details
@@ -85,7 +84,6 @@ export default function ReceiptPage() {
   if (message) {
     return (
       <div className="p-4">
-        <MiniOrderFlow step={4} />
         <p className="text-red-500">{message}</p>
       </div>
     );
@@ -95,7 +93,6 @@ export default function ReceiptPage() {
   if (!finalOrder) {
     return (
       <div className="p-4">
-        <MiniOrderFlow step={4} />
         <p>Loading your final order...</p>
       </div>
     );
@@ -104,7 +101,6 @@ export default function ReceiptPage() {
   // Once the order is successfully saved, display the receipt
   return (
     <div className="p-4">
-      <MiniOrderFlow step={4} />
       <ReceiptComponent finalOrder={finalOrder} />
     </div>
   );

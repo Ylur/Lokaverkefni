@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import MiniOrderFlow from "src/app/components/common/MiniOrderFlow";
 import DishPreview from "src/app/components/orders/DishPreview";
 import {
   Order,
