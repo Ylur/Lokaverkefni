@@ -1,3 +1,5 @@
+//src/app/components/orders/SelectDishes.tsx
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -25,7 +27,7 @@ export default function SelectDishes() {
   const [dishes, setDishes] = useState<Meal[]>([]);
   const [selected, setSelected] = useState<SelectedMeal[]>([]);
   const router = useRouter();
-  // So we can carry forward any existing "email" param or other data if needed
+
   const searchParams = useSearchParams();
   const email = searchParams.get("email") || "";
 

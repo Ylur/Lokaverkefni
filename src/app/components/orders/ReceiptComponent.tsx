@@ -1,17 +1,13 @@
-//src/app/components/orders/ReceiptComponent.tsx
+// src/app/components/orders/ReceiptComponent.tsx
 "use client";
 
 import React from "react";
 import { useRouter } from "next/navigation";
 
 interface ReceiptComponentProps {
-  finalOrder: any; // Adjust with a stronger Type if you like
+  finalOrder: any;
 }
 
-/**
- * Displays the final order.
- * Includes a "Done" button that goes back to homepage or wherever you'd like.
- */
 const ReceiptComponent: React.FC<ReceiptComponentProps> = ({ finalOrder }) => {
   const router = useRouter();
 
@@ -35,7 +31,10 @@ const ReceiptComponent: React.FC<ReceiptComponentProps> = ({ finalOrder }) => {
       <h2 className="text-xl font-semibold mt-4">Dishes:</h2>
       {finalOrder.dishes?.map((dish: any, i: number) => (
         <p key={i}>
-          <a href={`/dish/${dish.idMeal}`} className="text-blue-500 underline">
+          <a
+            href={`/select-dish/${dish.idMeal}`}
+            className="text-blue-500 underline"
+          >
             {dish.strMeal}
           </a>{" "}
           (x{dish.quantity})
@@ -46,7 +45,7 @@ const ReceiptComponent: React.FC<ReceiptComponentProps> = ({ finalOrder }) => {
       {finalOrder.drinks?.map((drink: any, i: number) => (
         <p key={i}>
           <a
-            href={`/drink/${drink.idDrink}`}
+            href={`/select-drinks/${drink.idDrink}`}
             className="text-blue-500 underline"
           >
             {drink.strDrink}

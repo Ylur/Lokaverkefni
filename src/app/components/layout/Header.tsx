@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 const Header: React.FC = () => {
   const pathname = usePathname();
 
-  // Showing on what page users are currently.
+  // Showing on what page users are currently
   const linkClass = (path: string) =>
     pathname === path ? "text-green-300 font-bold" : "";
 

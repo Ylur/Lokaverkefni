@@ -4,7 +4,7 @@ import React from "react";
 import "./globals.css";
 import Carousel from "./components/common/Carousel";
 import DrinkCarousel from "./components/common/DrinkCarousel"
-import OlderOrdersPage from "./components/orders/OrdersList";
+import NavButton from "./components/orders/NavButton"
 
 export default function HomePage() {
   return (
@@ -15,7 +15,10 @@ export default function HomePage() {
 
 
       <div className="flex justify-center items-center w-full md:w-1/2 p-4 border border-gray-300">
-        <OlderOrdersPage />
+        <NavButton 
+        route="/orders/older-orders"
+        buttonText="Look up your previous orders here"
+        />
       </div>
 
 

@@ -1,58 +1,53 @@
-// src/app/drink/[id]/page.tsx
-"use client";
-
-import React, { useEffect, useState, use } from "react";
+// src/app/select-drinks/[id]/page.tsx
+import React from "react";
 
 interface Drink {
   idDrink: string;
   strDrink: string;
   strDrinkThumb: string;
   strInstructions: string;
- 
 }
 
-export default function DrinkDetailPage(
-  props: {
-    params: Promise<{ id: string }>;
-  }
-) {
-  const params = use(props.params);
-  const { id } = params;
-  const [drink, setDrink] = useState<Drink | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    async function fetchDrink() {
-      try {
-        const res = await fetch(
-          `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
-        );
-        const data = await res.json();
-        if (data.drinks && data.drinks.length > 0) {
-          setDrink(data.drinks[0]);
-        } else {
-          setError("Drink not found");
-        }
-      } catch (err) {
-        setError("Error fetching drink details");
-      } finally {
-        setLoading(false);
-      }
+async function fetchDrink(id: string): Promise<Drink | null> {
+  try {
+    const res = await fetch(
+      `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
+    );
+    if (!res.ok) {
+      throw new Error("Network response was not ok");
     }
-    fetchDrink();
-  }, [id]);
+    const data = await res.json();
+    if (data.drinks && data.drinks.length > 0) {
+      return data.drinks[0];
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  return null;
+}
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
-  if (!drink) return <p>No details available.</p>;
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function DrinkDetailPage({ params }: PageProps) {
+  // Await the params before using its properties
+  const { id } = await params;
+  const drink = await fetchDrink(id);
+
+  if (!drink) {
+    return <p>Drink not found or error fetching details.</p>;
+  }
 
   return (
-    <div>
-      <h1>{drink.strDrink}</h1>
-      <img src={drink.strDrinkThumb} alt={drink.strDrink} />
+    <div className="max-w-2xl mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-4">{drink.strDrink}</h1>
+      <img
+        src={drink.strDrinkThumb}
+        alt={drink.strDrink}
+        className="w-full h-auto mb-4"
+      />
       <p>{drink.strInstructions}</p>
-      
     </div>
   );
 }

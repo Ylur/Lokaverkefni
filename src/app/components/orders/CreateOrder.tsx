@@ -34,7 +34,7 @@ const CreateOrder: React.FC = () => {
     };
 
     try {
-      // the fetch URL hits /api/orders on the same domain
+      // the fetch URL hits /api/orders on the same domain aka local dev
       const res = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
