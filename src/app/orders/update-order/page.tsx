@@ -1,5 +1,5 @@
 "use client";
-// LAGA UI Á DISHES OG DRINKS SVO ÞAÐ SÉ HORIZONTAL LIÍKA
+// LAGA UI Á DISHES OG DRINKS SVO ÞAÐ SÉ HORIZONTAL LIÍKA TODO (africa)
 import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import {
