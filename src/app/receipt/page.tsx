@@ -3,6 +3,7 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import ReceiptComponent from "../components/orders/ReceiptComponent";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function ReceiptPage() {
   return (
@@ -16,9 +17,11 @@ function ReceiptContent() {
   const searchParams = useSearchParams();
   const [message, setMessage] = useState("");
   const [finalOrder, setFinalOrder] = useState<any>(null);
+  const [orderSubmitted, setOrderSubmitted] = useState(false);
 
   useEffect(() => {
-    // Extract parameters from the URL
+    if (orderSubmitted) return; // Prevent duplicate submissions
+
     const email = searchParams.get("email");
     const date = searchParams.get("date");
     const time = searchParams.get("time");
@@ -26,13 +29,11 @@ function ReceiptContent() {
     const dishesParam = searchParams.get("dishes");
     const drinksParam = searchParams.get("drinks");
 
-    // Basic validation
     if (!email || !date || !time || !people || !dishesParam || !drinksParam) {
       setMessage("Missing booking info or items from previous steps.");
       return;
     }
 
-    // Parse the JSON parameters
     let dishes: any[] = [];
     let drinks: any[] = [];
     try {
@@ -43,7 +44,6 @@ function ReceiptContent() {
       return;
     }
 
-    // Calculate total (adjust prices as needed)
     let total = 0;
     dishes.forEach((dish) => {
       total += dish.quantity * 10;
@@ -52,8 +52,8 @@ function ReceiptContent() {
       total += drink.quantity * 5;
     });
 
-    // Build the final order object dynamically, capturing the email and other details
     const order = {
+      transaction: uuidv4(),
       email,
       date,
       time,
@@ -63,8 +63,8 @@ function ReceiptContent() {
       total,
     };
 
-    // Function to submit the order via POST
     const submitOrder = async () => {
+      console.log("Submitting order:", order); ////Debug til að sjá fjölda post triggera TODO LAGA TRIGGERA 
       try {
         const response = await fetch("/api/orders", {
           method: "POST",
@@ -77,39 +77,24 @@ function ReceiptContent() {
           throw new Error(data.error || "Failed to submit order.");
         }
 
-        // On success, store the returned order
         setFinalOrder(data.order);
+        setOrderSubmitted(true); // Mark as submitted
+        console.log("Order Successfully submitted", data.order); //Debug til að sjá fjölda post triggera
       } catch (error: any) {
         setMessage(error.message || "Error submitting order.");
       }
     };
 
-    // Submit the order once the component mounts and dependencies are ready
     submitOrder();
-  }, [searchParams]);
+  }, [searchParams, orderSubmitted]);
 
-  // Display error message if any
   if (message) {
-    return (
-      <div className="p-4">
-        <p className="text-red-500">{message}</p>
-      </div>
-    );
+    return <p className="text-red-500">{message}</p>;
   }
 
-  // Show loading state until the order is set
   if (!finalOrder) {
-    return (
-      <div className="p-4">
-        <p>Loading your final order...</p>
-      </div>
-    );
+    return <p>Loading your final order...</p>;
   }
 
-  // Once the order is successfully saved, display the receipt
-  return (
-    <div className="p-4">
-      <ReceiptComponent finalOrder={finalOrder} />
-    </div>
-  );
+  return <ReceiptComponent finalOrder={finalOrder} />;
 }

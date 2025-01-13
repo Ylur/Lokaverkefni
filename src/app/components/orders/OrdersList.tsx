@@ -26,7 +26,6 @@ export default function OlderOrdersPage() {
           credentials: "include",
         }
       );
-      
 
       const data = await res.json();
       if (!res.ok || !data.success) {

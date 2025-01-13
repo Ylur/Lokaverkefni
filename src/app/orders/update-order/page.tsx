@@ -150,6 +150,12 @@ function UpdateOrder() {
     setOrder({ ...order, dishes: updatedDishes });
   }
 
+  function removeDrink(index: number) {
+    if (!order) return;
+    const updatedDrinks = order.drinks.filter((_, i) => i !== index);
+    setOrder({ ...order, drinks: updatedDrinks });
+  }
+
   function addDishToSelection(dish: Meal) {
     setSelectedDishes((prev) => {
       const exists = prev.find((d) => d.idMeal === dish.idMeal);
@@ -260,7 +266,7 @@ function UpdateOrder() {
             >
               Remove
             </button>
-          </div> //TODO SETJA REMOVE Á DRYKKI
+          </div>
         ))}
         <button
           onClick={() => setShowDishSelector(true)}
@@ -291,6 +297,12 @@ function UpdateOrder() {
               }
               className="border px-1 w-16"
             />
+            <button
+              onClick={() => removeDrink(idx)}
+              className="text-black font-bold ml-2"
+            >
+              Remove
+            </button>
           </div>
         ))}
 

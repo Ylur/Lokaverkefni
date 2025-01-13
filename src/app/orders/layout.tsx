@@ -11,7 +11,7 @@ export default function OrdersLayout({
   return (
     <div className="flex flex-col md:flex-row">
       <aside 
-        className="w-full md:w-1/4 p-4 bg-gray-100" 
+        className="w-full md:w-1/4 p-4 bg-orange" 
         aria-label="Order Steps Navigation"
       >
         <MiniOrderFlow step={0} />

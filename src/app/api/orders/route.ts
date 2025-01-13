@@ -1,16 +1,17 @@
 // src/app/api/orders/route.ts
+
 import { NextResponse } from "next/server";
 import { readOrdersFile, writeOrdersFile } from "../../../../utils/files";
 import { v4 as uuidv4 } from "uuid";
 
 export async function GET(request: Request) {
   console.log("GET handler triggered for /api/orders");
-  // For debugging: print the file path by calling a function that uses it
+  /* // For debugging: printing the file path by calling a function that uses it
   const testPath = (() => {
     const { readOrdersFile } = require("../../../../utils/files");
-    return readOrdersFile(); // This will log errors if path is wrong
+    return readOrdersFile(); // logging errors if path is wrong
   })();
-  console.log("Test read returns:", testPath);
+  console.log("Test read returns:", testPath); */
 
   const { searchParams } = new URL(request.url);
   const email = searchParams.get("email") || undefined;
@@ -29,6 +30,8 @@ export async function POST(request: Request) {
     return null;
   });
 
+  console.log("Received body:", body);
+
   if (!body) {
     return NextResponse.json(
       { success: false, error: "Invalid request body" },
@@ -36,7 +39,8 @@ export async function POST(request: Request) {
     );
   }
 
-  const { email, dishes, drinks, total, date, time, people } = body;
+  const { transaction, email, dishes, drinks, total, date, time, people } =
+    body;
 
   if (!email) {
     return NextResponse.json(
@@ -45,13 +49,18 @@ export async function POST(request: Request) {
     );
   }
 
-  console.log("Using orders file path:", process.env.ORDERS_FILE_PATH);
-
+  // Prevent duplicates by checking the transactionId
   const orders = readOrdersFile();
-  console.log("Existing orders:", orders);
-
+  if (orders.some((order) => order.transaction === transaction)) {
+    console.log("Duplicate transaction detected:", transaction);
+    return NextResponse.json(
+      { success: false, error: "Duplicate order detected." },
+      { status: 409 }
+    );
+  }
   const newOrder = {
     _id: uuidv4(),
+    transaction,
     email,
     dishes: dishes || [],
     drinks: drinks || [],
