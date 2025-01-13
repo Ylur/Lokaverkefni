@@ -1,5 +1,5 @@
 "use client";
-
+// LAGA UI Á DISHES OG DRINKS SVO ÞAÐ SÉ HORIZONTAL LIÍKA
 import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import {
@@ -39,7 +39,9 @@ function UpdateOrder() {
   // States for drinks selection
   const [showDrinkSelector, setShowDrinkSelector] = useState(false);
   const [availableDrinks, setAvailableDrinks] = useState<any[]>([]);
-  const [selectedDrinksToAdd, setSelectedDrinksToAdd] = useState<SelectedDrink[]>([]);
+  const [selectedDrinksToAdd, setSelectedDrinksToAdd] = useState<
+    SelectedDrink[]
+  >([]);
 
   useEffect(() => {
     if (!id) return;
@@ -205,7 +207,7 @@ function UpdateOrder() {
 
   if (!order) {
     return (
-      <div className="max-w-md mx-auto p-4">
+      <div className="w-full max-w-screen-lg mx-auto p-4">
         <h1 className="text-2xl font-bold">Update Order</h1>
         {message && <p className="text-red-500">{message}</p>}
       </div>
@@ -213,7 +215,7 @@ function UpdateOrder() {
   }
 
   return (
-    <div className="max-w-md mx-auto p-4">
+    <div className="w-full max-w-screen-lg mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Update Order #{order.id}</h1>
       {message && <p className="text-red-500 mb-2">{message}</p>}
 
@@ -254,11 +256,11 @@ function UpdateOrder() {
             />
             <button
               onClick={() => removeDish(idx)}
-              className="text-red-500 ml-2"
+              className="text-black font-bold ml-2"
             >
               Remove
             </button>
-          </div>
+          </div> //TODO SETJA REMOVE Á DRYKKI
         ))}
         <button
           onClick={() => setShowDishSelector(true)}
@@ -309,7 +311,6 @@ function UpdateOrder() {
                 dish.idMeal && (
                   <div key={idx} className="shrink-0">
                     <DishPreview dishId={dish.idMeal} />
-                    <p className="text-xs text-center">Qty: {dish.quantity}</p>
                   </div>
                 )
             )}
@@ -320,7 +321,6 @@ function UpdateOrder() {
                 drink.idDrink && (
                   <div key={idx} className="shrink-0">
                     <DrinkPreview drinkId={drink.idDrink} />
-                    <p className="text-xs text-center">Qty: {drink.quantity}</p>
                   </div>
                 )
             )}
