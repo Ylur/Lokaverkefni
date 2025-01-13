@@ -6,6 +6,8 @@ import {
   DishPreview,
   DrinkPreview,
 } from "../../components/orders/DishDrinkPreview";
+import DishSelectorModal from "../../components/orders/DishSelectorModal";
+import DrinkSelectorModal from "../../components/orders/DrinkSelectorModal";
 
 import {
   Order,
@@ -37,9 +39,7 @@ function UpdateOrder() {
   // States for drinks selection
   const [showDrinkSelector, setShowDrinkSelector] = useState(false);
   const [availableDrinks, setAvailableDrinks] = useState<any[]>([]);
-  const [selectedDrinksToAdd, setSelectedDrinksToAdd] = useState<
-    SelectedDrink[]
-  >([]);
+  const [selectedDrinksToAdd, setSelectedDrinksToAdd] = useState<SelectedDrink[]>([]);
 
   useEffect(() => {
     if (!id) return;
@@ -329,137 +329,25 @@ function UpdateOrder() {
       </div>
 
       {showDishSelector && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-4 rounded max-w-lg w-full">
-            <h2 className="font-semibold mb-4">Select Additional Dishes</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {availableDishes.map((dish) => {
-                const isSelected = selectedDishes.some(
-                  (d) => d.idMeal === dish.idMeal
-                );
-                const selectedDish = selectedDishes.find(
-                  (d) => d.idMeal === dish.idMeal
-                );
-                return (
-                  <div key={dish.idMeal} className="p-2 border rounded">
-                    <img
-                      src={dish.strMealThumb}
-                      alt={dish.strMeal}
-                      className="w-full h-auto mb-2"
-                    />
-                    <h3 className="font-semibold">{dish.strMeal}</h3>
-                    <button
-                      onClick={() => addDishToSelection(dish)}
-                      className={`mt-2 px-2 py-1 text-white ${
-                        isSelected ? "bg-red-500" : "bg-green-500"
-                      }`}
-                    >
-                      {isSelected ? "Remove" : "Select"}
-                    </button>
-                    {isSelected && selectedDish && (
-                      <div className="mt-2">
-                        <label className="mr-2">Qty:</label>
-                        <input
-                          type="number"
-                          min={1}
-                          value={selectedDish.quantity}
-                          onChange={(e) =>
-                            updateSelectedDishQuantity(
-                              dish.idMeal,
-                              Number(e.target.value)
-                            )
-                          }
-                          className="border px-1 w-16"
-                        />
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-            <div className="mt-4 flex justify-end gap-2">
-              <button
-                onClick={() => setShowDishSelector(false)}
-                className="px-4 py-2 bg-gray-300 rounded"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={confirmDishSelection}
-                className="px-4 py-2 bg-blue-600 text-white rounded"
-              >
-                Confirm Selection
-              </button>
-            </div>
-          </div>
-        </div>
+        <DishSelectorModal
+          availableDishes={availableDishes}
+          selectedDishes={selectedDishes}
+          addDishToSelection={addDishToSelection}
+          updateSelectedDishQuantity={updateSelectedDishQuantity}
+          setShowDishSelector={setShowDishSelector}
+          confirmDishSelection={confirmDishSelection}
+        />
       )}
 
       {showDrinkSelector && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-4 rounded max-w-lg w-full">
-            <h2 className="font-semibold mb-4">Select Additional Drinks</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {availableDrinks.map((drink) => {
-                const isSelected = selectedDrinksToAdd.some(
-                  (d) => d.idDrink === drink.idDrink
-                );
-                const selectedDrink = selectedDrinksToAdd.find(
-                  (d) => d.idDrink === drink.idDrink
-                );
-                return (
-                  <div key={drink.idDrink} className="p-2 border rounded">
-                    <img
-                      src={drink.strDrinkThumb}
-                      alt={drink.strDrink}
-                      className="w-full h-auto mb-2"
-                    />
-                    <h3 className="font-semibold">{drink.strDrink}</h3>
-                    <button
-                      onClick={() => addDrinkToSelection(drink)}
-                      className={`mt-2 px-2 py-1 text-white ${
-                        isSelected ? "bg-red-500" : "bg-green-500"
-                      }`}
-                    >
-                      {isSelected ? "Remove" : "Select"}
-                    </button>
-                    {isSelected && selectedDrink && (
-                      <div className="mt-2">
-                        <label className="mr-2">Qty:</label>
-                        <input
-                          type="number"
-                          min={1}
-                          value={selectedDrink.quantity}
-                          onChange={(e) =>
-                            updateSelectedDrinkQuantity(
-                              drink.idDrink,
-                              Number(e.target.value)
-                            )
-                          }
-                          className="border px-1 w-16"
-                        />
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-            <div className="mt-4 flex justify-end gap-2">
-              <button
-                onClick={() => setShowDrinkSelector(false)}
-                className="px-4 py-2 bg-gray-300 rounded"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={confirmDrinkSelection}
-                className="px-4 py-2 bg-blue-600 text-white rounded"
-              >
-                Confirm Selection
-              </button>
-            </div>
-          </div>
-        </div>
+        <DrinkSelectorModal
+          availableDrinks={availableDrinks}
+          selectedDrinksToAdd={selectedDrinksToAdd}
+          addDrinkToSelection={addDrinkToSelection}
+          updateSelectedDrinkQuantity={updateSelectedDrinkQuantity}
+          setShowDrinkSelector={setShowDrinkSelector}
+          confirmDrinkSelection={confirmDrinkSelection}
+        />
       )}
 
       <button
