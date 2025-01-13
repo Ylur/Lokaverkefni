@@ -123,6 +123,16 @@
         "idMeal": "52874",
         "strMeal": "Beef and Mustard Pie",
         "quantity": 1
+      },
+      {
+        "idMeal": "52934",
+        "strMeal": "Chicken Basquaise",
+        "quantity": 1
+      },
+      {
+        "idMeal": "53038",
+        "strMeal": "Mustard champ",
+        "quantity": 1
       }
     ],
     "drinks": [
@@ -135,13 +145,18 @@
         "idDrink": "11124",
         "strDrink": "Boomerang",
         "quantity": 1
+      },
+      {
+        "idDrink": "13861",
+        "strDrink": "Nutty Irishman",
+        "quantity": 1
       }
     ],
     "total": 30,
     "date": "2025-01-14",
     "time": "22:00",
     "people": 1,
-    "status": "pending",
+    "status": "confirmed",
     "createdAt": "2025-01-13T18:08:12.198Z"
   },
   {

@@ -2,7 +2,11 @@
 
 import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import DishPreview from "src/app/components/orders/DishPreview";
+import {
+  DishPreview,
+  DrinkPreview,
+} from "../../components/orders/DishDrinkPreview";
+
 import {
   Order,
   SelectedDish,
@@ -13,12 +17,13 @@ import {
 
 export default function UpdateOrderPage() {
   return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <UpdateOrder />
-      </Suspense>
-    );
-  }
-  function UpdateOrder() {
+    <Suspense fallback={<div>Loading...</div>}>
+      <UpdateOrder />
+    </Suspense>
+  );
+}
+
+function UpdateOrder() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const id = searchParams.get("id");
@@ -28,6 +33,13 @@ export default function UpdateOrderPage() {
   const [showDishSelector, setShowDishSelector] = useState(false);
   const [availableDishes, setAvailableDishes] = useState<Meal[]>([]);
   const [selectedDishes, setSelectedDishes] = useState<SelectedMeal[]>([]);
+
+  // States for drinks selection
+  const [showDrinkSelector, setShowDrinkSelector] = useState(false);
+  const [availableDrinks, setAvailableDrinks] = useState<any[]>([]);
+  const [selectedDrinksToAdd, setSelectedDrinksToAdd] = useState<
+    SelectedDrink[]
+  >([]);
 
   useEffect(() => {
     if (!id) return;
@@ -63,6 +75,24 @@ export default function UpdateOrderPage() {
     }
     fetchRandomDishes();
   }, [showDishSelector]);
+
+  useEffect(() => {
+    if (!showDrinkSelector) return;
+    async function fetchRandomDrinks() {
+      const fetched: any[] = [];
+      for (let i = 0; i < 3; i++) {
+        const res = await fetch(
+          "https://www.thecocktaildb.com/api/json/v1/1/random.php"
+        );
+        const data = await res.json();
+        if (data.drinks && data.drinks.length > 0) {
+          fetched.push(data.drinks[0]);
+        }
+      }
+      setAvailableDrinks(fetched);
+    }
+    fetchRandomDrinks();
+  }, [showDrinkSelector]);
 
   async function handleUpdate() {
     if (!id || !order) return;
@@ -143,6 +173,34 @@ export default function UpdateOrderPage() {
     setOrder({ ...order, dishes: [...order.dishes, ...selectedDishes] });
     setShowDishSelector(false);
     setSelectedDishes([]);
+  }
+
+  // Drink selection handlers
+  function addDrinkToSelection(drink: any) {
+    setSelectedDrinksToAdd((prev) => {
+      const exists = prev.find((d) => d.idDrink === drink.idDrink);
+      if (exists) {
+        return prev.filter((d) => d.idDrink !== drink.idDrink);
+      } else {
+        return [
+          ...prev,
+          { idDrink: drink.idDrink, strDrink: drink.strDrink, quantity: 1 },
+        ];
+      }
+    });
+  }
+
+  function updateSelectedDrinkQuantity(drinkId: string, quantity: number) {
+    setSelectedDrinksToAdd((prev) =>
+      prev.map((d) => (d.idDrink === drinkId ? { ...d, quantity } : d))
+    );
+  }
+
+  function confirmDrinkSelection() {
+    if (!order) return;
+    setOrder({ ...order, drinks: [...order.drinks, ...selectedDrinksToAdd] });
+    setShowDrinkSelector(false);
+    setSelectedDrinksToAdd([]);
   }
 
   if (!order) {
@@ -233,15 +291,40 @@ export default function UpdateOrderPage() {
             />
           </div>
         ))}
+
+        <button
+          onClick={() => setShowDrinkSelector(true)}
+          className="bg-blue-500 text-white px-2 py-1 rounded mt-2"
+        >
+          Add Drink
+        </button>
       </div>
 
       <div className="mb-4">
-        <h2 className="font-semibold mt-4">Dish Previews:</h2>
-        <div className="flex flex-wrap gap-4">
-          {order.dishes?.map(
-            (dish, idx) =>
-              dish.idMeal && <DishPreview key={idx} dishId={dish.idMeal} />
-          )}
+        <h2 className="font-semibold mt-4">Your Order Preview:</h2>
+        <div className="flex flex-col space-y-4">
+          <div className="flex overflow-x-auto space-x-4">
+            {order.dishes?.map(
+              (dish, idx) =>
+                dish.idMeal && (
+                  <div key={idx} className="shrink-0">
+                    <DishPreview dishId={dish.idMeal} />
+                    <p className="text-xs text-center">Qty: {dish.quantity}</p>
+                  </div>
+                )
+            )}
+          </div>
+          <div className="flex overflow-x-auto space-x-4">
+            {order.drinks?.map(
+              (drink, idx) =>
+                drink.idDrink && (
+                  <div key={idx} className="shrink-0">
+                    <DrinkPreview drinkId={drink.idDrink} />
+                    <p className="text-xs text-center">Qty: {drink.quantity}</p>
+                  </div>
+                )
+            )}
+          </div>
         </div>
       </div>
 
@@ -303,6 +386,73 @@ export default function UpdateOrderPage() {
               </button>
               <button
                 onClick={confirmDishSelection}
+                className="px-4 py-2 bg-blue-600 text-white rounded"
+              >
+                Confirm Selection
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showDrinkSelector && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-4 rounded max-w-lg w-full">
+            <h2 className="font-semibold mb-4">Select Additional Drinks</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {availableDrinks.map((drink) => {
+                const isSelected = selectedDrinksToAdd.some(
+                  (d) => d.idDrink === drink.idDrink
+                );
+                const selectedDrink = selectedDrinksToAdd.find(
+                  (d) => d.idDrink === drink.idDrink
+                );
+                return (
+                  <div key={drink.idDrink} className="p-2 border rounded">
+                    <img
+                      src={drink.strDrinkThumb}
+                      alt={drink.strDrink}
+                      className="w-full h-auto mb-2"
+                    />
+                    <h3 className="font-semibold">{drink.strDrink}</h3>
+                    <button
+                      onClick={() => addDrinkToSelection(drink)}
+                      className={`mt-2 px-2 py-1 text-white ${
+                        isSelected ? "bg-red-500" : "bg-green-500"
+                      }`}
+                    >
+                      {isSelected ? "Remove" : "Select"}
+                    </button>
+                    {isSelected && selectedDrink && (
+                      <div className="mt-2">
+                        <label className="mr-2">Qty:</label>
+                        <input
+                          type="number"
+                          min={1}
+                          value={selectedDrink.quantity}
+                          onChange={(e) =>
+                            updateSelectedDrinkQuantity(
+                              drink.idDrink,
+                              Number(e.target.value)
+                            )
+                          }
+                          className="border px-1 w-16"
+                        />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            <div className="mt-4 flex justify-end gap-2">
+              <button
+                onClick={() => setShowDrinkSelector(false)}
+                className="px-4 py-2 bg-gray-300 rounded"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDrinkSelection}
                 className="px-4 py-2 bg-blue-600 text-white rounded"
               >
                 Confirm Selection
