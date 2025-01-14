@@ -12,16 +12,13 @@ interface NavigationButtonProps {
 const NavButton: React.FC<NavigationButtonProps> = ({
   route,
   buttonText = "Ima butttoN!",
-  className = "bg-green-600 text-white px-4 py-2 rounded"
+  className = "bg-green-600 text-white px-4 py-2 rounded",
 }) => {
   const router = useRouter();
 
   return (
     <div className="mt-4 text-center">
-      <button
-        onClick={() => router.push(route)}
-        className={className}
-      >
+      <button onClick={() => router.push(route)} className={className}>
         {buttonText}
       </button>
     </div>

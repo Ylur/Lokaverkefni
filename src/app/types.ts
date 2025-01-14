@@ -27,7 +27,7 @@ export interface Order {
   dishes: SelectedDish[];
   drinks: SelectedDrink[];
   total: number;
-  status: string; // Added status property
+  status: string; 
 }
 
 /**
@@ -54,14 +54,14 @@ export interface AuthResponse {
  * Represents a response from the register API.
  */
 export interface RegisterResponse extends AuthResponse {
-  welcomeMessage?: string; // Example: Add specific properties for RegisterResponse
+  welcomeMessage?: string; // specific properties for RegisterResponse
 }
 
 /**
  * Represents a response from the login API.
  */
 export interface LoginResponse extends AuthResponse {
-  lastLoginTime?: string; // Example: Add specific properties for LoginResponse
+  lastLoginTime?: string; // specific properties for LoginResponse
 }
 
 /**

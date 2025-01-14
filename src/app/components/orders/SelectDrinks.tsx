@@ -18,7 +18,7 @@ interface SelectedDrink {
 }
 
 /**
- * Similar logic to SelectDishes, but for random drinks from thecocktaildb.
+ * select desired drinks, set quantity, and proceed.
  */
 export default function SelectDrinks() {
   const [drinks, setDrinks] = useState<Drink[]>([]);

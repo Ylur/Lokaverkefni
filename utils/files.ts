@@ -7,7 +7,6 @@ import path from "path";
  // ? path.resolve(process.cwd(), process.env.ORDERS_FILE_PATH) 
 //  : path.join(process.cwd(), 'src', 'data', 'orders.json');
 
-// or default if not set
 const ordersFilePath = path.join(process.cwd(), 'src', 'data', 'orders.json');
 console.log("Using orders file path:", ordersFilePath);
 
