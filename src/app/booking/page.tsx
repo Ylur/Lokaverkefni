@@ -83,65 +83,77 @@ export default function BookingPage() {
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold">Booking Details</h1>
-      <div className="space-x-2 mb-4">
-        <button
-          onClick={handleBack}
-          className="bg-gray-400 text-white px-3 py-1"
-        >
-          Back (Drinks)
-        </button>
-        <button
-          onClick={handleNext}
-          className="bg-blue-600 text-white px-3 py-1"
-        >
-          Next (Receipt)
-        </button>
-      </div>
+    <div className="p-4 text-white flex justify-center">
+      {/* Constrain the form to max-width and center it */}
+      <div className="max-w-md w-full">
+        <h1 className="text-2xl font-bold mb-4">Booking Details</h1>
 
-      <div className="max-w-md space-y-2">
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            className="border w-full"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+        <div className="space-x-2 mb-4">
+          <button
+            onClick={handleBack}
+            className="bg-primary hover:bg-green-700 text-white px-3 py-1"
+          >
+            Back (Drinks)
+          </button>
+          <button
+            onClick={handleNext}
+            className="bg-primary hover:bg-green-700 text-white px-3 py-1"
+          >
+            Next (Receipt)
+          </button>
         </div>
-        <div>
-          <label>Date:</label>
-          <input
-            type="date"
-            className="border w-full"
-            min={today}
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Time (16:00-23:00):</label>
-          <input
-            type="time"
-            className="border w-full"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            min="16:00"
-            max="23:00"
-            step={1800}
-          />
-        </div>
-        <div>
-          <label>People (1-10):</label>
-          <input
-            type="number"
-            className="border w-full"
-            min={1}
-            max={10}
-            value={people}
-            onChange={(e) => setPeople(Number(e.target.value))}
-          />
+
+        <p className="mb-4">
+          Please fill in your booking details. We’ll prepare your table and confirm your order!
+        </p>
+
+        <div className="bg-black/40 p-4 rounded shadow space-y-4">
+          {/* Email */}
+          <div>
+            <label className="block font-semibold">Email:</label>
+            <input
+              type="email"
+              className="border w-full text-black p-1"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          {/* Date */}
+          <div>
+            <label className="block font-semibold">Date:</label>
+            <input
+              type="date"
+              className="border w-full text-black p-1"
+              min={today}
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
+          {/* Time */}
+          <div>
+            <label className="block font-semibold">Time (16:00-23:00):</label>
+            <input
+              type="time"
+              className="border w-full text-black p-1"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              min="16:00"
+              max="23:00"
+              step={1800}
+            />
+          </div>
+          {/* People */}
+          <div>
+            <label className="block font-semibold">People (1-10):</label>
+            <input
+              type="number"
+              className="border w-full text-black p-1"
+              min={1}
+              max={10}
+              value={people}
+              onChange={(e) => setPeople(Number(e.target.value))}
+            />
+          </div>
         </div>
       </div>
     </div>

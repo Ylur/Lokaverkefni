@@ -23,7 +23,7 @@ export default function HomePage() {
           {/* Primary Call to Action */}
           <Link
             href="/select-dishes"
-            className="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded shadow transition"
+            className="inline-block bg-primary hover:bg-green-700 text-white px-6 py-2 rounded shadow transition"
           >
             Create Order
           </Link>
@@ -31,6 +31,7 @@ export default function HomePage() {
           <NavButton
             route="/orders/older-orders"
             buttonText="View Previous Orders"
+            className="text-white bg-primary hover:bg-green-700 px-6 py-2 rounded shadow transition"
           />
         </div>
       </section>

@@ -96,7 +96,7 @@ export default function SelectDishes() {
   return (
     <div className="p-4">
       <h1 className="text-xl font-bold">Select Dishes</h1>
-      <button onClick={handleNext} className="bg-blue-500 text-white px-3 py-1">
+      <button onClick={handleNext} className="bg-primary hover:bg-green-700 text-white px-3 py-1">
         Next (Select Drinks)
       </button>
 
@@ -105,7 +105,7 @@ export default function SelectDishes() {
       ) : (
         <div className="grid grid-cols-3 gap-4 mt-4">
           {dishes.map((dish) => {
-            const isSelected = selectedDishes.some((d) => d.idMeal === dish.idMeal);
+            const isSelected = selectedDishes.some((d) =>   d.idMeal === dish.idMeal);
             const dishData = selectedDishes.find((d) => d.idMeal === dish.idMeal);
 
             return (
@@ -120,7 +120,7 @@ export default function SelectDishes() {
                 <button
                   onClick={() => toggleDish(dish)}
                   className={`${
-                    isSelected ? "bg-red-500" : "bg-green-500"
+                    isSelected ? "bg-accent" : "bg-primary"
                   } text-white px-2 py-1 mt-2`}
                 >
                   {isSelected ? "Remove" : "Select"}
