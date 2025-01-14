@@ -158,5 +158,238 @@
     "people": 10,
     "status": "pending",
     "createdAt": "2025-01-14T10:46:12.318Z"
+  },
+  {
+    "_id": "db2be72b-4496-442e-a96f-0c2f4ed77c2e",
+    "transaction": "4d2e7fa3-a20d-4f8f-8d2f-1ec64cef403f",
+    "email": "13@13.is",
+    "dishes": [
+      {
+        "idMeal": "53064",
+        "strMeal": "Fettuccine Alfredo",
+        "quantity": 1
+      }
+    ],
+    "drinks": [
+      {
+        "idDrink": "17251",
+        "strDrink": "Boulevardier",
+        "quantity": 1
+      }
+    ],
+    "total": 15,
+    "date": "2025-01-15",
+    "time": "16:30",
+    "people": 1,
+    "status": "pending",
+    "createdAt": "2025-01-14T20:10:37.761Z"
+  },
+  {
+    "_id": "e894d51d-3b67-4b5a-9ae7-92d4706f2dc0",
+    "transaction": "70aa45a8-55ec-4097-a0c2-bdf3cab05f03",
+    "email": "13@13.is",
+    "dishes": [
+      {
+        "idMeal": "53064",
+        "strMeal": "Fettuccine Alfredo",
+        "quantity": 1
+      }
+    ],
+    "drinks": [
+      {
+        "idDrink": "17251",
+        "strDrink": "Boulevardier",
+        "quantity": 1
+      }
+    ],
+    "total": 15,
+    "date": "2025-01-15",
+    "time": "16:30",
+    "people": 1,
+    "status": "pending",
+    "createdAt": "2025-01-14T20:10:37.762Z"
+  },
+  {
+    "_id": "888f057d-278a-4740-8a5b-5c53d85773cb",
+    "transaction": "d6342f46-75ba-4b1d-802c-2a5ebdc94cac",
+    "email": "13@13.is",
+    "dishes": [
+      {
+        "idMeal": "52820",
+        "strMeal": "Katsu Chicken curry",
+        "quantity": 1
+      }
+    ],
+    "drinks": [
+      {
+        "idDrink": "15330",
+        "strDrink": "Orange Crush",
+        "quantity": 1
+      }
+    ],
+    "total": 15,
+    "date": "2025-01-16",
+    "time": "17:30",
+    "people": 1,
+    "status": "pending",
+    "createdAt": "2025-01-14T20:11:07.748Z"
+  },
+  {
+    "_id": "8d8bd21a-56b1-4382-a724-cc2cbd3e1d04",
+    "transaction": "4b41e827-62a4-42b9-98f5-178761ac849c",
+    "email": "13@13.is",
+    "dishes": [
+      {
+        "idMeal": "52820",
+        "strMeal": "Katsu Chicken curry",
+        "quantity": 1
+      }
+    ],
+    "drinks": [
+      {
+        "idDrink": "15330",
+        "strDrink": "Orange Crush",
+        "quantity": 1
+      }
+    ],
+    "total": 15,
+    "date": "2025-01-16",
+    "time": "17:30",
+    "people": 1,
+    "status": "pending",
+    "createdAt": "2025-01-14T20:11:07.751Z"
+  },
+  {
+    "_id": "eef0b4bd-17d8-4924-a9a8-fdc628373619",
+    "transaction": "ba7b84ff-5ed4-4274-9091-a4ecba5cb948",
+    "email": "159@159.is",
+    "dishes": [
+      {
+        "idMeal": "52972",
+        "strMeal": "Tunisian Lamb Soup",
+        "quantity": 1
+      }
+    ],
+    "drinks": [
+      {
+        "idDrink": "17222",
+        "strDrink": "A1",
+        "quantity": 1
+      },
+      {
+        "idDrink": "12914",
+        "strDrink": "Egg-Nog - Classic Cooked",
+        "quantity": 1
+      },
+      {
+        "idDrink": "14133",
+        "strDrink": "Cosmopolitan Martini",
+        "quantity": 1
+      }
+    ],
+    "total": 25,
+    "date": "2025-01-16",
+    "time": "00:12",
+    "people": 1,
+    "status": "pending",
+    "createdAt": "2025-01-14T21:10:49.182Z"
+  },
+  {
+    "_id": "0eb74e8a-e017-416c-8bee-be453dd5d2f5",
+    "transaction": "b3b941fa-0d97-43f2-b73f-11bc18cc35f8",
+    "email": "99@99.is",
+    "dishes": [],
+    "drinks": [
+      {
+        "idDrink": "13066",
+        "strDrink": "Bruce's Puce",
+        "quantity": 1
+      }
+    ],
+    "total": 5,
+    "date": "2025-01-15",
+    "time": "17:17",
+    "people": 2,
+    "status": "pending",
+    "createdAt": "2025-01-14T21:24:23.064Z"
+  },
+  {
+    "_id": "747f3818-ebba-4d67-be72-1cb40788e030",
+    "transaction": "7b3aee56-2839-40d7-9193-e10f914d1784",
+    "email": "99@99.is",
+    "dishes": [],
+    "drinks": [
+      {
+        "idDrink": "13066",
+        "strDrink": "Bruce's Puce",
+        "quantity": 1
+      }
+    ],
+    "total": 5,
+    "date": "2025-01-15",
+    "time": "17:17",
+    "people": 2,
+    "status": "pending",
+    "createdAt": "2025-01-14T21:24:23.070Z"
+  },
+  {
+    "_id": "205ecd58-89cb-47b6-bed9-b9aa4a503412",
+    "transaction": "ed7043bb-1bcc-44c5-beb5-a7ebf27afc9e",
+    "email": "666@666.is",
+    "dishes": [
+      {
+        "idMeal": "52831",
+        "strMeal": "Chicken Karaage",
+        "quantity": 1
+      },
+      {
+        "idMeal": "52806",
+        "strMeal": "Tandoori chicken",
+        "quantity": 1
+      },
+      {
+        "idMeal": "52807",
+        "strMeal": "Baingan Bharta",
+        "quantity": 1
+      },
+      {
+        "idMeal": "52943",
+        "strMeal": "Oxtail with broad beans",
+        "quantity": 1
+      },
+      {
+        "idMeal": "52902",
+        "strMeal": "Parkin Cake",
+        "quantity": 2
+      }
+    ],
+    "drinks": [
+      {
+        "idDrink": "11766",
+        "strDrink": "Midnight Cowboy",
+        "quantity": 1
+      },
+      {
+        "idDrink": "178342",
+        "strDrink": "Gin and Soda",
+        "quantity": 1
+      },
+      {
+        "idDrink": "14602",
+        "strDrink": "Tequila Surprise",
+        "quantity": 1
+      },
+      {
+        "idDrink": "11117",
+        "strDrink": "Blue Lagoon",
+        "quantity": 1
+      }
+    ],
+    "total": 80,
+    "date": "2025-01-14",
+    "time": "23:40",
+    "people": 1,
+    "status": "confirmed",
+    "createdAt": "2025-01-14T21:38:29.788Z"
   }
 ]

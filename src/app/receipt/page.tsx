@@ -1,100 +1,186 @@
 "use client";
 
-import React, { useEffect, useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
-import ReceiptComponent from "../components/orders/ReceiptComponent";
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
 
-export default function ReceiptPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ReceiptContent />
-    </Suspense>
-  );
+interface SelectedMeal {
+  idMeal: string;
+  strMeal: string;
+  quantity: number;
 }
 
-function ReceiptContent() {
+interface SelectedDrink {
+  idDrink: string;
+  strDrink: string;
+  quantity: number;
+}
+
+export default function ReceiptPage() {
   const searchParams = useSearchParams();
-  const [message, setMessage] = useState("");
+  const router = useRouter();
+
   const [finalOrder, setFinalOrder] = useState<any>(null);
-  const [orderSubmitted, setOrderSubmitted] = useState(false);
+  const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    if (orderSubmitted) return; // Prevent duplicate submissions
+  // Safely parse from query (use coalescing so they're never null)
+  const email = searchParams.get("email") ?? "";
+  const date = searchParams.get("date") ?? "";
+  const time = searchParams.get("time") ?? "";
+  const peopleStr = searchParams.get("people") ?? "";
 
-    const email = searchParams.get("email");
-    const date = searchParams.get("date");
-    const time = searchParams.get("time");
-    const people = searchParams.get("people");
-    const dishesParam = searchParams.get("dishes");
-    const drinksParam = searchParams.get("drinks");
+  let dishes: SelectedMeal[] = [];
+  let drinks: SelectedDrink[] = [];
 
-    if (!email || !date || !time || !people || !dishesParam || !drinksParam) {
-      setMessage("Missing booking info or items from previous steps.");
-      return;
-    }
+  try {
+    dishes = JSON.parse(searchParams.get("dishes") ?? "[]");
+    drinks = JSON.parse(searchParams.get("drinks") ?? "[]");
+  } catch (err) {
+    return <p className="text-red-500">Error parsing dishes/drinks from query.</p>;
+  }
 
-    let dishes: any[] = [];
-    let drinks: any[] = [];
+  // If something is missing, show an error (optional)
+  if (!email || !date || !time || !peopleStr) {
+    return <p className="text-red-500">Missing booking info (email, date, time, or people).</p>;
+  }
+
+  // Convert people to a number
+  const people = Number(peopleStr);
+  if (Number.isNaN(people) || people < 1) {
+    return <p className="text-red-500">Invalid number of people.</p>;
+  }
+
+  // Example cost logic
+  let total = 0;
+  for (const dish of dishes) {
+    total += dish.quantity * 10;
+  }
+  for (const drink of drinks) {
+    total += drink.quantity * 5;
+  }
+
+  // Build the order object to POST (when user presses Done)
+  const orderToPost = {
+    transaction: uuidv4(),
+    email,
+    date,
+    time,
+    people,
+    dishes,
+    drinks,
+    total,
+  };
+
+  // POST /api/orders only on button click
+  const [orderPosted, setOrderPosted] = useState(false);
+
+  async function handleDone() {
+    setMessage("");
     try {
-      dishes = JSON.parse(dishesParam);
-      drinks = JSON.parse(drinksParam);
-    } catch (err) {
-      setMessage("Error parsing dishes or drinks from query params.");
-      return;
-    }
-
-    let total = 0;
-    dishes.forEach((dish) => {
-      total += dish.quantity * 10;
-    });
-    drinks.forEach((drink) => {
-      total += drink.quantity * 5;
-    });
-
-    const order = {
-      transaction: uuidv4(),
-      email,
-      date,
-      time,
-      people: Number(people),
-      dishes,
-      drinks,
-      total,
-    };
-
-    const submitOrder = async () => {
-      console.log("Submitting order:", order); ////Debug til að sjá fjölda post triggera TODO LAGA TRIGGERA 
-      try {
-        const response = await fetch("/api/orders", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(order),
-        });
-
-        const data = await response.json();
-        if (!response.ok) {
-          throw new Error(data.error || "Failed to submit order.");
-        }
-
-        setFinalOrder(data.order);
-        setOrderSubmitted(true); // Mark as submitted
-        console.log("Order Successfully submitted", data.order); //Debug til að sjá fjölda post triggera
-      } catch (error: any) {
-        setMessage(error.message || "Error submitting order.");
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderToPost),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to create order");
       }
-    };
-
-    submitOrder();
-  }, [searchParams, orderSubmitted]);
-
-  if (message) {
-    return <p className="text-red-500">{message}</p>;
+      setFinalOrder(data.order);
+      setMessage("Order created successfully!");
+      setOrderPosted(true);
+    } catch (error: any) {
+      setMessage(error.message || "Error submitting order.");
+    }
   }
 
-  if (!finalOrder) {
-    return <p>Loading your final order...</p>;
+  // Go back to booking
+  function handleBack() {
+    const params = new URLSearchParams();
+    params.set("dishes", JSON.stringify(dishes));
+    params.set("drinks", JSON.stringify(drinks));
+    params.set("email", email);
+    params.set("date", date);
+    params.set("time", time);
+    params.set("people", String(people));
+    router.push(`/booking?${params.toString()}`);
   }
 
-  return <ReceiptComponent finalOrder={finalOrder} />;
+  // If we have a finalOrder, show the actual “receipt”
+  if (finalOrder) {
+    return (
+      <div className="p-4">
+        <h1 className="text-2xl font-bold">Receipt</h1>
+        {message && <p className="text-green-600">{message}</p>}
+
+        <p>Email: {finalOrder.email}</p>
+        <p>Date: {finalOrder.date}</p>
+        <p>Time: {finalOrder.time}</p>
+        <p>People: {finalOrder.people}</p>
+
+        <h2 className="font-semibold mt-4">Dishes:</h2>
+        {finalOrder.dishes?.map((dish: any, i: number) => (
+          <p key={i}>
+            {dish.strMeal} (x{dish.quantity})
+          </p>
+        ))}
+
+        <h2 className="font-semibold mt-4">Drinks:</h2>
+        {finalOrder.drinks?.map((drink: any, i: number) => (
+          <p key={i}>
+            {drink.strDrink} (x{drink.quantity})
+          </p>
+        ))}
+
+        <p className="font-bold mt-2">Total: ${finalOrder.total}</p>
+
+        <button onClick={() => router.push("/")} className="bg-green-500 text-white px-4 py-2 mt-4">
+          Done
+        </button>
+      </div>
+    );
+  }
+
+  // Otherwise, show “preview” (not posted yet)
+  return (
+    <div className="p-4">
+      <h1 className="text-2xl font-bold">Receipt (Preview)</h1>
+      <div className="mb-2">
+        <button onClick={handleBack} className="bg-gray-400 text-white px-3 py-1">
+          Back (Booking)
+        </button>
+      </div>
+
+      <p>Email: {email}</p>
+      <p>Date: {date}</p>
+      <p>Time: {time}</p>
+      <p>People: {people}</p>
+
+      <h2 className="font-semibold mt-4">Dishes:</h2>
+      {dishes.map((dish, i) => (
+        <p key={i}>
+          {dish.strMeal} (x{dish.quantity})
+        </p>
+      ))}
+
+      <h2 className="font-semibold mt-4">Drinks:</h2>
+      {drinks.map((drink, i) => (
+        <p key={i}>
+          {drink.strDrink} (x{drink.quantity})
+        </p>
+      ))}
+
+      <p className="font-bold mt-2">Total: ${total}</p>
+
+      {message && <p className="text-red-500 mt-2">{message}</p>}
+
+      <button
+        onClick={handleDone}
+        className="bg-blue-600 text-white px-4 py-2 mt-4"
+        disabled={orderPosted}
+      >
+        Confirm (POST Order)
+      </button>
+    </div>
+  );
 }

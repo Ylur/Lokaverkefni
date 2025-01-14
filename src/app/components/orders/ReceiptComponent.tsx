@@ -32,7 +32,7 @@ const ReceiptComponent: React.FC<ReceiptComponentProps> = ({ finalOrder }) => {
       {finalOrder.dishes?.map((dish: any, i: number) => (
         <p key={i}>
           <a
-            href={`/select-dish/${dish.idMeal}`}
+            href={`/select-dishes/${dish.idMeal}`}
             className="text-blue-500 underline"
           >
             {dish.strMeal}

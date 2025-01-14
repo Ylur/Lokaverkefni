@@ -1,16 +1,13 @@
-//src/app/components/orders/SelectDishes.tsx
-
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 
-/** Basic interface for random Meal data from themealdb.com */
 interface Meal {
+  idMeal: string;
   strMeal: string;
   strMealThumb: string;
-  idMeal: string;
 }
 
 interface SelectedMeal {
@@ -19,111 +16,127 @@ interface SelectedMeal {
   quantity: number;
 }
 
-/**
- * Allows user to fetch random dishes (3 in this example),
- * select desired dishes, set quantity, and proceed to "SelectDrinks".
- */
-export default function SelectDishes() {
-  const [dishes, setDishes] = useState<Meal[]>([]);
-  const [selected, setSelected] = useState<SelectedMeal[]>([]);
-  const router = useRouter();
+interface SelectedDrink {
+  idDrink: string;
+  strDrink: string;
+  quantity: number;
+}
 
+export default function SelectDishes() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const email = searchParams.get("email") || "";
+
+  // 1) Parse existing dishes & drinks from query
+  const [dishes, setDishes] = useState<Meal[]>([]);
+  const [selectedDishes, setSelectedDishes] = useState<SelectedMeal[]>(() => {
+    try {
+      const param = searchParams.get("dishes");
+      return param ? JSON.parse(param) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [selectedDrinks, setSelectedDrinks] = useState<SelectedDrink[]>(() => {
+    try {
+      const param = searchParams.get("drinks");
+      return param ? JSON.parse(param) : [];
+    } catch {
+      return [];
+    }
+  });
 
   useEffect(() => {
-    // On mount, fetch 3 random dishes
-    async function fetchRandomDishes() {
+    async function fetchDishes() {
       const fetched: Meal[] = [];
       for (let i = 0; i < 3; i++) {
         const res = await fetch("https://themealdb.com/api/json/v1/1/random.php");
         const data = await res.json();
-        if (data.meals && data.meals.length > 0) {
+        if (data.meals?.[0]) {
           fetched.push(data.meals[0]);
         }
       }
       setDishes(fetched);
     }
-
-    fetchRandomDishes();
+    fetchDishes();
   }, []);
 
-  // Toggle selection of a dish (if selected, remove; else add)
+  // Toggle dish
   function toggleDish(dish: Meal) {
-    setSelected((prev) => {
-      const exists = prev.find((d) => d.idMeal === dish.idMeal);
-      if (exists) {
-        return prev.filter((d) => d.idMeal !== dish.idMeal);
+    setSelectedDishes((prev) => {
+      const found = prev.find((m) => m.idMeal === dish.idMeal);
+      if (found) {
+        return prev.filter((m) => m.idMeal !== dish.idMeal);
       } else {
         return [...prev, { idMeal: dish.idMeal, strMeal: dish.strMeal, quantity: 1 }];
       }
     });
   }
 
-  // Update quantity for a selected dish
-  function updateQuantity(dishId: string, quantity: number) {
-    setSelected((prev) =>
-      prev.map((d) => (d.idMeal === dishId ? { ...d, quantity } : d))
+  // Update quantity
+  function updateQuantity(idMeal: string, quantity: number) {
+    setSelectedDishes((prev) =>
+      prev.map((m) => (m.idMeal === idMeal ? { ...m, quantity } : m))
     );
   }
 
-  // Proceed to next step -> /select-drinks
   function handleNext() {
-    if (selected.length === 0) {
-      alert("Please select at least one dish.");
-      return;
-    }
-    // Build the query params
+    // We allow skipping dishes? Then do not force the user to pick anything:
+    // if (selectedDishes.length === 0) {
+    //   alert("Please select at least one dish");
+    //   return;
+    // }
+
+    // Put both updated dishes & drinks into query
     const params = new URLSearchParams();
-    if (email) params.set("email", email);
-    params.set("dishes", JSON.stringify(selected));
-    // Move on to the next step
+    params.set("dishes", JSON.stringify(selectedDishes));
+    params.set("drinks", JSON.stringify(selectedDrinks));
     router.push(`/select-drinks?${params.toString()}`);
   }
 
   return (
-    <div className="mt-4">
-      <h1 className="text-xl font-bold mb-4">Select Dishes</h1>
+    <div className="p-4">
+      <h1 className="text-xl font-bold">Select Dishes</h1>
+      <button onClick={handleNext} className="bg-blue-500 text-white px-3 py-1">
+        Next (Select Drinks)
+      </button>
+
       {dishes.length === 0 ? (
         <p>Loading dishes...</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 mt-4">
           {dishes.map((dish) => {
-            const isSelected = selected.some((d) => d.idMeal === dish.idMeal);
-            const selectedDish = selected.find((d) => d.idMeal === dish.idMeal);
+            const isSelected = selectedDishes.some((d) => d.idMeal === dish.idMeal);
+            const dishData = selectedDishes.find((d) => d.idMeal === dish.idMeal);
 
             return (
-              <div
-                key={dish.idMeal}
-                className="p-4 border rounded bg-white shadow"
-              >
+              <div key={dish.idMeal} className="border p-2">
                 <Image
                   src={dish.strMealThumb}
                   alt={dish.strMeal}
-                  width={400}
-                  height={300}
-                  className="object-cover mb-2"
+                  width={200}
+                  height={150}
                 />
-                <h2 className="font-semibold text-lg">{dish.strMeal}</h2>
+                <p>{dish.strMeal}</p>
                 <button
                   onClick={() => toggleDish(dish)}
-                  className={`mt-2 px-2 py-1 text-white ${
+                  className={`${
                     isSelected ? "bg-red-500" : "bg-green-500"
-                  }`}
+                  } text-white px-2 py-1 mt-2`}
                 >
                   {isSelected ? "Remove" : "Select"}
                 </button>
-                {isSelected && selectedDish && (
+
+                {isSelected && dishData && (
                   <div className="mt-2">
-                    <label className="mr-2">Qty:</label>
+                    <label>Quantity:</label>
                     <input
                       type="number"
+                      className="border ml-2"
+                      value={dishData.quantity}
                       min={1}
-                      value={selectedDish.quantity}
                       onChange={(e) =>
                         updateQuantity(dish.idMeal, Number(e.target.value))
                       }
-                      className="border px-1 w-16"
                     />
                   </div>
                 )}
@@ -132,12 +145,6 @@ export default function SelectDishes() {
           })}
         </div>
       )}
-      <button
-        onClick={handleNext}
-        className="bg-blue-600 text-white px-4 py-2 mt-4 rounded"
-      >
-        Next (Select Drinks)
-      </button>
     </div>
   );
 }

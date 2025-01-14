@@ -1,57 +1,81 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
-const Header: React.FC = () => {
+/**
+ * TopMenu with a logo on the left that navigates home, 
+ * and non-clickable labels that highlight the current page/section.
+ */
+export default function TopMenu() {
   const pathname = usePathname();
 
-  // Showing on what page users are currently
-  const linkClass = (path: string) =>
-    pathname === path ? "text-green-300 font-bold" : "";
+  /**
+   * We define “sections” by an array of objects.
+   * Each object has:
+   *   label -> what to display
+   *   paths -> any routes that should highlight this label
+   */
+  const sections = [
+    {
+      label: "Home",
+      paths: ["/"], // highlight only on home
+    },
+    {
+      label: "Orders",
+      paths: ["/orders", "/select-dishes", "/select-drinks"],
+    },
+    {
+      label: "Booking",
+      paths: ["/booking"],
+    },
+    {
+      label: "Receipt",
+      paths: ["/receipt"],
+    },
+  ];
+
+  /**
+   * Check if current route matches any path in the array.
+   * We'll highlight if pathname === p or pathname.startsWith(p).
+   */
+  function isActiveSection(paths: string[]) {
+    return paths.some(
+      (p) => pathname === p || pathname.startsWith(p)
+    );
+  }
 
   return (
-    <header className="flex justify-between bg-primary text-white p-4 ">
-      <div className="container mx-auto flex justify-between items-center ">
-        <Link href="/" className="text-2xl font-bold ">
-          Lil Bits
-        </Link>
-        <nav>
-          <ul className="flex flex-row space-x-4">
-            <li>
-              <Link href="/" className={linkClass("/")}>
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link href="/menu" className={linkClass("/menu")}>
-                Menu
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className={linkClass("/about")}>
-                About us
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className={linkClass("/contact")}>
-                Contact
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/orders/older-orders"
-                className={linkClass("/orders/older-orders")}
-              >
-                Previous Orders
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-  );
-};
+    <nav className="w-full #C16757 px-4 py-3 flex items-center justify-between">
+      {/* Logo that navigates home, yes the header was supposed to be non intertact but users must be able to go to home page */}
+      <Link href="/" className="flex items-center space-x-2">
+        {/* The logo image */}
+        <img
+          src="/photos/lb.png"
+          alt="Logo"
+          className="w-8 h-8 object-contain cursor-pointer"
+        />
+      </Link>
 
-export default Header;
+      {/* Non-interactable labels */}
+      <div className="space-x-6">
+        {sections.map(({ label, paths }) => {
+          const active = isActiveSection(paths);
+          return (
+            <span
+              key={label}
+              className={
+                active
+                  ? "text-blue-700 font-semibold"
+                  : "text-gray-600"
+              }
+            >
+              {label}
+            </span>
+          );
+        })}
+      </div>
+    </nav>
+  );
+}

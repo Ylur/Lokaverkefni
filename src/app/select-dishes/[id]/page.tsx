@@ -1,4 +1,4 @@
-// src/app/select-dish/[id]/page.tsx
+// src/app/select-disesh/[id]/page.tsx
 import React from "react";
 
 interface Dish {

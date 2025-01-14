@@ -147,7 +147,7 @@ Orders are saved locally to `data/orders.json` and can be retrieved later by the
 │ │ ├── page.tsx
 │ │ ├── receipt
 │ │ │ └── page.tsx
-│ │ ├── select-dish
+│ │ ├── select-dishes
 │ │ │ ├── [id]
 │ │ │ │ └── page.tsx
 │ │ │ └── page.tsx

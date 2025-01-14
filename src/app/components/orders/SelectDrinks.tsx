@@ -1,5 +1,3 @@
-//src/app/components/orders/SelectDrinks.tsx
-
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -17,111 +15,140 @@ interface SelectedDrink {
   quantity: number;
 }
 
-/**
- * select desired drinks, set quantity, and proceed.
- */
+// For skipping dishes, we just keep it an empty array if none
+interface SelectedMeal {
+  idMeal: string;
+  strMeal: string;
+  quantity: number;
+}
+
 export default function SelectDrinks() {
-  const [drinks, setDrinks] = useState<Drink[]>([]);
-  const [selected, setSelected] = useState<SelectedDrink[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
-  // Grab any previously selected dishes from the URL
-  const storedDishes = searchParams.get("dishes");
-  const email = searchParams.get("email") || "";
+
+  // Parse from query
+  const [selectedDishes, setSelectedDishes] = useState<SelectedMeal[]>(() => {
+    try {
+      const param = searchParams.get("dishes");
+      return param ? JSON.parse(param) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [selectedDrinks, setSelectedDrinks] = useState<SelectedDrink[]>(() => {
+    try {
+      const param = searchParams.get("drinks");
+      return param ? JSON.parse(param) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const [drinks, setDrinks] = useState<Drink[]>([]);
 
   useEffect(() => {
-    async function fetchRandomDrinks() {
+    async function fetchDrinks() {
       const fetched: Drink[] = [];
       for (let i = 0; i < 3; i++) {
-        const res = await fetch(
-          "https://www.thecocktaildb.com/api/json/v1/1/random.php"
-        );
+        const res = await fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php");
         const data = await res.json();
-        if (data.drinks && data.drinks.length > 0) {
+        if (data.drinks?.[0]) {
           fetched.push(data.drinks[0]);
         }
       }
       setDrinks(fetched);
     }
-    fetchRandomDrinks();
+    fetchDrinks();
   }, []);
 
+  // Toggle
   function toggleDrink(drink: Drink) {
-    setSelected((prev) => {
-      const exists = prev.find((d) => d.idDrink === drink.idDrink);
-      if (exists) {
+    setSelectedDrinks((prev) => {
+      const found = prev.find((d) => d.idDrink === drink.idDrink);
+      if (found) {
         return prev.filter((d) => d.idDrink !== drink.idDrink);
       } else {
-        return [
-          ...prev,
-          { idDrink: drink.idDrink, strDrink: drink.strDrink, quantity: 1 },
-        ];
+        return [...prev, { idDrink: drink.idDrink, strDrink: drink.strDrink, quantity: 1 }];
       }
     });
   }
 
-  function updateQuantity(drinkId: string, quantity: number) {
-    setSelected((prev) =>
-      prev.map((d) => (d.idDrink === drinkId ? { ...d, quantity } : d))
+  // Quantity
+  function updateQuantity(idDrink: string, quantity: number) {
+    setSelectedDrinks((prev) =>
+      prev.map((d) => (d.idDrink === idDrink ? { ...d, quantity } : d))
     );
   }
 
   function handleNext() {
-    if (!storedDishes) {
-      alert("No dishes selected. Please go back.");
-      return;
-    }
-    // Build query params
-    const params = new URLSearchParams();
-    if (email) params.set("email", email);
-    params.set("dishes", storedDishes);
-    params.set("drinks", JSON.stringify(selected));
+    // We allow skipping drinks if user wants:
+    // if (selectedDrinks.length === 0) {
+    //   ...
+    // }
 
-    // The next step is "Booking" instead of "Create Order".
+    // Keep both arrays
+    const params = new URLSearchParams();
+    params.set("dishes", JSON.stringify(selectedDishes));
+    params.set("drinks", JSON.stringify(selectedDrinks));
+
     router.push(`/booking?${params.toString()}`);
   }
 
+  function handleBack() {
+    // If user wants to go back to dishes, keep the data
+    const params = new URLSearchParams();
+    params.set("dishes", JSON.stringify(selectedDishes));
+    params.set("drinks", JSON.stringify(selectedDrinks));
+    router.push(`/select-dishes?${params.toString()}`);
+  }
+
   return (
-    <div className="mt-4">
-      <h1 className="text-xl font-bold mb-4">Select Drinks</h1>
+    <div className="p-4">
+      <h1 className="text-xl font-bold">Select Drinks</h1>
+
+      <div className="space-x-2">
+        <button onClick={handleBack} className="bg-gray-400 text-white px-3 py-1">
+          Back (Dishes)
+        </button>
+        <button onClick={handleNext} className="bg-blue-600 text-white px-3 py-1">
+          Next (Booking)
+        </button>
+      </div>
+
       {drinks.length === 0 ? (
         <p>Loading drinks...</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 mt-4">
           {drinks.map((drink) => {
-            const isSelected = selected.some((d) => d.idDrink === drink.idDrink);
-            const selectedDrink = selected.find((d) => d.idDrink === drink.idDrink);
-
+            const isSelected = selectedDrinks.some((d) => d.idDrink === drink.idDrink);
+            const drinkData = selectedDrinks.find((d) => d.idDrink === drink.idDrink);
             return (
-              <div
-                key={drink.idDrink}
-                className="p-4 border rounded bg-white shadow"
-              >
+              <div key={drink.idDrink} className="border p-2">
                 <img
                   src={drink.strDrinkThumb}
                   alt={drink.strDrink}
-                  className="w-full h-auto object-cover mb-2"
+                  className="w-full h-auto"
                 />
-                <h2 className="font-semibold text-lg">{drink.strDrink}</h2>
+                <p>{drink.strDrink}</p>
                 <button
                   onClick={() => toggleDrink(drink)}
-                  className={`mt-2 px-2 py-1 text-white ${
+                  className={`${
                     isSelected ? "bg-red-500" : "bg-green-500"
-                  }`}
+                  } text-white px-2 py-1 mt-2`}
                 >
                   {isSelected ? "Remove" : "Select"}
                 </button>
-                {isSelected && selectedDrink && (
+                {isSelected && drinkData && (
                   <div className="mt-2">
-                    <label className="mr-2">Qty:</label>
+                    <label>Quantity:</label>
                     <input
                       type="number"
+                      className="border ml-2"
+                      value={drinkData.quantity}
                       min={1}
-                      value={selectedDrink.quantity}
                       onChange={(e) =>
                         updateQuantity(drink.idDrink, Number(e.target.value))
                       }
-                      className="border px-1 w-16"
                     />
                   </div>
                 )}
@@ -130,12 +157,6 @@ export default function SelectDrinks() {
           })}
         </div>
       )}
-      <button
-        onClick={handleNext}
-        className="bg-blue-600 text-white px-4 py-2 mt-4 rounded"
-      >
-        Next (Booking)
-      </button>
     </div>
   );
 }

@@ -1,44 +1,58 @@
 "use client";
 
 import React from "react";
+import Link from "next/link"; // recommended for Next.js internal routing
 import "./globals.css";
 import Carousel from "./components/common/Carousel";
-import DrinkCarousel from "./components/common/DrinkCarousel"
-import NavButton from "./components/orders/NavButton"
+import DrinkCarousel from "./components/common/DrinkCarousel";
+import NavButton from "./components/orders/NavButton";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-wrap h-screen">
-      <div className="flex justify-center items-center w-full md:w-1/2 p-4 border border-gray-300">
-        <Carousel />
-      </div>
-
-
-      <div className="flex justify-center items-center w-full md:w-1/2 p-4 border border-gray-300">
-        <NavButton 
-        route="/orders/older-orders"
-        buttonText="Look up your previous orders here"
-        />
-      </div>
-
-
-      <div className="flex flex-col justify-center items-center w-full md:w-1/2 p-4 border border-gray-300 text-center">
-        <h2 className="text-xl font-semibold mb-3">Start / Create Order</h2>
-        <p className="mb-3">
-          Begin your journey by selecting dishes, drinks, and finalizing your booking.
+    <div className="min-h-screen w-full bg-gray-50 text-gray-800">
+      {/* Hero Section */}
+      <section className="container mx-auto px-4 py-8 flex flex-col items-center text-center">
+        <h1 className="text-3xl md:text-4xl font-bold mb-4">
+          Welcome to Our Restaurant
+        </h1>
+        <p className="mb-6 max-w-2xl">
+          Explore delicious dishes, refreshing drinks, and easy booking. 
+          Start your order or check out our featured items below!
         </p>
-        <a
-          href="/select-dish"
-          className="inline-block bg-green-600 text-white px-4 py-2 rounded"
-        >
-          Create Order
-        </a>
-      </div>
+        <div className="space-x-3">
+          {/* Primary Call to Action */}
+          <Link
+            href="/select-dishes"
+            className="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded shadow transition"
+          >
+            Create Order
+          </Link>
+          {/* Secondary Action */}
+          <NavButton
+            route="/orders/older-orders"
+            buttonText="View Previous Orders"
+          />
+        </div>
+      </section>
 
+      <hr className="my-8 border-gray-200" />
 
-      <div className="flex justify-center items-center w-full md:w-1/2 p-4 border border-gray-300">
-        <DrinkCarousel />
-      </div>
+      {/* Carousel Section */}
+      <section className="container mx-auto px-4 py-8">
+        <h2 className="text-2xl font-semibold mb-4 text-center">
+          Featured Dishes
+        </h2>
+        <div className="w-full mx-auto mb-6">
+          <Carousel />
+        </div>
+
+        <h2 className="text-2xl font-semibold mb-4 text-center">
+          Popular Drinks
+        </h2>
+        <div className="w-full mx-auto">
+          <DrinkCarousel />
+        </div>
+      </section>
     </div>
   );
 }

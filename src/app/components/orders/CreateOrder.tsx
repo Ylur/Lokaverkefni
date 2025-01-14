@@ -19,7 +19,7 @@ const CreateOrder: React.FC = () => {
     e.preventDefault();
     setMessage("");
 
-    // Build the data to match "backend's" validation
+    // Build the data to match "backend'" validation
     const orderData = {
       email: "",
       dishes: [

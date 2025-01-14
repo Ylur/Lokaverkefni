@@ -1,5 +1,5 @@
 "use client";
-// LAGA UI Á DISHES OG DRINKS SVO ÞAÐ SÉ HORIZONTAL LIÍKA TODO (africa)
+
 import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import {
@@ -36,12 +36,10 @@ function UpdateOrder() {
   const [availableDishes, setAvailableDishes] = useState<Meal[]>([]);
   const [selectedDishes, setSelectedDishes] = useState<SelectedMeal[]>([]);
 
-  // States for drinks selection
+  // For drinks selection
   const [showDrinkSelector, setShowDrinkSelector] = useState(false);
   const [availableDrinks, setAvailableDrinks] = useState<any[]>([]);
-  const [selectedDrinksToAdd, setSelectedDrinksToAdd] = useState<
-    SelectedDrink[]
-  >([]);
+  const [selectedDrinksToAdd, setSelectedDrinksToAdd] = useState<SelectedDrink[]>([]);
 
   useEffect(() => {
     if (!id) return;
@@ -60,14 +58,13 @@ function UpdateOrder() {
     fetchOrder();
   }, [id]);
 
+  // Fetch random dishes only when dishSelector is open
   useEffect(() => {
     if (!showDishSelector) return;
     async function fetchRandomDishes() {
       const fetched: Meal[] = [];
       for (let i = 0; i < 3; i++) {
-        const res = await fetch(
-          "https://themealdb.com/api/json/v1/1/random.php"
-        );
+        const res = await fetch("https://themealdb.com/api/json/v1/1/random.php");
         const data = await res.json();
         if (data.meals && data.meals.length > 0) {
           fetched.push(data.meals[0]);
@@ -78,14 +75,13 @@ function UpdateOrder() {
     fetchRandomDishes();
   }, [showDishSelector]);
 
+  // Fetch random drinks only when drinkSelector is open
   useEffect(() => {
     if (!showDrinkSelector) return;
     async function fetchRandomDrinks() {
       const fetched: any[] = [];
       for (let i = 0; i < 3; i++) {
-        const res = await fetch(
-          "https://www.thecocktaildb.com/api/json/v1/1/random.php"
-        );
+        const res = await fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php");
         const data = await res.json();
         if (data.drinks && data.drinks.length > 0) {
           fetched.push(data.drinks[0]);
@@ -96,8 +92,29 @@ function UpdateOrder() {
     fetchRandomDrinks();
   }, [showDrinkSelector]);
 
+  /** 
+   * Utility: Recalculate total if needed. 
+   * For demonstration, assume each dish is $10 * quantity, 
+   * each drink is $5 * quantity. 
+   * If your real logic is in the server, you can skip or do a local approximation.
+   */
+  function recalcTotal() {
+    if (!order) return 0;
+    let total = 0;
+    for (const d of order.dishes) {
+      total += (d.quantity || 1) * 10;
+    }
+    for (const dr of order.drinks) {
+      total += (dr.quantity || 1) * 5;
+    }
+    return total;
+  }
+
   async function handleUpdate() {
     if (!id || !order) return;
+    // Optional: recalc total here or do it on backend
+    const newTotal = recalcTotal();
+
     try {
       const res = await fetch(`/api/orders/${id}`, {
         method: "PUT",
@@ -105,7 +122,7 @@ function UpdateOrder() {
         body: JSON.stringify({
           dishes: order.dishes,
           drinks: order.drinks,
-          total: order.total,
+          total: newTotal,
           status: order.status,
         }),
       });
@@ -113,29 +130,23 @@ function UpdateOrder() {
       if (!res.ok || !data.success) {
         throw new Error(data.error || "Failed to update order");
       }
-      alert("Order updated!");
-      router.push("/orders/older-orders");
+      // Show an inline success message
+      setMessage("Order updated successfully!");
+      // Optionally navigate away after a delay
+      setTimeout(() => router.push("/orders/older-orders"), 1500);
     } catch (err: any) {
-      alert(err.message || "Update failed");
+      setMessage(err.message || "Update failed");
     }
   }
 
-  function handleChangeDishes(
-    index: number,
-    field: keyof SelectedDish,
-    value: any
-  ) {
+  function handleChangeDishes(index: number, field: keyof SelectedDish, value: any) {
     if (!order) return;
     const updatedDishes = [...order.dishes];
     updatedDishes[index] = { ...updatedDishes[index], [field]: value };
     setOrder({ ...order, dishes: updatedDishes });
   }
 
-  function handleChangeDrinks(
-    index: number,
-    field: keyof SelectedDrink,
-    value: any
-  ) {
+  function handleChangeDrinks(index: number, field: keyof SelectedDrink, value: any) {
     if (!order) return;
     const updatedDrinks = [...order.drinks];
     updatedDrinks[index] = { ...updatedDrinks[index], [field]: value };
@@ -144,28 +155,30 @@ function UpdateOrder() {
 
   function removeDish(index: number) {
     if (!order) return;
-    const updatedDishes = order.dishes.filter(
-      (_: any, i: number) => i !== index
-    );
+    // Confirm removing?
+    const confirmDelete = confirm("Are you sure you want to remove this dish?");
+    if (!confirmDelete) return;
+    const updatedDishes = order.dishes.filter((_item, i) => i !== index);
     setOrder({ ...order, dishes: updatedDishes });
   }
 
   function removeDrink(index: number) {
     if (!order) return;
-    const updatedDrinks = order.drinks.filter((_, i) => i !== index);
+    // Confirm removing?
+    const confirmDelete = confirm("Are you sure you want to remove this drink?");
+    if (!confirmDelete) return;
+    const updatedDrinks = order.drinks.filter((_item, i) => i !== index);
     setOrder({ ...order, drinks: updatedDrinks });
   }
 
+  // ----- Dishes
   function addDishToSelection(dish: Meal) {
     setSelectedDishes((prev) => {
       const exists = prev.find((d) => d.idMeal === dish.idMeal);
       if (exists) {
         return prev.filter((d) => d.idMeal !== dish.idMeal);
       } else {
-        return [
-          ...prev,
-          { idMeal: dish.idMeal, strMeal: dish.strMeal, quantity: 1 },
-        ];
+        return [...prev, { idMeal: dish.idMeal, strMeal: dish.strMeal, quantity: 1 }];
       }
     });
   }
@@ -183,17 +196,14 @@ function UpdateOrder() {
     setSelectedDishes([]);
   }
 
-  // Drink selection handlers
+  // ----- Drinks
   function addDrinkToSelection(drink: any) {
     setSelectedDrinksToAdd((prev) => {
       const exists = prev.find((d) => d.idDrink === drink.idDrink);
       if (exists) {
         return prev.filter((d) => d.idDrink !== drink.idDrink);
       } else {
-        return [
-          ...prev,
-          { idDrink: drink.idDrink, strDrink: drink.strDrink, quantity: 1 },
-        ];
+        return [...prev, { idDrink: drink.idDrink, strDrink: drink.strDrink, quantity: 1 }];
       }
     });
   }
@@ -211,44 +221,53 @@ function UpdateOrder() {
     setSelectedDrinksToAdd([]);
   }
 
+  // If no order yet, show loading or error
   if (!order) {
     return (
       <div className="w-full max-w-screen-lg mx-auto p-4">
         <h1 className="text-2xl font-bold">Update Order</h1>
         {message && <p className="text-red-500">{message}</p>}
+        <p>Loading order or ID missing...</p>
       </div>
     );
   }
 
+  // --- Rendered UI ---
   return (
-    <div className="w-full max-w-screen-lg mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Update Order #{order.id}</h1>
-      {message && <p className="text-red-500 mb-2">{message}</p>}
+    <div className="w-full max-w-screen-lg mx-auto p-4 space-y-4">
+      <h1 className="text-2xl font-bold mb-2">Update Order {order.id}</h1>
 
-      <div className="mb-2">
-        <label className="block font-semibold">Status: </label>
-        <select
-          value={order.status}
-          onChange={(e) => setOrder({ ...order, status: e.target.value })}
-          className="border p-1"
+      {message && (
+        <p className="p-2 bg-green-200 text-green-800 rounded">
+          {message}
+        </p>
+      )}
+
+      {/* Status Section */}
+      <div className="p-3 border rounded mb-2 bg-opacity-10">
+        
+
+        <div className="text-center">
+        <button
+          onClick={handleUpdate}
+          className="bg-green-600 text-white px-4 py-2 rounded mt-4"
         >
-          <option value="pending">pending</option>
-          <option value="confirmed">confirmed</option>
-          <option value="delivered">delivered</option>
-          <option value="cancelled">cancelled</option>
-        </select>
+          Save Changes
+        </button>
+      </div>
       </div>
 
-      <div className="mb-2">
-        <h2 className="font-semibold">Dishes</h2>
+      <hr />
+
+      {/* Dishes Section */}
+      <div className="p-3 border rounded">
+        <h2 className="text-lg font-semibold mb-2">Dishes</h2>
         {order.dishes?.map((dish, idx) => (
-          <div key={idx} className="flex gap-2 items-center mb-1">
+          <div key={idx} className="flex items-center gap-2 mb-1">
             <input
               type="text"
               value={dish.strMeal}
-              onChange={(e) =>
-                handleChangeDishes(idx, "strMeal", e.target.value)
-              }
+              onChange={(e) => handleChangeDishes(idx, "strMeal", e.target.value)}
               className="border px-1"
             />
             <input
@@ -262,7 +281,7 @@ function UpdateOrder() {
             />
             <button
               onClick={() => removeDish(idx)}
-              className="text-black font-bold ml-2"
+              className="bg-red-500 text-white px-2 py-1 rounded"
             >
               Remove
             </button>
@@ -270,22 +289,23 @@ function UpdateOrder() {
         ))}
         <button
           onClick={() => setShowDishSelector(true)}
-          className="bg-blue-500 text-white px-2 py-1 rounded mt-2"
+          className="bg-blue-500 text-white px-3 py-1 rounded mt-2"
         >
-          Add Dish
+          + Add Dish
         </button>
       </div>
 
-      <div className="mb-2">
-        <h2 className="font-semibold">Drinks</h2>
+      <hr />
+
+      {/* Drinks Section */}
+      <div className="p-3 border rounded">
+        <h2 className="text-lg font-semibold mb-2">Drinks</h2>
         {order.drinks?.map((drink, idx) => (
-          <div key={idx} className="flex gap-2 items-center mb-1">
+          <div key={idx} className="flex items-center gap-2 mb-1">
             <input
               type="text"
               value={drink.strDrink}
-              onChange={(e) =>
-                handleChangeDrinks(idx, "strDrink", e.target.value)
-              }
+              onChange={(e) => handleChangeDrinks(idx, "strDrink", e.target.value)}
               className="border px-1"
             />
             <input
@@ -299,24 +319,31 @@ function UpdateOrder() {
             />
             <button
               onClick={() => removeDrink(idx)}
-              className="text-black font-bold ml-2"
+              className="bg-red-500 text-white px-2 py-1 rounded"
             >
               Remove
             </button>
           </div>
         ))}
-
         <button
           onClick={() => setShowDrinkSelector(true)}
-          className="bg-blue-500 text-white px-2 py-1 rounded mt-2"
+          className="bg-blue-500 text-white px-3 py-1 rounded mt-2"
         >
-          Add Drink
+          + Add Drink
         </button>
       </div>
 
-      <div className="mb-4">
-        <h2 className="font-semibold mt-4">Your Order Preview:</h2>
-        <div className="flex flex-col space-y-4">
+      <hr />
+
+      {/* Preview Section */}
+      <div className="p-3 border rounded">
+        <h2 className="text-lg font-semibold mb-2">Preview</h2>
+        <p className="font-medium">
+          Estimated Total: <span className="text-green-600">${recalcTotal()}</span>
+        </p>
+
+        <div className="flex flex-col space-y-4 mt-2">
+          {/* Horizontal scroller for dishes */}
           <div className="flex overflow-x-auto space-x-4">
             {order.dishes?.map(
               (dish, idx) =>
@@ -327,6 +354,7 @@ function UpdateOrder() {
                 )
             )}
           </div>
+          {/* Horizontal scroller for drinks */}
           <div className="flex overflow-x-auto space-x-4">
             {order.drinks?.map(
               (drink, idx) =>
@@ -340,6 +368,7 @@ function UpdateOrder() {
         </div>
       </div>
 
+      {/* Dish Selector Modal */}
       {showDishSelector && (
         <DishSelectorModal
           availableDishes={availableDishes}
@@ -351,6 +380,7 @@ function UpdateOrder() {
         />
       )}
 
+      {/* Drink Selector Modal */}
       {showDrinkSelector && (
         <DrinkSelectorModal
           availableDrinks={availableDrinks}
@@ -362,12 +392,7 @@ function UpdateOrder() {
         />
       )}
 
-      <button
-        onClick={handleUpdate}
-        className="bg-green-600 text-white px-4 py-2 rounded mt-4"
-      >
-        Save Changes
-      </button>
+      
     </div>
   );
 }
