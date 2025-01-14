@@ -1,244 +1,52 @@
 [
   {
-    "_id": "971f1206-9d94-49e7-901f-ead998cb7263",
-    "email": "tester@tester.com",
+    "_id": "45d10a04-b9e7-490d-865d-090d3ca06d13",
+    "transaction": "6eaa1f05-c17a-49fc-9d36-8fb30f363e38",
+    "email": "44@44.is",
     "dishes": [
       {
-        "idMeal": "52826",
-        "strMeal": "Braised Beef Chilli",
+        "idMeal": "53083",
+        "strMeal": "Lamb Pilaf (Plov)",
         "quantity": 1
       }
     ],
     "drinks": [
       {
-        "idDrink": "12560",
-        "strDrink": "Afterglow",
-        "quantity": 1
-      }
-    ],
-    "total": 42,
-    "date": "2025-01-15",
-    "time": "18:53",
-    "people": 1,
-    "status": "pending",
-    "createdAt": "2025-01-12T17:58:07.057Z"
-  },
-  {
-    "_id": "98da4fb3-e42d-437a-883a-45dc64b9da6c",
-    "email": "test@test.com",
-    "dishes": [
-      {
-        "idMeal": "52782",
-        "strMeal": "Lamb tomato and sweet spices",
-        "quantity": 1
-      },
-      {
-        "idMeal": "52785",
-        "strMeal": "Dal fry",
-        "quantity": 1
-      },
-      {
-        "idMeal": "52853",
-        "strMeal": "Chocolate Avocado Mousse",
-        "quantity": 1
-      },
-      {
-        "idMeal": "52929",
-        "strMeal": "Timbits",
-        "quantity": 1
-      }
-    ],
-    "drinks": [
-      {
-        "idDrink": "14167",
-        "strDrink": "Vodka Martini",
+        "idDrink": "15226",
+        "strDrink": "Space Odyssey",
         "quantity": 1
       }
     ],
     "total": 15,
-    "date": "2025-01-12",
-    "time": "20:13",
-    "people": 1,
-    "status": "confirmed",
-    "createdAt": "2025-01-12T18:11:50.402Z"
-  },
-  {
-    "_id": "868881f6-8c18-46e7-b2a9-395c3b96b034",
-    "email": "22@22.is",
-    "dishes": [
-      {
-        "idMeal": "52842",
-        "strMeal": "Broccoli & Stilton soup",
-        "quantity": 1
-      },
-      {
-        "idMeal": "52874",
-        "strMeal": "Beef and Mustard Pie",
-        "quantity": 1
-      },
-      {
-        "idMeal": "52934",
-        "strMeal": "Chicken Basquaise",
-        "quantity": 1
-      },
-      {
-        "idMeal": "53038",
-        "strMeal": "Mustard champ",
-        "quantity": 1
-      }
-    ],
-    "drinks": [
-      {
-        "idDrink": "13192",
-        "strDrink": "National Aquarium",
-        "quantity": 1
-      },
-      {
-        "idDrink": "11124",
-        "strDrink": "Boomerang",
-        "quantity": 1
-      },
-      {
-        "idDrink": "13861",
-        "strDrink": "Nutty Irishman",
-        "quantity": 1
-      }
-    ],
-    "total": 30,
     "date": "2025-01-14",
-    "time": "22:00",
+    "time": "18:30",
     "people": 1,
-    "status": "confirmed",
-    "createdAt": "2025-01-13T18:08:12.198Z"
+    "status": "pending",
+    "createdAt": "2025-01-14T09:22:30.443Z"
   },
   {
-    "_id": "9c192cde-532c-45d3-a583-4bd03fe2c1e5",
-    "email": "22@22.is",
+    "_id": "f3546b49-4d4f-43d1-be0f-dfa0993e13a3",
+    "transaction": "6c8b8f90-ff5a-44eb-8c36-030a330bd0a4",
+    "email": "44@44.is",
     "dishes": [
       {
-        "idMeal": "52842",
-        "strMeal": "Broccoli & Stilton soup",
-        "quantity": 1
-      },
-      {
-        "idMeal": "52874",
-        "strMeal": "Beef and Mustard Pie",
+        "idMeal": "53083",
+        "strMeal": "Lamb Pilaf (Plov)",
         "quantity": 1
       }
     ],
     "drinks": [
       {
-        "idDrink": "13192",
-        "strDrink": "National Aquarium",
-        "quantity": 1
-      },
-      {
-        "idDrink": "11124",
-        "strDrink": "Boomerang",
+        "idDrink": "15226",
+        "strDrink": "Space Odyssey",
         "quantity": 1
       }
     ],
-    "total": 30,
+    "total": 15,
     "date": "2025-01-14",
-    "time": "22:00",
+    "time": "18:30",
     "people": 1,
     "status": "pending",
-    "createdAt": "2025-01-13T18:08:12.201Z"
-  },
-  {
-    "_id": "4f12b6c1-9385-482d-b8f4-fb45953a1ed9",
-    "email": "123@123.is",
-    "dishes": [
-      {
-        "idMeal": "52838",
-        "strMeal": "Venetian Duck Ragu",
-        "quantity": 1
-      }
-    ],
-    "drinks": [
-      {
-        "idDrink": "17202",
-        "strDrink": "Horse's Neck",
-        "quantity": 1
-      }
-    ],
-    "total": 15,
-    "date": "2025-01-22",
-    "time": "18:00",
-    "people": 1,
-    "status": "pending",
-    "createdAt": "2025-01-13T20:34:28.970Z"
-  },
-  {
-    "_id": "023f255b-759a-4867-bbd7-93a6cc235c65",
-    "email": "123@123.is",
-    "dishes": [
-      {
-        "idMeal": "52838",
-        "strMeal": "Venetian Duck Ragu",
-        "quantity": 1
-      }
-    ],
-    "drinks": [
-      {
-        "idDrink": "17202",
-        "strDrink": "Horse's Neck",
-        "quantity": 1
-      }
-    ],
-    "total": 15,
-    "date": "2025-01-22",
-    "time": "18:00",
-    "people": 1,
-    "status": "pending",
-    "createdAt": "2025-01-13T20:34:28.971Z"
-  },
-  {
-    "_id": "91c1bab9-e7a1-4909-86f0-4fff610c931f",
-    "email": "123@123.is",
-    "dishes": [
-      {
-        "idMeal": "52838",
-        "strMeal": "Venetian Duck Ragu",
-        "quantity": 1
-      }
-    ],
-    "drinks": [
-      {
-        "idDrink": "17202",
-        "strDrink": "Horse's Neck",
-        "quantity": 1
-      }
-    ],
-    "total": 15,
-    "date": "2025-01-22",
-    "time": "18:00",
-    "people": 1,
-    "status": "pending",
-    "createdAt": "2025-01-13T20:34:33.811Z"
-  },
-  {
-    "_id": "933581a7-830d-4c10-8463-0d63f7e4e6a1",
-    "email": "123@123.is",
-    "dishes": [
-      {
-        "idMeal": "52838",
-        "strMeal": "Venetian Duck Ragu",
-        "quantity": 1
-      }
-    ],
-    "drinks": [
-      {
-        "idDrink": "17202",
-        "strDrink": "Horse's Neck",
-        "quantity": 1
-      }
-    ],
-    "total": 15,
-    "date": "2025-01-22",
-    "time": "18:00",
-    "people": 1,
-    "status": "pending",
-    "createdAt": "2025-01-13T20:34:36.622Z"
+    "createdAt": "2025-01-14T09:22:30.447Z"
   }
 ]
