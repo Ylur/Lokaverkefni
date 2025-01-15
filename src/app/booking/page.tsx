@@ -103,11 +103,12 @@ export default function BookingPage() {
   }
 
   return (
-    <div className="p-8 text-white flex justify-items-center">
-      <div className="max-w-md w-full">
+    // min-h-screen + flex-col + justify-center + items-center => vertical center
+    <div className="min-h-screen flex flex-col justify-center items-center p-4 text-white">
+      {/* Container for the heading and buttons */}
+      <div className="max-w-md w-full mb-6">
         <h1 className="text-2xl font-bold mb-4 text-center">Booking Details</h1>
-
-        <div className="space-x-2 mb-4 text-center">
+        <div className="flex justify-center gap-4 mb-4">
           <button
             onClick={handleBack}
             className="bg-primary hover:bg-green-700 text-white px-3 py-1"
@@ -121,12 +122,14 @@ export default function BookingPage() {
             Next (Receipt)
           </button>
         </div>
-
         <p className="mb-4 text-center">
           Please fill in your booking details. We'll prepare your table and
           confirm your order!
         </p>
+      </div>
 
+      {/* Center the form itself */}
+      <div className="max-w-md w-full">
         <BookingForm
           email={email}
           date={date}

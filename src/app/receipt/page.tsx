@@ -86,7 +86,6 @@ export default function ReceiptPage() {
   }
 
   async function handleDone() {
-    // We do the POST once user confirms
     setMessage("");
     try {
       const res = await fetch("/api/orders", {
@@ -107,9 +106,9 @@ export default function ReceiptPage() {
   }
 
   if (finalOrder) {
-    // If posted => show the final receipt using <ReceiptComponent>
+    // If posted => show the final receipt
     return (
-      <div className="p-4 flex justify-center text-white">
+      <div className="min-h-screen flex flex-col justify-center items-center p-4 text-white">
         <div className="max-w-md w-full">
           {message && (
             <p className="text-primary font-semibold text-lg mb-2">{message}</p>
@@ -123,9 +122,9 @@ export default function ReceiptPage() {
     );
   }
 
-  // Otherwise, show the “preview” portion
+  // Otherwise, show “preview” portion
   return (
-    <div className="p-4 flex justify-center text-white">
+    <div className="min-h-screen flex flex-col justify-center items-center p-4 text-white">
       <div className="max-w-md w-full">
         <h1 className="text-2xl font-bold mb-4 text-center font-serif">
           Your Order (Preview)
@@ -177,13 +176,16 @@ export default function ReceiptPage() {
 
         {message && <p className="text-red-500 mt-2">{message}</p>}
 
-        <button
-          onClick={handleDone}
-          className="bg-primary hover:bg-green-700 text-white px-4 py-2 mt-4 font-serif"
-          disabled={orderPosted}
-        >
-          Confirm Order
-        </button>
+        {/* “Confirm Order” button below the form, centered */}
+        <div className="text-center mt-4">
+          <button
+            onClick={handleDone}
+            className="bg-primary hover:bg-green-700 text-white px-4 py-2 font-serif"
+            disabled={orderPosted}
+          >
+            Confirm Order
+          </button>
+        </div>
       </div>
     </div>
   );
