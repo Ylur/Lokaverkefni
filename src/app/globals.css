@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .loader {
-  border-top-color: #BA2329;
+  border-top-color: #ba2329;
   animation: spinner 1.5s linear infinite;
 }
 
@@ -14,15 +14,14 @@
 }
 
 :root {
-  --background: #C16757;
+  --background: #c16757;
   --foreground: #000000;
   --secondary: #e8ff36;
-
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #C16757;
+    --background: #c16757;
     --foreground: #000000;
   }
 }
@@ -34,16 +33,23 @@ body {
 }
 @layer base {
   /* font-sans á alla þessa*/
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-sans font-semibold;
   }
 
   /* font-serif á alla linka,p og div */
-  div, a, p {
+  div,
+  a,
+  p {
     @apply font-sans;
   }
 }
 .vertical-text {
-  writing-mode: vertical-rl; /* Can be used RL also */
-  transform: rotate(180deg); 
+  writing-mode: vertical-rl; /* Can be used as RL also */
+  transform: rotate(180deg);
 }

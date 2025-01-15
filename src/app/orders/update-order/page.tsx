@@ -39,7 +39,9 @@ function UpdateOrder() {
   // For drinks selection
   const [showDrinkSelector, setShowDrinkSelector] = useState(false);
   const [availableDrinks, setAvailableDrinks] = useState<any[]>([]);
-  const [selectedDrinksToAdd, setSelectedDrinksToAdd] = useState<SelectedDrink[]>([]);
+  const [selectedDrinksToAdd, setSelectedDrinksToAdd] = useState<
+    SelectedDrink[]
+  >([]);
 
   useEffect(() => {
     if (!id) return;
@@ -64,7 +66,9 @@ function UpdateOrder() {
     async function fetchRandomDishes() {
       const fetched: Meal[] = [];
       for (let i = 0; i < 3; i++) {
-        const res = await fetch("https://themealdb.com/api/json/v1/1/random.php");
+        const res = await fetch(
+          "https://themealdb.com/api/json/v1/1/random.php"
+        );
         const data = await res.json();
         if (data.meals && data.meals.length > 0) {
           fetched.push(data.meals[0]);
@@ -81,7 +85,9 @@ function UpdateOrder() {
     async function fetchRandomDrinks() {
       const fetched: any[] = [];
       for (let i = 0; i < 3; i++) {
-        const res = await fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php");
+        const res = await fetch(
+          "https://www.thecocktaildb.com/api/json/v1/1/random.php"
+        );
         const data = await res.json();
         if (data.drinks && data.drinks.length > 0) {
           fetched.push(data.drinks[0]);
@@ -92,12 +98,7 @@ function UpdateOrder() {
     fetchRandomDrinks();
   }, [showDrinkSelector]);
 
-  /** 
-   * Utility: Recalculate total if needed. 
-   * For demonstration, assume each dish is $10 * quantity, 
-   * each drink is $5 * quantity. 
-   * If your real logic is in the server, you can skip or do a local approximation.
-   */
+
   function recalcTotal() {
     if (!order) return 0;
     let total = 0;
@@ -139,14 +140,22 @@ function UpdateOrder() {
     }
   }
 
-  function handleChangeDishes(index: number, field: keyof SelectedDish, value: any) {
+  function handleChangeDishes(
+    index: number,
+    field: keyof SelectedDish,
+    value: any
+  ) {
     if (!order) return;
     const updatedDishes = [...order.dishes];
     updatedDishes[index] = { ...updatedDishes[index], [field]: value };
     setOrder({ ...order, dishes: updatedDishes });
   }
 
-  function handleChangeDrinks(index: number, field: keyof SelectedDrink, value: any) {
+  function handleChangeDrinks(
+    index: number,
+    field: keyof SelectedDrink,
+    value: any
+  ) {
     if (!order) return;
     const updatedDrinks = [...order.drinks];
     updatedDrinks[index] = { ...updatedDrinks[index], [field]: value };
@@ -165,7 +174,9 @@ function UpdateOrder() {
   function removeDrink(index: number) {
     if (!order) return;
     // Confirm removing?
-    const confirmDelete = confirm("Are you sure you want to remove this drink?");
+    const confirmDelete = confirm(
+      "Are you sure you want to remove this drink?"
+    );
     if (!confirmDelete) return;
     const updatedDrinks = order.drinks.filter((_item, i) => i !== index);
     setOrder({ ...order, drinks: updatedDrinks });
@@ -178,7 +189,10 @@ function UpdateOrder() {
       if (exists) {
         return prev.filter((d) => d.idMeal !== dish.idMeal);
       } else {
-        return [...prev, { idMeal: dish.idMeal, strMeal: dish.strMeal, quantity: 1 }];
+        return [
+          ...prev,
+          { idMeal: dish.idMeal, strMeal: dish.strMeal, quantity: 1 },
+        ];
       }
     });
   }
@@ -203,7 +217,10 @@ function UpdateOrder() {
       if (exists) {
         return prev.filter((d) => d.idDrink !== drink.idDrink);
       } else {
-        return [...prev, { idDrink: drink.idDrink, strDrink: drink.strDrink, quantity: 1 }];
+        return [
+          ...prev,
+          { idDrink: drink.idDrink, strDrink: drink.strDrink, quantity: 1 },
+        ];
       }
     });
   }
@@ -238,23 +255,19 @@ function UpdateOrder() {
       <h1 className="text-2xl font-bold mb-2">Update Order {order.id}</h1>
 
       {message && (
-        <p className="p-2 bg-primary text-secondary rounded">
-          {message}
-        </p>
+        <p className="p-2 bg-primary text-secondary rounded">{message}</p>
       )}
 
       {/* Status Section */}
       <div className="p-3 border rounded mb-2 bg-opacity-10">
-        
-
         <div className="text-center">
-        <button
-          onClick={handleUpdate}
-          className="bg-primary hover:bg-green-700 text-white px-4 py-2 rounded mt-4"
-        >
-          Save Changes
-        </button>
-      </div>
+          <button
+            onClick={handleUpdate}
+            className="bg-primary hover:bg-green-700 text-white px-4 py-2 rounded mt-4"
+          >
+            Save Changes
+          </button>
+        </div>
       </div>
 
       <hr />
@@ -267,7 +280,9 @@ function UpdateOrder() {
             <input
               type="text"
               value={dish.strMeal}
-              onChange={(e) => handleChangeDishes(idx, "strMeal", e.target.value)}
+              onChange={(e) =>
+                handleChangeDishes(idx, "strMeal", e.target.value)
+              }
               className="border px-1 text-primary"
             />
             <input
@@ -305,7 +320,9 @@ function UpdateOrder() {
             <input
               type="text"
               value={drink.strDrink}
-              onChange={(e) => handleChangeDrinks(idx, "strDrink", e.target.value)}
+              onChange={(e) =>
+                handleChangeDrinks(idx, "strDrink", e.target.value)
+              }
               className="border px-1 text-primary"
             />
             <input
@@ -339,7 +356,8 @@ function UpdateOrder() {
       <div className="p-3 border rounded">
         <h2 className="text-lg font-semibold mb-2">Preview of order</h2>
         <p className="font-medium">
-          Estimated Total: <span className="text-primary font-bold">${recalcTotal()}</span>
+          Estimated Total:{" "}
+          <span className="text-primary font-bold">${recalcTotal()}</span>
         </p>
 
         <div className="flex flex-col space-y-4 mt-2">
@@ -391,8 +409,6 @@ function UpdateOrder() {
           confirmDrinkSelection={confirmDrinkSelection}
         />
       )}
-
-      
     </div>
   );
 }

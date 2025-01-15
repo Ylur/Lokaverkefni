@@ -176,7 +176,6 @@ export default function ReceiptPage() {
 
         {message && <p className="text-red-500 mt-2">{message}</p>}
 
-        {/* “Confirm Order” button below the form, centered */}
         <div className="text-center mt-4">
           <button
             onClick={handleDone}

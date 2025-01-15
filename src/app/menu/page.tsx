@@ -28,10 +28,12 @@ const MenuPage: FC = () => {
           "https://www.themealdb.com/api/json/v1/1/filter.php?c=Starter"
         );
         const startersData = await startersResponse.json();
-        const startersItems: MenuItem[] = startersData.meals.map((meal: any) => ({
-          name: meal.strMeal,
-          image: meal.strMealThumb,
-        }));
+        const startersItems: MenuItem[] = startersData.meals.map(
+          (meal: any) => ({
+            name: meal.strMeal,
+            image: meal.strMealThumb,
+          })
+        );
         setStarters(startersItems);
 
         // Fetch random drinks
@@ -69,7 +71,9 @@ const MenuPage: FC = () => {
 
   const renderMenuSection = (title: string, items: MenuItem[]) => (
     <section className="mb-8">
-      <h2 className="text-2xl text-white font-serif font-semibold mb-4">{title}</h2>
+      <h2 className="text-2xl text-white font-serif font-semibold mb-4">
+        {title}
+      </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {items.map((item, index) => (
           <div key={index} className="p-4 border rounded-lg shadow-lg">
@@ -92,8 +96,7 @@ const MenuPage: FC = () => {
 
   return (
     <>
-    <Hero />
-    
+      <Hero />
 
       <div className="container mx-auto p-8">
         {loading ? (

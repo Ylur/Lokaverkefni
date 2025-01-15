@@ -23,7 +23,9 @@ export default function Carousel({ onSlideChange }: CarouselProps) {
       // Fetch 3 random dishes for the carousel
       for (let i = 0; i < 3; i++) {
         try {
-          const res = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
+          const res = await fetch(
+            "https://www.themealdb.com/api/json/v1/1/random.php"
+          );
           const data = await res.json();
           if (data.meals && data.meals.length > 0) {
             fetched.push({
@@ -58,11 +60,10 @@ export default function Carousel({ onSlideChange }: CarouselProps) {
   }, [slides.length, onSlideChange]);
 
   // Determine which three slides to display based on currentIndex
-  const indicesToShow = slides.length > 0
-    ? [0, 1, 2].map(
-        (offset) => (currentIndex + offset) % slides.length
-      )
-    : [];
+  const indicesToShow =
+    slides.length > 0
+      ? [0, 1, 2].map((offset) => (currentIndex + offset) % slides.length)
+      : [];
 
   return (
     <div className="flex justify-center items-center overflow-hidden w-full h-[200px]">

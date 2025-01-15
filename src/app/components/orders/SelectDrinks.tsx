@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import Image from "next/image"; // Use next/image for consistency
+import Image from "next/image"; 
 
 interface Drink {
   idDrink: string;
@@ -98,7 +98,9 @@ export default function SelectDrinks() {
 
   return (
     <div className="p-8 justify-items-center">
-      <h1 className="text-xl font-bold text-white font-serif text-center">Select Drinks</h1>
+      <h1 className="text-xl font-bold text-white font-serif text-center">
+        Select Drinks
+      </h1>
 
       <div className="space-x-2 mb-4">
         <button
@@ -128,8 +130,11 @@ export default function SelectDrinks() {
             );
 
             return (
-              <div key={drink.idDrink} className="border p-2 font-serif font-semibold text-white">
-                {/* Matching the image size from dishes */}
+              <div
+                key={drink.idDrink}
+                className="border p-2 font-serif font-semibold text-white"
+              >
+
                 <Image
                   src={drink.strDrinkThumb}
                   alt={drink.strDrink}
@@ -141,7 +146,9 @@ export default function SelectDrinks() {
                 <button
                   onClick={() => toggleDrink(drink)}
                   className={`mt-2 px-2 py-1 text-white ${
-                    isSelected ? "bg-accent hover:bg-red-400" : "bg-primary hover:bg-green-700"
+                    isSelected
+                      ? "bg-accent hover:bg-red-400"
+                      : "bg-primary hover:bg-green-700"
                   } text-white px-2 py-1 mt-2 font-serif font-semibold `}
                 >
                   {isSelected ? "Remove" : "Select"}

@@ -8,7 +8,7 @@ const AboutPage: FC = () => {
       <div className="flex container mx-auto p-8">
         <div className="p-4">
           <h1 className="vertical-text text-8xl text-primary font-bold">
-            A B O U T 
+            A B O U T
           </h1>
         </div>
 

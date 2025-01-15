@@ -3,7 +3,6 @@
 import React, { Suspense } from "react";
 import MiniOrderFlow from "../components/common/MiniOrderFlow";
 
-// Lazy-load the selection UI
 const SelectDrinks = React.lazy(
   () => import("../components/orders/SelectDrinks")
 );

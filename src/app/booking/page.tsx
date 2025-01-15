@@ -82,7 +82,7 @@ export default function BookingPage() {
       return;
     }
 
-    // Build query params for the next (Receipt) page
+    // Building query params for the next (Receipt) page
     const params = new URLSearchParams();
     params.set("dishes", JSON.stringify(selectedDishes));
     params.set("drinks", JSON.stringify(selectedDrinks));
@@ -103,7 +103,7 @@ export default function BookingPage() {
   }
 
   return (
-    // min-h-screen + flex-col + justify-center + items-center => vertical center
+
     <div className="min-h-screen flex flex-col justify-center items-center p-4 text-white">
       {/* Container for the heading and buttons */}
       <div className="max-w-md w-full mb-6">
@@ -128,7 +128,7 @@ export default function BookingPage() {
         </p>
       </div>
 
-      {/* Center the form itself */}
+      {/* Center form */}
       <div className="max-w-md w-full">
         <BookingForm
           email={email}

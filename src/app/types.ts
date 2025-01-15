@@ -1,4 +1,4 @@
-// src/app/types.ts
+
 /**
  * Represents a selected dish in an order.
  */
@@ -27,7 +27,7 @@ export interface Order {
   dishes: SelectedDish[];
   drinks: SelectedDrink[];
   total: number;
-  status: string; 
+  status: string;
 }
 
 /**

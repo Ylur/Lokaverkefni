@@ -8,8 +8,8 @@ interface BookingFormProps {
   date: string;
   time: string;
   people: number;
-  today: string; // used for min date
-  timeSlots: string[]; // you can define your slots outside and pass them in
+  today: string; // used for min date, no time travellers
+  timeSlots: string[]; 
   onChangeEmail: (val: string) => void;
   onChangeDate: (val: string) => void;
   onChangeTime: (val: string) => void;

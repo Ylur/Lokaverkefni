@@ -1,5 +1,3 @@
-// src/app/api/orders/route.ts
-
 import { NextResponse } from "next/server";
 import { readOrdersFile, writeOrdersFile } from "../../../../utils/files";
 import { v4 as uuidv4 } from "uuid";

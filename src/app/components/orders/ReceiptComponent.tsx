@@ -1,11 +1,11 @@
-// src/app/components/orders/ReceiptComponent.tsx
+
 "use client";
 
 import React from "react";
 
 interface ReceiptComponentProps {
   finalOrder: any;
-  onDone?: () => void; // optional callback if you want to handle “Done” in the parent
+  onDone?: () => void; 
 }
 
 const ReceiptComponent: React.FC<ReceiptComponentProps> = ({

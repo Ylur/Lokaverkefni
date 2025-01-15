@@ -49,7 +49,9 @@ export default function SelectDishes() {
     async function fetchDishes() {
       const fetched: Meal[] = [];
       for (let i = 0; i < 3; i++) {
-        const res = await fetch("https://themealdb.com/api/json/v1/1/random.php");
+        const res = await fetch(
+          "https://themealdb.com/api/json/v1/1/random.php"
+        );
         const data = await res.json();
         if (data.meals?.[0]) {
           fetched.push(data.meals[0]);
@@ -67,7 +69,10 @@ export default function SelectDishes() {
       if (found) {
         return prev.filter((m) => m.idMeal !== dish.idMeal);
       } else {
-        return [...prev, { idMeal: dish.idMeal, strMeal: dish.strMeal, quantity: 1 }];
+        return [
+          ...prev,
+          { idMeal: dish.idMeal, strMeal: dish.strMeal, quantity: 1 },
+        ];
       }
     });
   }
@@ -95,8 +100,13 @@ export default function SelectDishes() {
 
   return (
     <div className="p-8 justify-items-center">
-      <h1 className="text-xl font-bold text-white font-serif text-center">Select Dishes</h1>
-      <button onClick={handleNext} className="bg-primary hover:bg-green-700 text-white px-3 py-1 font-serif  ">
+      <h1 className="text-xl font-bold text-white font-serif text-center">
+        Select Dishes
+      </h1>
+      <button
+        onClick={handleNext}
+        className="bg-primary hover:bg-green-700 text-white px-3 py-1 font-serif  "
+      >
         Next (Select Drinks)
       </button>
 
@@ -105,11 +115,18 @@ export default function SelectDishes() {
       ) : (
         <div className="grid grid-cols-3 gap-4 mt-4">
           {dishes.map((dish) => {
-            const isSelected = selectedDishes.some((d) =>   d.idMeal === dish.idMeal);
-            const dishData = selectedDishes.find((d) => d.idMeal === dish.idMeal);
+            const isSelected = selectedDishes.some(
+              (d) => d.idMeal === dish.idMeal
+            );
+            const dishData = selectedDishes.find(
+              (d) => d.idMeal === dish.idMeal
+            );
 
             return (
-              <div key={dish.idMeal} className="border p-2 font-serif font-semibold text-white">
+              <div
+                key={dish.idMeal}
+                className="border p-2 font-serif font-semibold text-white"
+              >
                 <Image
                   src={dish.strMealThumb}
                   alt={dish.strMeal}
@@ -120,7 +137,9 @@ export default function SelectDishes() {
                 <button
                   onClick={() => toggleDish(dish)}
                   className={`${
-                    isSelected ? "bg-accent hover:bg-red-600 " : "bg-primary hover:bg-green-700"
+                    isSelected
+                      ? "bg-accent hover:bg-red-600 "
+                      : "bg-primary hover:bg-green-700"
                   } text-white px-2 py-1 mt-2 font-serif font-semibold `}
                 >
                   {isSelected ? "Remove" : "Select"}

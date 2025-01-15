@@ -1,15 +1,14 @@
-// src/utils/files.ts
+
 import fs from "fs";
 import path from "path";
 
-// Use environment variable for file path, 
-// const ordersFilePath = process.env.ORDERS_FILE_PATH 
- // ? path.resolve(process.cwd(), process.env.ORDERS_FILE_PATH) 
+// Use environment variable for file path,
+// const ordersFilePath = process.env.ORDERS_FILE_PATH
+// ? path.resolve(process.cwd(), process.env.ORDERS_FILE_PATH)
 //  : path.join(process.cwd(), 'src', 'data', 'orders.json');
 
-const ordersFilePath = path.join(process.cwd(), 'src', 'data', 'orders.json');
+const ordersFilePath = path.join(process.cwd(), "src", "data", "orders.json");
 console.log("Using orders file path:", ordersFilePath);
-
 
 // Function to read the json files that stores orders
 export function readOrdersFile(): any[] {

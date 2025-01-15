@@ -13,7 +13,7 @@ const Hero: FC = () => {
       <div className="relative flex items-center justify-center h-full">
         <div className="text-center text-white">
           {/* 
-            We replace the letter 'i' in "LiL" with 
+            I replaced the letter 'i' in "LiL" with 
             L<span class="blink-i">i</span>L so we can control the dot
           */}
           <h1 className="text-5xl font-serif font-semibold">
