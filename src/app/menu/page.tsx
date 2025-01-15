@@ -2,6 +2,7 @@
 
 import React, { FC, useEffect, useState } from "react";
 import Image from "next/image";
+import Hero from "../components/common/Hero";
 
 interface MenuItem {
   name: string;
@@ -68,10 +69,10 @@ const MenuPage: FC = () => {
 
   const renderMenuSection = (title: string, items: MenuItem[]) => (
     <section className="mb-8">
-      <h2 className="text-2xl font-serif font-semibold mb-4">{title}</h2>
+      <h2 className="text-2xl text-white font-serif font-semibold mb-4">{title}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {items.map((item, index) => (
-          <div key={index} className="p-4 bg-white rounded-lg shadow-lg">
+          <div key={index} className="p-4 border rounded-lg shadow-lg">
             <Image
               src={item.image}
               alt={item.name}
@@ -79,7 +80,7 @@ const MenuPage: FC = () => {
               width={400}
               height={200}
             />
-            <h3 className="text-xl font-bold mb-2">{item.name}</h3>
+            <h3 className="text-xl text-primary font-bold mb-2">{item.name}</h3>
             {item.description && (
               <p className="text-gray-600">{item.description}</p>
             )}
@@ -91,20 +92,12 @@ const MenuPage: FC = () => {
 
   return (
     <>
-      <div
-        className="relative bg-cover bg-center h-96"
-        style={{ backgroundImage: 'url("/photos/lb.png")' }}
-      >
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="relative flex items-center justify-center h-full">
-          <div className="text-center text-white">
-            <h1 className="text-5xl font-bold">Our LiL Menu</h1>
-          </div>
-        </div>
-      </div>
+    <Hero />
+    
+
       <div className="container mx-auto p-8">
         {loading ? (
-          <p>Loading menu...</p>
+          <p className="text-white">Loading menu...</p>
         ) : error ? (
           <p className="text-red-500">{error}</p>
         ) : (

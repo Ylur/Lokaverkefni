@@ -43,6 +43,25 @@ export default function BookingPage() {
 
   const today = new Date().toISOString().split("T")[0];
 
+  // Predefine half-hour slots from 16:00 to 23:00
+  const timeSlots = [
+    "16:00",
+    "16:30",
+    "17:00",
+    "17:30",
+    "18:00",
+    "18:30",
+    "19:00",
+    "19:30",
+    "20:00",
+    "20:30",
+    "21:00",
+    "21:30",
+    "22:00",
+    "22:30",
+    "23:00",
+  ];
+
   function handleNext() {
     // Basic validation
     if (!email.includes("@")) {
@@ -104,7 +123,8 @@ export default function BookingPage() {
         </div>
 
         <p className="mb-4">
-          Please fill in your booking details. We’ll prepare your table and confirm your order!
+          Please fill in your booking details. We’ll prepare your table and
+          confirm your order!
         </p>
 
         <div className="bg-black/40 p-4 rounded shadow space-y-4">
@@ -129,18 +149,21 @@ export default function BookingPage() {
               onChange={(e) => setDate(e.target.value)}
             />
           </div>
-          {/* Time */}
+          {/* Time (Half-Hour Slots) */}
           <div>
             <label className="block font-semibold">Time (16:00-23:00):</label>
-            <input
-              type="time"
+            <select
               className="border w-full text-black p-1"
               value={time}
               onChange={(e) => setTime(e.target.value)}
-              min="16:00"
-              max="23:00"
-              step={1800}
-            />
+            >
+              <option value="">Select a Time</option>
+              {timeSlots.map((slot) => (
+                <option key={slot} value={slot}>
+                  {slot}
+                </option>
+              ))}
+            </select>
           </div>
           {/* People */}
           <div>

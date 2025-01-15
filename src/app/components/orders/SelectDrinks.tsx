@@ -97,19 +97,19 @@ export default function SelectDrinks() {
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-white text-xl font-bold">Select Drinks</h1>
+    <div className="p-8 justify-items-center">
+      <h1 className="text-xl font-bold text-white font-serif text-center">Select Drinks</h1>
 
       <div className="space-x-2 mb-4">
         <button
           onClick={handleBack}
-          className="bg-primary hover:bg-green-700 text-white px-3 py-1"
+          className="bg-primary hover:bg-green-700 text-white px-3 py-1 font-serif  "
         >
           Back (Dishes)
         </button>
         <button
           onClick={handleNext}
-          className="bg-primary hover:bg-green-700 text-white px-3 py-1"
+          className="bg-primary hover:bg-green-700 text-white px-3 py-1 font-serif  "
         >
           Next (Booking)
         </button>
@@ -128,7 +128,7 @@ export default function SelectDrinks() {
             );
 
             return (
-              <div key={drink.idDrink} className="border p-2">
+              <div key={drink.idDrink} className="border p-2 font-serif font-semibold text-white">
                 {/* Matching the image size from dishes */}
                 <Image
                   src={drink.strDrinkThumb}
@@ -142,16 +142,16 @@ export default function SelectDrinks() {
                   onClick={() => toggleDrink(drink)}
                   className={`mt-2 px-2 py-1 text-white ${
                     isSelected ? "bg-accent hover:bg-red-400" : "bg-primary hover:bg-green-700"
-                  }`}
+                  } text-white px-2 py-1 mt-2 font-serif font-semibold `}
                 >
                   {isSelected ? "Remove" : "Select"}
                 </button>
                 {isSelected && drinkData && (
-                  <div className="mt-2">
+                  <div className="mt-2 text-white font-serif font-semibold ">
                     <label>Quantity:</label>
                     <input
                       type="number"
-                      className="border ml-2"
+                      className="border ml-2 text-primary font-serif"
                       value={drinkData.quantity}
                       min={1}
                       onChange={(e) =>

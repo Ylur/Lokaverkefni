@@ -4,7 +4,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-
 export default function OlderOrdersPage() {
   const [email, setEmail] = useState("");
   const [orders, setOrders] = useState<any[]>([]);
@@ -35,7 +34,7 @@ export default function OlderOrdersPage() {
 
       // If no orders are returned, redirect to the No Orders page
       if (data.orders.length === 0) {
-        router.push("/orders/no-orders");
+        router.push("/no-orders");
       } else {
         setOrders(data.orders);
       }
@@ -46,7 +45,6 @@ export default function OlderOrdersPage() {
 
   function handleUpdate(orderId: string) {
     router.push(`/orders/update-order?id=${orderId}`);
-
   }
 
   function handleReOrder(order: any) {
@@ -73,58 +71,64 @@ export default function OlderOrdersPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto p-4">
-      <h1 className="text-white text-2xl font-bold mb-4">Older Orders</h1>
-      <div className="text-white mb-2">
-        <label>Email to search:</label>
-        <input
-          className="border p-2 w-full text-black"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+    <div className="p-4 min-h-screen text-white flex justify-center">
+      <div className="max-w-lg w-full">
+        <h1 className="text-3xl font-bold mb-4 text-center">Older Orders</h1>
+
+        <div className="mb-4">
+          <label className="block mb-1">Email to search:</label>
+          <input
+            className="border p-2 w-full text-black"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        <button
+          onClick={handleFetch}
+          className="bg-primary hover:bg-green-700 text-white font-bold px-4 py-2"
+        >
+          Fetch Orders
+        </button>
+
+        {message && <p className="text-red-500 mt-2">{message}</p>}
+
+        {/* Orders List */}
+        {orders.length > 0 && (
+          <ul className="mt-4 space-y-4">
+            {orders.map((o) => (
+              <li key={o._id} className="bg-black/40 p-4 rounded shadow">
+                <h3 className="font-semibold mb-1">Order ID: {o._id}</h3>
+                <p>Email: {o.email}</p>
+                <p>Total: {o.total}</p>
+                <p>Status: {o.status}</p>
+
+                <div className="mt-2 flex gap-2">
+                  <button
+                    onClick={() => handleUpdate(o._id)}
+                    className="bg-secondary hover:bg-orange-400 text-white px-2 py-1"
+                  >
+                    Update
+                  </button>
+                  <button
+                    onClick={() => handleReOrder(o)}
+                    className="bg-primary hover:bg-green-700 text-white px-2 py-1"
+                  >
+                    Re-Order
+                  </button>
+                  <button
+                    onClick={() => handleDelete(o._id)}
+                    className="bg-accent hover:bg-red-500 text-white px-2 py-1 rounded"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
-      <button
-        onClick={handleFetch}
-        className="bg-primary hover:bg-green-700 text-white font-bold px-4 py-2 mt-2"
-      >
-        Fetch Orders
-      </button>
-
-      {message && <p className="text-red-500 mt-2">{message}</p>}
-
-      {orders.length > 0 && (
-        <ul className="mt-4 space-y-2">
-          {orders.map((o) => (
-            <li key={o._id} className="border p-2">
-              <h3>Order ID: {o._id}</h3>
-              <p>Email: {o.email}</p>
-              <p>Total: {o.total}</p>
-              <p>Status: {o.status}</p>
-              <div className="mt-2 flex gap-2">
-                <button
-                  onClick={() => handleUpdate(o._id)}
-                  className="bg-secondary hover:bg-orange-400 text-white px-2 py-1"
-                >
-                  Update
-                </button>
-                <button
-                  onClick={() => handleReOrder(o)}
-                  className="bg-primary hover:bg-green-700 text-white px-2 py-1"
-                >
-                  Re-Order
-                </button>
-                <button
-                  onClick={() => handleDelete(o._id)}
-                  className="bg-accent hover:bg-red-500 text-white px-2 py-1 border rounded "
-                >
-                  Delete
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 }

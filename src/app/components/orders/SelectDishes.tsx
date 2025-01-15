@@ -94,9 +94,9 @@ export default function SelectDishes() {
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold">Select Dishes</h1>
-      <button onClick={handleNext} className="bg-primary hover:bg-green-700 text-white px-3 py-1">
+    <div className="p-8 justify-items-center">
+      <h1 className="text-xl font-bold text-white font-serif text-center">Select Dishes</h1>
+      <button onClick={handleNext} className="bg-primary hover:bg-green-700 text-white px-3 py-1 font-serif  ">
         Next (Select Drinks)
       </button>
 
@@ -109,7 +109,7 @@ export default function SelectDishes() {
             const dishData = selectedDishes.find((d) => d.idMeal === dish.idMeal);
 
             return (
-              <div key={dish.idMeal} className="border p-2">
+              <div key={dish.idMeal} className="border p-2 font-serif font-semibold text-white">
                 <Image
                   src={dish.strMealThumb}
                   alt={dish.strMeal}
@@ -121,17 +121,17 @@ export default function SelectDishes() {
                   onClick={() => toggleDish(dish)}
                   className={`${
                     isSelected ? "bg-accent hover:bg-red-600 " : "bg-primary hover:bg-green-700"
-                  } text-white px-2 py-1 mt-2`}
+                  } text-white px-2 py-1 mt-2 font-serif font-semibold `}
                 >
                   {isSelected ? "Remove" : "Select"}
                 </button>
 
                 {isSelected && dishData && (
-                  <div className="mt-2">
+                  <div className="mt-2 text-white font-serif font-semibold ">
                     <label>Quantity:</label>
                     <input
                       type="number"
-                      className="border ml-2"
+                      className="border ml-2 text-primary font-serif"
                       value={dishData.quantity}
                       min={1}
                       onChange={(e) =>

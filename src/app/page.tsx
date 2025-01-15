@@ -9,7 +9,7 @@ import NavButton from "./components/orders/NavButton";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen w-full bg-gray-50 text-gray-800">
+    <div className="min-h-screen w-full border font-serif font-semibold text-white">
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-8 flex flex-col items-center text-center">
         <h1 className="text-3xl md:text-4xl font-bold mb-4">
@@ -39,15 +39,15 @@ export default function HomePage() {
       <hr className="my-8 border-gray-200" />
 
       {/* Carousel Section */}
-      <section className="container mx-auto px-4 py-8">
-        <h2 className="text-2xl font-semibold mb-4 text-center">
-          Featured Dishes
+      <section className="container mx-auto px-4 py-8  ">
+        <h2 className="text-2xl mb-4 text-center font-serif font-semibold">
+        Popular Dishes
         </h2>
         <div className="w-full mx-auto mb-6">
           <Carousel />
         </div>
 
-        <h2 className="text-2xl font-semibold mb-4 text-center">
+        <h2 className="text-2xl mb-4 text-center font-serif font-semibold">
           Popular Drinks
         </h2>
         <div className="w-full mx-auto">

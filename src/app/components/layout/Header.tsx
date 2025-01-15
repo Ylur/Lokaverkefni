@@ -14,7 +14,7 @@ export default function TopMenu() {
   /**
    * We define “sections” by an array of objects.
    * Each object has:
-   *   label -> what to display
+   *   label -> what is displayd
    *   paths -> any routes that should highlight this label
    */
   const sections = [
@@ -47,14 +47,15 @@ export default function TopMenu() {
   }
 
   return (
-    <nav className="w-full #C16757 px-4 py-3 flex items-center justify-between">
+    <nav className="w-full px-4 py-3 flex items-center justify-between">
       {/* Logo that navigates home, yes the header was supposed to be non intertact but users must be able to go to home page */}
       <Link href="/" className="flex items-center space-x-2">
+      
         {/* The logo image */}
         <img
           src="/photos/lb.png"
           alt="Logo"
-          className="w-8 h-8 object-contain cursor-pointer"
+          className="w-8 h-8 object-contain cursor-pointer text-primary"
         />
       </Link>
 
@@ -67,8 +68,8 @@ export default function TopMenu() {
               key={label}
               className={
                 active
-                  ? "text-primary font-semibold"
-                  : "text-gray-600"
+                  ? "text-primary font-serif font-semibold"
+                  : "text-gray-600 font-serif font-semibold"
               }
             >
               {label}
