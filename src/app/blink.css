@@ -1,0 +1,46 @@
+/* Created for a flair, used in hero components 
+color codes from the pdf werent 100% so im using something similar */
+
+.blink-i {
+    position: relative; 
+    /* Since the 'i' has a native dot, I can remove it with a custom font 
+       or by using 'font-feature-settings' if needed. 
+       But i chose to set l + dot over, it's small enough that the pseudo-element dot covers it. */
+  }
+  
+  /*  blinking dot*/
+  .blink-i::after {
+    content: "";
+    position: absolute;
+    /* Adjust top/left to place the dot exactly where you want over the i */
+    top: -0.3em;      /* slightly above the letter to look line i*/
+    left: 52%;
+    transform: translateX(-50%);
+  
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+
+    background-color: #e8ff36; 
+  
+    /* Blinking animation, more smoother with longer transitions since its three pretty different colors*/
+    animation: blink-dot 3s infinite ease-in-out;
+  }
+  
+  /* Animation cycle through multiple colors 
+      */
+  @keyframes blink-dot {
+    0% {
+      background-color: #C16757; /* Green */
+    }
+    33% {
+      background-color: #75d106; /* Light green */
+    }
+    66% {
+      background-color: #e8ff36; /* yellow/green variant */
+    }
+    100% {
+      background-color: #C16757;
+    }
+  }
+  
