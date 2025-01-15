@@ -586,5 +586,50 @@
     "people": 1,
     "status": "pending",
     "createdAt": "2025-01-15T15:06:31.986Z"
+  },
+  {
+    "_id": "c1062dee-9ed7-4431-8eaa-92e98909dc33",
+    "transaction": "aaca776f-39ce-4cbf-a36b-5be4747b6203",
+    "email": "123@123.is",
+    "dishes": [
+      {
+        "idMeal": "52878",
+        "strMeal": "Beef and Oyster pie",
+        "quantity": 1
+      },
+      {
+        "idMeal": "52835",
+        "strMeal": "Fettucine alfredo",
+        "quantity": 1
+      },
+      {
+        "idMeal": "53072",
+        "strMeal": "Crispy Eggplant",
+        "quantity": 1
+      }
+    ],
+    "drinks": [
+      {
+        "idDrink": "14860",
+        "strDrink": "Talos Coffee",
+        "quantity": 1
+      },
+      {
+        "idDrink": "12758",
+        "strDrink": "Gagliardo",
+        "quantity": 1
+      },
+      {
+        "idDrink": "13675",
+        "strDrink": "Flander's Flake-Out",
+        "quantity": 1
+      }
+    ],
+    "total": 45,
+    "date": "2025-01-16",
+    "time": "17:30",
+    "people": 1,
+    "status": "pending",
+    "createdAt": "2025-01-15T15:12:12.521Z"
   }
 ]

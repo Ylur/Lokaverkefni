@@ -38,6 +38,14 @@ export default function TopMenu() {
       label: "Receipt",
       paths: ["/receipt"],
     },
+    {
+      label: "Contact us",
+      paths: ["/contact"],
+    },
+    {
+      label: "About us",
+      paths: ["/about"],
+    },
   ];
 
   /**

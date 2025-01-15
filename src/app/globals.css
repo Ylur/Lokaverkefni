@@ -43,3 +43,7 @@ body {
     @apply font-sans;
   }
 }
+.vertical-text {
+  writing-mode: vertical-rl; /* Can be used RL also */
+  transform: rotate(180deg); 
+}

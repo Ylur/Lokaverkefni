@@ -5,26 +5,28 @@ import React, { FC } from "react";
 const AboutPage: FC = () => {
   return (
     <>
-      <div className="container mx-auto p-8">
-        <h1 className="text-4xl text-primary font-bold text-center mb-10">About Us</h1>
-        <p className="text-lg text-primary text-center leading-relaxed">
-          Welcome to <span className="font-bold">Lil bits.</span> <br />
-          <br />
-          <br />
-          At <span className="font-bold">Lil bits</span>,<br />
-          we believe that food is not just a necessity,
-          <br />
-          <br />
-        </p>
-        <p className="text-lg text-primary mt-4 text-center">
-          Come join us at <span className="font-bold">Lil bits</span>, where
-          good food meets great company!
-        </p>
-        <br />
-        <br />
-        <div className="relative flex items-center justify-center h-full">
-          <div className="text-center text-white"></div>
+      <div className="flex container mx-auto p-8">
+        <div className="p-4">
+          <h1 className="vertical-text text-8xl text-primary font-bold">
+            A B O U T 
+          </h1>
         </div>
+
+        <p className="flex-2 px-8 text-2xl text-primary text-center leading-relaxed">
+          Welcome to <span className="font-bold">Lil bits.</span>
+          <br />
+          Where food isn't just served —it's celebrated. Each dish is a tribute
+          to fresh ingredients, thoughtful preparation, and the joy of sharing a
+          meal together. <br />
+          <br />
+        </p>
+        <p className="text-2xl text-primary mt-4 text-center">
+          Join us at <span className="font-bold">Lil bits</span> and discover
+          how great flavors and an even better community can make every visit
+          one to remember!
+        </p>
+        <br />
+        <br />
       </div>
     </>
   );
