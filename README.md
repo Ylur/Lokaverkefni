@@ -84,6 +84,7 @@ Orders are saved locally to `data/orders.json` and can be retrieved later by the
 5. **Older-orders** → Gets orders that match the Email from `data/orders.json`, else shows no-order page.
 
 ### Project Structure
+tree -I "node_modules|.git" 
 
 .
 ├── README.md
@@ -94,76 +95,80 @@ Orders are saved locally to `data/orders.json` and can be retrieved later by the
 ├── postcss.config.mjs
 ├── postcss.config.ts
 ├── public
-│ └── photos
-│ └── lb.png
+│   └── photos
+│       └── lb.png
 ├── src
-│ ├── app
-│ │ ├── about
-│ │ │ └── page.tsx
-│ │ ├── api
-│ │ │ └── orders
-│ │ │ ├── [id]
-│ │ │ │ └── route.ts
-│ │ │ └── route.ts
-│ │ ├── booking
-│ │ │ └── page.tsx
-│ │ ├── components
-│ │ │ ├── common
-│ │ │ │ ├── Carousel.tsx
-│ │ │ │ ├── DrinkCarousel.tsx
-│ │ │ │ ├── Hero.tsx
-│ │ │ │ └── MiniOrderFlow.tsx
-│ │ │ ├── forms
-│ │ │ │ └── ContactForm.tsx
-│ │ │ ├── layout
-│ │ │ │ ├── Footer.tsx
-│ │ │ │ └── Header.tsx
-│ │ │ └── orders
-│ │ │ ├── CreateOrder.tsx
-│ │ │ ├── DishPreview.tsx
-│ │ │ ├── OrdersList.tsx
-│ │ │ ├── ReceiptComponent.tsx
-│ │ │ ├── SelectDishes.tsx
-│ │ │ └── SelectDrinks.tsx
-│ │ ├── contact
-│ │ │ └── page.tsx
-│ │ ├── create-order
-│ │ │ └── page.tsx
-│ │ ├── fonts
-│ │ │ ├── GeistMonoVF.woff
-│ │ │ └── GeistVF.woff
-│ │ ├── globals.css
-│ │ ├── layout.tsx
-│ │ ├── menu
-│ │ │ └── page.tsx
-│ │ ├── orders
-│ │ │ ├── layout.tsx
-│ │ │ ├── no-orders
-│ │ │ │ └── page.tsx
-│ │ │ ├── older-orders
-│ │ │ │ └── page.tsx
-│ │ │ └── update-order
-│ │ │ └── page.tsx
-│ │ ├── page.tsx
-│ │ ├── receipt
-│ │ │ └── page.tsx
-│ │ ├── select-dishes
-│ │ │ ├── [id]
-│ │ │ │ └── page.tsx
-│ │ │ └── page.tsx
-│ │ ├── select-drinks
-│ │ │ ├── [id]
-│ │ │ │ └── page.tsx
-│ │ │ └── page.tsx
-│ │ └── types.ts
-│ └── data
-│ └── orders.json
-├── tailwind.config.ts
+│   ├── app
+│   │   ├── about
+│   │   │   └── page.tsx
+│   │   ├── api
+│   │   │   └── orders
+│   │   │       ├── [id]
+│   │   │       │   └── route.ts
+│   │   │       └── route.ts
+│   │   ├── blink.css
+│   │   ├── booking
+│   │   │   └── page.tsx
+│   │   ├── components
+│   │   │   ├── common
+│   │   │   │   ├── Carousel.tsx
+│   │   │   │   ├── DrinkCarousel.tsx
+│   │   │   │   ├── Hero.tsx
+│   │   │   │   └── MiniOrderFlow.tsx
+│   │   │   ├── forms
+│   │   │   │   └── ContactForm.tsx
+│   │   │   ├── layout
+│   │   │   │   ├── Footer.tsx
+│   │   │   │   └── Header.tsx
+│   │   │   └── orders
+│   │   │       ├── BookingForm.tsx
+│   │   │       ├── CreateOrder.tsx
+│   │   │       ├── DishDrinkPreview.tsx
+│   │   │       ├── DishSelectorModal.tsx
+│   │   │       ├── DrinkSelectorModal.tsx
+│   │   │       ├── NavButton.tsx
+│   │   │       ├── ReceiptComponent.tsx
+│   │   │       ├── SelectDishes.tsx
+│   │   │       └── SelectDrinks.tsx
+│   │   ├── contact
+│   │   │   └── page.tsx
+│   │   ├── create-order
+│   │   │   └── page.tsx
+│   │   ├── fonts
+│   │   │   ├── GeistMonoVF.woff
+│   │   │   └── GeistVF.woff
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   ├── menu
+│   │   │   └── page.tsx
+│   │   ├── orders
+│   │   │   ├── layout.tsx
+│   │   │   ├── no-orders
+│   │   │   │   └── page.tsx
+│   │   │   ├── older-orders
+│   │   │   │   └── page.tsx
+│   │   │   └── update-order
+│   │   │       └── page.tsx
+│   │   ├── page.tsx
+│   │   ├── receipt
+│   │   │   └── page.tsx
+│   │   ├── select-dishes
+│   │   │   ├── [id]
+│   │   │   │   └── page.tsx
+│   │   │   └── page.tsx
+│   │   ├── select-drinks
+│   │   │   ├── [id]
+│   │   │   │   └── page.tsx
+│   │   │   └── page.tsx
+│   │   └── types.ts
+│   └── data
+│       └── orders.json
+├── tailwind.config.js
 ├── tsconfig.json
-├── tsconfig.tsbuildinfo
-├── types.js
 └── utils
-└── files.ts.
+    └── files.ts
+
+30 directories, 51 files
 
 ## Technologies Used
 
