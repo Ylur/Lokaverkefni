@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
+import ReceiptComponent from "@/app/components/orders/ReceiptComponent";
 
 interface SelectedMeal {
   idMeal: string;
@@ -13,7 +14,7 @@ interface SelectedDrink {
   idDrink: string;
   strDrink: string;
   quantity: number;
-} 
+}
 
 export default function ReceiptPage() {
   const searchParams = useSearchParams();
@@ -23,7 +24,6 @@ export default function ReceiptPage() {
   const [message, setMessage] = useState("");
   const [orderPosted, setOrderPosted] = useState(false);
 
-  // Safely parse from query
   const email = searchParams.get("email") ?? "";
   const date = searchParams.get("date") ?? "";
   const time = searchParams.get("time") ?? "";
@@ -36,11 +36,17 @@ export default function ReceiptPage() {
     dishes = JSON.parse(searchParams.get("dishes") ?? "[]");
     drinks = JSON.parse(searchParams.get("drinks") ?? "[]");
   } catch (err) {
-    return <p className="text-accent">Error parsing dishes/drinks from query.</p>;
+    return (
+      <p className="text-accent">Error parsing dishes/drinks from query.</p>
+    );
   }
 
   if (!email || !date || !time || !peopleStr) {
-    return <p className="text-accent">Missing booking info (email, date, time, or people).</p>;
+    return (
+      <p className="text-accent">
+        Missing booking info (email, date, time, or people).
+      </p>
+    );
   }
 
   const people = Number(peopleStr);
@@ -48,7 +54,7 @@ export default function ReceiptPage() {
     return <p className="text-accent">Invalid number of people.</p>;
   }
 
-  // Example cost logic
+  // cost logic
   let total = 0;
   for (const dish of dishes) {
     total += dish.quantity * 10;
@@ -68,7 +74,19 @@ export default function ReceiptPage() {
     total,
   };
 
+  function handleBack() {
+    const params = new URLSearchParams();
+    params.set("dishes", JSON.stringify(dishes));
+    params.set("drinks", JSON.stringify(drinks));
+    params.set("email", email);
+    params.set("date", date);
+    params.set("time", time);
+    params.set("people", String(people));
+    router.push(`/booking?${params.toString()}`);
+  }
+
   async function handleDone() {
+    // We do the POST once user confirms
     setMessage("");
     try {
       const res = await fetch("/api/orders", {
@@ -88,85 +106,41 @@ export default function ReceiptPage() {
     }
   }
 
-  function handleBack() {
-    const params = new URLSearchParams();
-    params.set("dishes", JSON.stringify(dishes));
-    params.set("drinks", JSON.stringify(drinks));
-    params.set("email", email);
-    params.set("date", date);
-    params.set("time", time);
-    params.set("people", String(people));
-    router.push(`/booking?${params.toString()}`);
-  }
-
-  // If finalOrder is set, show the "confirmed" receipt
   if (finalOrder) {
+    // If posted => show the final receipt using <ReceiptComponent>
     return (
-      <div className="p-4 text-white flex justify-center">
+      <div className="p-4 flex justify-center text-white">
         <div className="max-w-md w-full">
-          <h1 className="text-primary text-4xl font-semibold font-serif mb-4">Receipt</h1>
-
-          {message && <p className="text-primary font-serif text-lg mb-2 font-semibold">{message}</p>}
-
-          <div className="bg-primary/10 p-4 rounded shadow space-y-2 ">
-            <p>
-              <span className="font-semibold font-serif">Email:</span> {finalOrder.email}
-            </p>
-            <p>
-              <span className="font-semibold font-serif">Date:</span> {finalOrder.date}
-            </p>
-            <p>
-              <span className="font-semiboldfont-serif ">Time:</span> {finalOrder.time}
-            </p>
-            <p>
-              <span className="font-semibold font-serif">People:</span> {finalOrder.people}
-            </p>
-
-            <div>
-              <h2 className="font-semibold font-serif mt-4">Dishes:</h2>
-              {finalOrder.dishes?.map((dish: any, i: number) => (
-                <p key={i}>
-                  {dish.strMeal} (x{dish.quantity})
-                </p>
-              ))}
-            </div>
-
-            <div>
-              <h2 className="font-semibold font-serif mt-4">Drinks:</h2>
-              {finalOrder.drinks?.map((drink: any, i: number) => (
-                <p key={i}>
-                  {drink.strDrink} (x{drink.quantity})
-                </p>
-              ))}
-            </div>
-
-            <p className="font-bold mt-2 font-serif">Total: ${finalOrder.total}</p>
-          </div>
-
-          <button
-            onClick={() => router.push("/")}
-            className="bg-primary hover:bg-green-700 text-white font-serif px-4 py-2 mt-4"
-          >
-            Done
-          </button>
+          {message && (
+            <p className="text-primary font-semibold text-lg mb-2">{message}</p>
+          )}
+          <ReceiptComponent
+            finalOrder={finalOrder}
+            onDone={() => router.push("/")}
+          />
         </div>
       </div>
     );
   }
 
-  // Otherwise, show the "preview" (not posted yet)
+  // Otherwise, show the “preview” portion
   return (
     <div className="p-4 flex justify-center text-white">
       <div className="max-w-md w-full">
-        <h1 className="text-2xl font-bold mb-4">Your order (Preview)</h1>
+        <h1 className="text-2xl font-bold mb-4 text-center font-serif">
+          Your Order (Preview)
+        </h1>
 
-        <div className="mb-2">
-          <button onClick={handleBack} className=" bg-primary hover:bg-green-700 text-white px-3 py-1">
+        <div className="text-center mb-4">
+          <button
+            onClick={handleBack}
+            className="bg-primary hover:bg-green-700 text-white px-3 py-1 font-serif"
+          >
             Back (Booking)
           </button>
         </div>
 
-        <div className="bg-primary/10 p-4 rounded border shadow space-y-2 ">
+        <div className="bg-primary/10 p-4 rounded border shadow space-y-2">
           <p>
             <span className="font-semibold font-serif">Email:</span> {email}
           </p>
@@ -205,10 +179,10 @@ export default function ReceiptPage() {
 
         <button
           onClick={handleDone}
-          className="bg-primary hover:bg-green-700 text-white px-4 py-2 mt-4"
+          className="bg-primary hover:bg-green-700 text-white px-4 py-2 mt-4 font-serif"
           disabled={orderPosted}
         >
-          Confirm order
+          Confirm Order
         </button>
       </div>
     </div>

@@ -80,7 +80,7 @@ export default function SelectDishes() {
   }
 
   function handleNext() {
-    // Allowing user to skip dishes if not I would use:
+    // Im allowing user to skip dishes, if thats not desired I would use:
     // if (selectedDishes.length === 0) {
     //   alert("Please select at least one dish");
     //   return;

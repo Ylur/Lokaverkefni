@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import BookingForm from "@/app/components/orders/BookingForm";
 
 interface SelectedMeal {
   idMeal: string;
@@ -102,12 +103,11 @@ export default function BookingPage() {
   }
 
   return (
-    <div className="p-4 text-white flex justify-center">
-      {/* Constrain the form to max-width and center it */}
+    <div className="p-8 text-white flex justify-items-center">
       <div className="max-w-md w-full">
-        <h1 className="text-2xl font-bold mb-4">Booking Details</h1>
+        <h1 className="text-2xl font-bold mb-4 text-center">Booking Details</h1>
 
-        <div className="space-x-2 mb-4">
+        <div className="space-x-2 mb-4 text-center">
           <button
             onClick={handleBack}
             className="bg-primary hover:bg-green-700 text-white px-3 py-1"
@@ -122,62 +122,23 @@ export default function BookingPage() {
           </button>
         </div>
 
-        <p className="mb-4">
-          Please fill in your booking details. We’ll prepare your table and
+        <p className="mb-4 text-center">
+          Please fill in your booking details. We'll prepare your table and
           confirm your order!
         </p>
 
-        <div className="bg-black/40 p-4 rounded shadow space-y-4">
-          {/* Email */}
-          <div>
-            <label className="block font-semibold">Email:</label>
-            <input
-              type="email"
-              className="border w-full text-black p-1"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          {/* Date */}
-          <div>
-            <label className="block font-semibold">Date:</label>
-            <input
-              type="date"
-              className="border w-full text-black p-1"
-              min={today}
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </div>
-          {/* Time (Half-Hour Slots) */}
-          <div>
-            <label className="block font-semibold">Time (16:00-23:00):</label>
-            <select
-              className="border w-full text-black p-1"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-            >
-              <option value="">Select a Time</option>
-              {timeSlots.map((slot) => (
-                <option key={slot} value={slot}>
-                  {slot}
-                </option>
-              ))}
-            </select>
-          </div>
-          {/* People */}
-          <div>
-            <label className="block font-semibold">People (1-10):</label>
-            <input
-              type="number"
-              className="border w-full text-black p-1"
-              min={1}
-              max={10}
-              value={people}
-              onChange={(e) => setPeople(Number(e.target.value))}
-            />
-          </div>
-        </div>
+        <BookingForm
+          email={email}
+          date={date}
+          time={time}
+          people={people}
+          today={today}
+          timeSlots={timeSlots}
+          onChangeEmail={(val) => setEmail(val)}
+          onChangeDate={(val) => setDate(val)}
+          onChangeTime={(val) => setTime(val)}
+          onChangePeople={(val) => setPeople(val)}
+        />
       </div>
     </div>
   );

@@ -34,7 +34,7 @@ export default function OlderOrdersPage() {
 
       // If no orders are returned, redirect to the No Orders page
       if (data.orders.length === 0) {
-        router.push("/no-orders");
+        router.push("/orders/no-orders");
       } else {
         setOrders(data.orders);
       }
@@ -73,10 +73,10 @@ export default function OlderOrdersPage() {
   return (
     <div className="p-4 min-h-screen text-white flex justify-center">
       <div className="max-w-lg w-full">
-        <h1 className="text-3xl font-bold mb-4 text-center">Older Orders</h1>
+        <h1 className="text-3xl font-bold mb-4 text-center font-serif">Older Orders</h1>
 
         <div className="mb-4">
-          <label className="block mb-1">Email to search:</label>
+          <label className="block mb-1 font-serif">Email to search:</label>
           <input
             className="border p-2 w-full text-black"
             type="email"
@@ -87,7 +87,7 @@ export default function OlderOrdersPage() {
 
         <button
           onClick={handleFetch}
-          className="bg-primary hover:bg-green-700 text-white font-bold px-4 py-2"
+          className="bg-primary hover:bg-green-700 text-white font-bold px-4 py-2 font-serif"
         >
           Fetch Orders
         </button>
@@ -98,8 +98,8 @@ export default function OlderOrdersPage() {
         {orders.length > 0 && (
           <ul className="mt-4 space-y-4">
             {orders.map((o) => (
-              <li key={o._id} className="bg-black/40 p-4 rounded shadow">
-                <h3 className="font-semibold mb-1">Order ID: {o._id}</h3>
+              <li key={o._id} className="bg-black/40 p-4 rounded shadow font-serif">
+                <h3 className="font-semibold mb-1 font-serif">Order ID: {o._id}</h3>
                 <p>Email: {o.email}</p>
                 <p>Total: {o.total}</p>
                 <p>Status: {o.status}</p>
@@ -107,19 +107,19 @@ export default function OlderOrdersPage() {
                 <div className="mt-2 flex gap-2">
                   <button
                     onClick={() => handleUpdate(o._id)}
-                    className="bg-secondary hover:bg-orange-400 text-white px-2 py-1"
+                    className="bg-secondary hover:bg-orange-400 text-white px-2 py-1 font-serif"
                   >
                     Update
                   </button>
                   <button
                     onClick={() => handleReOrder(o)}
-                    className="bg-primary hover:bg-green-700 text-white px-2 py-1"
+                    className="bg-primary hover:bg-green-700 text-white px-2 py-1 font-serif"
                   >
                     Re-Order
                   </button>
                   <button
                     onClick={() => handleDelete(o._id)}
-                    className="bg-accent hover:bg-red-500 text-white px-2 py-1 rounded"
+                    className="bg-accent hover:bg-red-500 text-white px-2 py-1 rounded font-serif"
                   >
                     Delete
                   </button>
