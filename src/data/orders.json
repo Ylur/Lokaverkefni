@@ -1,1 +1,40 @@
-[]
+[
+  {
+    "_id": "0e3d4989-ee03-4b46-bef2-1b2c2bec69d0",
+    "transaction": "d5d5a75e-c14b-46a9-ae5e-fefbd6a9b325",
+    "email": "876@876.is",
+    "dishes": [
+      {
+        "idMeal": "52858",
+        "strMeal": "New York cheesecake",
+        "quantity": 1
+      }
+    ],
+    "drinks": [],
+    "total": 10,
+    "date": "2025-01-15",
+    "time": "18:00",
+    "people": 1,
+    "status": "pending",
+    "createdAt": "2025-01-15T20:12:25.933Z"
+  },
+  {
+    "_id": "27a358ab-0bec-48d7-b3bd-ea9c6d71b115",
+    "transaction": "14f4cdee-44b5-4838-9119-9253b698def6",
+    "email": "876@876.is",
+    "dishes": [
+      {
+        "idMeal": "52899",
+        "strMeal": "Dundee cake",
+        "quantity": 1
+      }
+    ],
+    "drinks": [],
+    "total": 10,
+    "date": "2025-01-15",
+    "time": "16:30",
+    "people": 1,
+    "status": "pending",
+    "createdAt": "2025-01-15T20:13:18.561Z"
+  }
+]
