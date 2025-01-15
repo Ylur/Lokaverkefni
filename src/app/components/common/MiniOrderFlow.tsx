@@ -18,7 +18,7 @@ export default function MiniOrderFlow({ step }: MiniOrderFlowProps) {
   ];
 
   return (
-    <div className="p-4 border rounded-xl shadow-md w-full max-w-md mx-auto md:max-w-lg lg:max-w-xl bg-gray-200">
+    <div className="text-white font-bold p-4 border rounded-xl shadow-md w-full max-w-md mx-auto md:max-w-lg lg:max-w-xl bg-primary">
       <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-4 text-center">
         Order Status
       </h2>
@@ -27,7 +27,7 @@ export default function MiniOrderFlow({ step }: MiniOrderFlowProps) {
           <li
             key={stepNumber}
             className={`${
-              stepNumber === step ? "font-bold text-blue-600" : "opacity-60"
+              stepNumber === step ? "font-bold " : "opacity-60"
             } text-sm md:text-base lg:text-lg`}
           >
             {label}

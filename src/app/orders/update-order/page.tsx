@@ -112,7 +112,7 @@ function UpdateOrder() {
 
   async function handleUpdate() {
     if (!id || !order) return;
-    // Optional: recalc total here or do it on backend
+    // Optional: recalc total here or do it on backend dno whats better
     const newTotal = recalcTotal();
 
     try {
@@ -234,11 +234,11 @@ function UpdateOrder() {
 
   // --- Rendered UI ---
   return (
-    <div className="w-full max-w-screen-lg mx-auto p-4 space-y-4">
+    <div className="w-full max-w-screen-lg mx-auto p-4 space-y-4 text-white font-bold">
       <h1 className="text-2xl font-bold mb-2">Update Order {order.id}</h1>
 
       {message && (
-        <p className="p-2 bg-green-200 text-green-800 rounded">
+        <p className="p-2 bg-primary text-secondary rounded">
           {message}
         </p>
       )}
@@ -250,7 +250,7 @@ function UpdateOrder() {
         <div className="text-center">
         <button
           onClick={handleUpdate}
-          className="bg-green-600 text-white px-4 py-2 rounded mt-4"
+          className="bg-primary hover:bg-green-700 text-white px-4 py-2 rounded mt-4"
         >
           Save Changes
         </button>
@@ -268,7 +268,7 @@ function UpdateOrder() {
               type="text"
               value={dish.strMeal}
               onChange={(e) => handleChangeDishes(idx, "strMeal", e.target.value)}
-              className="border px-1"
+              className="border px-1 text-primary"
             />
             <input
               type="number"
@@ -277,11 +277,11 @@ function UpdateOrder() {
               onChange={(e) =>
                 handleChangeDishes(idx, "quantity", Number(e.target.value))
               }
-              className="border px-1 w-16"
+              className="border px-1 w-16 text-primary"
             />
             <button
               onClick={() => removeDish(idx)}
-              className="bg-red-500 text-white px-2 py-1 rounded"
+              className="bg-accent hover:bg-red-700 text-white px-2 py-1 border rounded"
             >
               Remove
             </button>
@@ -289,7 +289,7 @@ function UpdateOrder() {
         ))}
         <button
           onClick={() => setShowDishSelector(true)}
-          className="bg-blue-500 text-white px-3 py-1 rounded mt-2"
+          className="bg-primary hover:bg-green-700 text-white px-3 py-1 rounded mt-2"
         >
           + Add Dish
         </button>
@@ -306,7 +306,7 @@ function UpdateOrder() {
               type="text"
               value={drink.strDrink}
               onChange={(e) => handleChangeDrinks(idx, "strDrink", e.target.value)}
-              className="border px-1"
+              className="border px-1 text-primary"
             />
             <input
               type="number"
@@ -315,11 +315,11 @@ function UpdateOrder() {
               onChange={(e) =>
                 handleChangeDrinks(idx, "quantity", Number(e.target.value))
               }
-              className="border px-1 w-16"
+              className="border px-1 w-16 text-primary"
             />
             <button
               onClick={() => removeDrink(idx)}
-              className="bg-red-500 text-white px-2 py-1 rounded"
+              className="border rounded hover:bg-red-700 text-white px-2 py-1"
             >
               Remove
             </button>
@@ -327,7 +327,7 @@ function UpdateOrder() {
         ))}
         <button
           onClick={() => setShowDrinkSelector(true)}
-          className="bg-blue-500 text-white px-3 py-1 rounded mt-2"
+          className="bg-primary hover:bg-green-700 text-white px-3 py-1 rounded mt-2"
         >
           + Add Drink
         </button>
@@ -339,7 +339,7 @@ function UpdateOrder() {
       <div className="p-3 border rounded">
         <h2 className="text-lg font-semibold mb-2">Preview</h2>
         <p className="font-medium">
-          Estimated Total: <span className="text-green-600">${recalcTotal()}</span>
+          Estimated Total: <span className="text-primary">${recalcTotal()}</span>
         </p>
 
         <div className="flex flex-col space-y-4 mt-2">

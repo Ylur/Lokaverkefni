@@ -80,13 +80,13 @@ export default function SelectDishes() {
   }
 
   function handleNext() {
-    // We allow skipping dishes? Then do not force the user to pick anything:
+    // Allowing user to skip dishes if not I would use:
     // if (selectedDishes.length === 0) {
     //   alert("Please select at least one dish");
     //   return;
     // }
 
-    // Put both updated dishes & drinks into query
+    // Adding updated dishes & drinks into query
     const params = new URLSearchParams();
     params.set("dishes", JSON.stringify(selectedDishes));
     params.set("drinks", JSON.stringify(selectedDrinks));
@@ -120,7 +120,7 @@ export default function SelectDishes() {
                 <button
                   onClick={() => toggleDish(dish)}
                   className={`${
-                    isSelected ? "bg-accent" : "bg-primary"
+                    isSelected ? "bg-accent hover:bg-red-600 " : "bg-primary hover:bg-green-700"
                   } text-white px-2 py-1 mt-2`}
                 >
                   {isSelected ? "Remove" : "Select"}

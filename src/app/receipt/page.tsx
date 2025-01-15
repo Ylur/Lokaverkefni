@@ -13,7 +13,7 @@ interface SelectedDrink {
   idDrink: string;
   strDrink: string;
   quantity: number;
-}
+} 
 
 export default function ReceiptPage() {
   const searchParams = useSearchParams();
@@ -158,7 +158,7 @@ export default function ReceiptPage() {
   return (
     <div className="p-4 text-white flex justify-center">
       <div className="max-w-md w-full">
-        <h1 className="text-2xl font-bold mb-4">Receipt (Preview)</h1>
+        <h1 className="text-2xl font-bold mb-4">Your order (Preview)</h1>
 
         <div className="mb-2">
           <button onClick={handleBack} className="bg-primary hover:bg-green-700 text-white px-3 py-1">
@@ -208,7 +208,7 @@ export default function ReceiptPage() {
           className="bg-primary hover:bg-green-700 text-white px-4 py-2 mt-4"
           disabled={orderPosted}
         >
-          Confirm (POST Order)
+          Confirm order
         </button>
       </div>
     </div>

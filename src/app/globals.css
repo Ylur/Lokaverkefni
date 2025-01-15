@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .loader {
-  border-top-color: #3498db;
+  border-top-color: #BA2329;
   animation: spinner 1.5s linear infinite;
 }
 
@@ -16,6 +16,7 @@
 :root {
   --background: #C16757;
   --foreground: #000000;
+  --secondary: #e8ff36;
 
 }
 

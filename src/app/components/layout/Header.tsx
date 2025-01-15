@@ -67,7 +67,7 @@ export default function TopMenu() {
               key={label}
               className={
                 active
-                  ? "text-blue-700 font-semibold"
+                  ? "text-primary font-semibold"
                   : "text-gray-600"
               }
             >

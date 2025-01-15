@@ -74,11 +74,11 @@ export default function OlderOrdersPage() {
 
   return (
     <div className="max-w-md mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Older Orders</h1>
-      <div className="mb-2">
+      <h1 className="text-white text-2xl font-bold mb-4">Older Orders</h1>
+      <div className="text-white mb-2">
         <label>Email to search:</label>
         <input
-          className="border p-2 w-full"
+          className="border p-2 w-full text-black"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -86,7 +86,7 @@ export default function OlderOrdersPage() {
       </div>
       <button
         onClick={handleFetch}
-        className="bg-blue-500 text-white px-4 py-2 mt-2"
+        className="bg-primary hover:bg-green-700 text-white font-bold px-4 py-2 mt-2"
       >
         Fetch Orders
       </button>
@@ -104,19 +104,19 @@ export default function OlderOrdersPage() {
               <div className="mt-2 flex gap-2">
                 <button
                   onClick={() => handleUpdate(o._id)}
-                  className="bg-yellow-500 text-white px-2 py-1"
+                  className="bg-secondary hover:bg-orange-400 text-white px-2 py-1"
                 >
                   Update
                 </button>
                 <button
                   onClick={() => handleReOrder(o)}
-                  className="bg-green-600 text-white px-2 py-1"
+                  className="bg-primary hover:bg-green-700 text-white px-2 py-1"
                 >
                   Re-Order
                 </button>
                 <button
                   onClick={() => handleDelete(o._id)}
-                  className="bg-red-600 text-white px-2 py-1"
+                  className="bg-accent hover:bg-red-500 text-white px-2 py-1 border rounded "
                 >
                   Delete
                 </button>
