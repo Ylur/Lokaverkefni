@@ -791,5 +791,50 @@
     "people": 7,
     "status": "pending",
     "createdAt": "2025-01-15T17:12:21.849Z"
+  },
+  {
+    "_id": "233c0d1e-d7db-412e-8ca0-58b628fe9e16",
+    "transaction": "23f928c4-fe62-4e33-ac98-2567c3e7986d",
+    "email": "43@43.is",
+    "dishes": [
+      {
+        "idMeal": "52794",
+        "strMeal": "Vegan Chocolate Cake",
+        "quantity": 1
+      },
+      {
+        "idMeal": "52943",
+        "strMeal": "Oxtail with broad beans",
+        "quantity": 1
+      },
+      {
+        "idMeal": "53046",
+        "strMeal": "Portuguese custard tarts",
+        "quantity": 1
+      }
+    ],
+    "drinks": [
+      {
+        "idDrink": "178308",
+        "strDrink": "Spritz Veneziano",
+        "quantity": 1
+      },
+      {
+        "idDrink": "15194",
+        "strDrink": "Amaretto Shake",
+        "quantity": 1
+      },
+      {
+        "idDrink": "12107",
+        "strDrink": "Salty Dog",
+        "quantity": 1
+      }
+    ],
+    "total": 45,
+    "date": "2025-01-22",
+    "time": "17:00",
+    "people": 1,
+    "status": "pending",
+    "createdAt": "2025-01-15T19:22:55.860Z"
   }
 ]
