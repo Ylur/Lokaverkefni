@@ -12,10 +12,10 @@ export default function HomePage() {
     <div className="min-h-screen w-full border font-serif font-semibold text-white">
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-8 flex flex-col items-center text-center">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">
+        <h1 className="text-3xl md:text-4xl font-bold mb-4 font-serif">
           Welcome to Our Restaurant
         </h1>
-        <p className="mb-6 max-w-2xl">
+        <p className="mb-6 max-w-2xl font-serif ">
           Explore delicious dishes, refreshing drinks, and easy booking. 
           Start your order or check out our featured items below!
         </p>
@@ -23,17 +23,24 @@ export default function HomePage() {
           {/* Primary Call to Action */}
           <Link
             href="/select-dishes"
-            className="inline-block bg-primary hover:bg-green-700 text-white px-6 py-2 rounded shadow transition"
+            className="inline-block bg-primary hover:bg-green-700 text-white px-6 py-2 rounded shadow transition font-serif"
           >
             Create Order
           </Link>
           {/* Secondary Action */}
           <NavButton
+            route="/menu"
+            buttonText="View our menu"
+            className="text-white bg-primary hover:bg-green-700 px-6 py-2 rounded shadow transition font-serif"
+          />
+            {/* Secondary Action */}
+            <NavButton
             route="/orders/older-orders"
             buttonText="View Previous Orders"
-            className="text-white bg-primary hover:bg-green-700 px-6 py-2 rounded shadow transition"
+            className="text-white bg-primary hover:bg-green-700 px-6 py-2 rounded shadow transition font-serif"
           />
         </div>
+        
       </section>
 
       <hr className="my-8 border-gray-200" />

@@ -19,8 +19,12 @@ export default function TopMenu() {
    */
   const sections = [
     {
-      label: "Home",
+      label: "HomePage",
       paths: ["/"], // highlight only on home
+    },
+    {
+      label: "Menu",
+      paths: ["/Menu"], 
     },
     {
       label: "Orders",
@@ -69,7 +73,7 @@ export default function TopMenu() {
               className={
                 active
                   ? "text-primary font-serif font-semibold"
-                  : "text-gray-600 font-serif font-semibold"
+                  : "text-secondary font-serif font-semibold"
               }
             >
               {label}

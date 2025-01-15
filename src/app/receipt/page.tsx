@@ -104,26 +104,26 @@ export default function ReceiptPage() {
     return (
       <div className="p-4 text-white flex justify-center">
         <div className="max-w-md w-full">
-          <h1 className="text-primary text-2xl font-bold mb-4">Receipt</h1>
+          <h1 className="text-primary text-4xl font-semibold font-serif mb-4">Receipt</h1>
 
-          {message && <p className="text-primary font-bold text-lg mb-2">{message}</p>}
+          {message && <p className="text-primary font-serif text-lg mb-2 font-semibold">{message}</p>}
 
-          <div className="bg-black/40 p-4 rounded shadow space-y-2 ">
+          <div className="bg-primary/10 p-4 rounded shadow space-y-2 ">
             <p>
-              <span className="font-semibold">Email:</span> {finalOrder.email}
+              <span className="font-semibold font-serif">Email:</span> {finalOrder.email}
             </p>
             <p>
-              <span className="font-semibold">Date:</span> {finalOrder.date}
+              <span className="font-semibold font-serif">Date:</span> {finalOrder.date}
             </p>
             <p>
-              <span className="font-semibold">Time:</span> {finalOrder.time}
+              <span className="font-semiboldfont-serif ">Time:</span> {finalOrder.time}
             </p>
             <p>
-              <span className="font-semibold">People:</span> {finalOrder.people}
+              <span className="font-semibold font-serif">People:</span> {finalOrder.people}
             </p>
 
             <div>
-              <h2 className="font-semibold mt-4">Dishes:</h2>
+              <h2 className="font-semibold font-serif mt-4">Dishes:</h2>
               {finalOrder.dishes?.map((dish: any, i: number) => (
                 <p key={i}>
                   {dish.strMeal} (x{dish.quantity})
@@ -132,7 +132,7 @@ export default function ReceiptPage() {
             </div>
 
             <div>
-              <h2 className="font-semibold mt-4">Drinks:</h2>
+              <h2 className="font-semibold font-serif mt-4">Drinks:</h2>
               {finalOrder.drinks?.map((drink: any, i: number) => (
                 <p key={i}>
                   {drink.strDrink} (x{drink.quantity})
@@ -140,12 +140,12 @@ export default function ReceiptPage() {
               ))}
             </div>
 
-            <p className="font-bold mt-2">Total: ${finalOrder.total}</p>
+            <p className="font-bold mt-2 font-serif">Total: ${finalOrder.total}</p>
           </div>
 
           <button
             onClick={() => router.push("/")}
-            className="bg-primary hover:bg-green-700 text-white px-4 py-2 mt-4"
+            className="bg-primary hover:bg-green-700 text-white font-serif px-4 py-2 mt-4"
           >
             Done
           </button>
@@ -166,7 +166,7 @@ export default function ReceiptPage() {
           </button>
         </div>
 
-        <div className="bg-accent/40 p-4 rounded border shadow space-y-2 ">
+        <div className="bg-primary/10 p-4 rounded border shadow space-y-2 ">
           <p>
             <span className="font-semibold font-serif">Email:</span> {email}
           </p>
