@@ -21,9 +21,11 @@ const DrinkSelectorModal: React.FC<DrinkSelectorModalProps> = ({
   setShowDrinkSelector,
   confirmDrinkSelection,
 }) => (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-    <div className="bg-white p-4 rounded max-w-lg w-full">
-      <h2 className="font-semibold mb-4">Select Additional Drinks</h2>
+  <div className="fixed inset-0 flex items-center justify-center">
+    <div className="bg-primary p-4 rounded max-w-lg w-full">
+      <h2 className="font-semibold mb-4 text-white">
+        Select Additional Drinks
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {availableDrinks.map((drink) => {
           const isSelected = selectedDrinksToAdd.some(
@@ -43,7 +45,9 @@ const DrinkSelectorModal: React.FC<DrinkSelectorModalProps> = ({
               <button
                 onClick={() => addDrinkToSelection(drink)}
                 className={`mt-2 px-2 py-1 text-white ${
-                  isSelected ? "bg-red-500" : "bg-green-500"
+                  isSelected
+                    ? "bg-accent hover:bg-red-700"
+                    : "bg-primary hover:bg-green-700"
                 }`}
               >
                 {isSelected ? "Remove" : "Select"}
@@ -61,7 +65,7 @@ const DrinkSelectorModal: React.FC<DrinkSelectorModalProps> = ({
                         Number(e.target.value)
                       )
                     }
-                    className="border px-1 w-16"
+                    className="border px-1 w-16 text-primary"
                   />
                 </div>
               )}
@@ -72,13 +76,13 @@ const DrinkSelectorModal: React.FC<DrinkSelectorModalProps> = ({
       <div className="mt-4 flex justify-end gap-2">
         <button
           onClick={() => setShowDrinkSelector(false)}
-          className="px-4 py-2 bg-gray-300 rounded"
+          className="px-4 py-2 bg-accent hover:bg-green-700 rounded"
         >
           Cancel
         </button>
         <button
           onClick={confirmDrinkSelection}
-          className="px-4 py-2 bg-blue-600 text-white rounded"
+          className="px-4 py-2 bg-primary hover:bg-green-700 rounded"
         >
           Confirm Selection
         </button>

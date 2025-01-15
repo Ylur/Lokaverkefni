@@ -298,7 +298,23 @@
     "_id": "747f3818-ebba-4d67-be72-1cb40788e030",
     "transaction": "7b3aee56-2839-40d7-9193-e10f914d1784",
     "email": "99@99.is",
-    "dishes": [],
+    "dishes": [
+      {
+        "idMeal": "52834",
+        "strMeal": "Beef stroganoff",
+        "quantity": 1
+      },
+      {
+        "idMeal": "52865",
+        "strMeal": "Matar Paneer",
+        "quantity": 1
+      },
+      {
+        "idMeal": "53038",
+        "strMeal": "Mustard champ",
+        "quantity": 1
+      }
+    ],
     "drinks": [
       {
         "idDrink": "13066",
@@ -306,7 +322,7 @@
         "quantity": 1
       }
     ],
-    "total": 5,
+    "total": 35,
     "date": "2025-01-15",
     "time": "17:17",
     "people": 2,

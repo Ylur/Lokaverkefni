@@ -56,7 +56,7 @@ export const DishPreview: FC<DishPreviewProps> = ({ dishId }) => {
   if (!dish) return <p>Loading dish details...</p>;
 
   return (
-    <div className="max-w-xs rounded overflow-hidden shadow-lg bg-white p-4 m-2">
+    <div className="max-w-xs rounded overflow-hidden shadow-lg border p-4 m-2">
       <Image
         className="w-full h-auto object-cover"
         src={dish.strMealThumb}
@@ -64,8 +64,8 @@ export const DishPreview: FC<DishPreviewProps> = ({ dishId }) => {
         width={500}
         height={300}
       />
-      <div className="mt-4 text-lg font-semibold">{dish.strMeal}</div>
-      <p className="mt-2 text-gray-600">
+      <div className="mt-4 text-lg font-semibold text-white">{dish.strMeal}</div>
+      <p className="mt-2 text-primary">
         {dish.strInstructions.substring(0, 100)}...
       </p>
     </div>
@@ -97,11 +97,11 @@ export const DrinkPreview: FC<DrinkPreviewProps> = ({ drinkId }) => {
     fetchDrink();
   }, [drinkId]);
 
-  if (error) return <p className="text-red-500">{error}</p>;
+  if (error) return <p className="text-accent">{error}</p>;
   if (!drink) return <p>Loading drink details...</p>;
 
   return (
-    <div className="max-w-xs rounded overflow-hidden shadow-lg bg-white p-4 m-2">
+    <div className="border max-w-xs rounded overflow-hidden shadow-lg p-4 m-2">
       <Image
         className="w-full h-auto object-cover"
         src={drink.strDrinkThumb}
@@ -110,7 +110,7 @@ export const DrinkPreview: FC<DrinkPreviewProps> = ({ drinkId }) => {
         height={300}
       />
       <div className="mt-4 text-lg font-semibold">{drink.strDrink}</div>
-      <p className="mt-2 text-gray-600">
+      <p className="mt-2 text-primary">
         {drink.strInstructions.substring(0, 100)}...
       </p>
     </div>

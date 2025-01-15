@@ -319,7 +319,7 @@ function UpdateOrder() {
             />
             <button
               onClick={() => removeDrink(idx)}
-              className="border rounded hover:bg-red-700 text-white px-2 py-1"
+              className="border rounded hover:bg-red-700 text-primary px-2 py-1"
             >
               Remove
             </button>
@@ -337,9 +337,9 @@ function UpdateOrder() {
 
       {/* Preview Section */}
       <div className="p-3 border rounded">
-        <h2 className="text-lg font-semibold mb-2">Preview</h2>
+        <h2 className="text-lg font-semibold mb-2">Preview of order</h2>
         <p className="font-medium">
-          Estimated Total: <span className="text-primary">${recalcTotal()}</span>
+          Estimated Total: <span className="text-primary font-bold">${recalcTotal()}</span>
         </p>
 
         <div className="flex flex-col space-y-4 mt-2">
