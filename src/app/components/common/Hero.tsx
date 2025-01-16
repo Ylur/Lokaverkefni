@@ -6,10 +6,10 @@ import "../../blink.css"; // blinking dot with restaurant color
 const Hero: FC = () => {
   return (
     <div
-      className="relative bg-cover bg-center h-96"
+      className="relative bg-fit bg-center container mx-auto "
       style={{ backgroundImage: 'url("/photos/lb.png")' }}
     >
-      <div className="border rounded-lg absolute inset-0 bg-black opacity-50"></div>
+      <div className="border rounded absolute inset-0 bg-black opacity-50 "></div>
       <div className="relative flex items-center justify-center h-full">
         <div className="text-center text-white">
           {/* 

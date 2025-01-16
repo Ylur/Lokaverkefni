@@ -58,13 +58,13 @@ export default function TopMenu() {
 
   return (
     <nav className="w-full px-4 py-3 flex items-center justify-between">
-      {/* Logo that navigates home, yes the header was supposed to be non intertact but users must be able to go to home page */}
+      {/* Logo that navigates home, yes the header was supposed to be non intertact but users must be able to go to home page imo */}
       <Link href="/" className="flex items-center space-x-2">
         {/* The logo image */}
         <img
           src="/photos/lb.png"
           alt="Logo"
-          className="w-8 h-8 object-contain cursor-pointer text-primary"
+          className="w-12 h-12 object-contain cursor-pointer text-primary"
         />
       </Link>
 
@@ -77,8 +77,8 @@ export default function TopMenu() {
               key={label}
               className={
                 active
-                  ? "text-primary font-serif font-semibold"
-                  : "text-secondary font-serif font-semibold"
+                  ? "text-primary font-serif font-bold"
+                  : "text-secondary font-serif font-bold"
               }
             >
               {label}

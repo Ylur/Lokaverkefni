@@ -8,7 +8,7 @@ import NavButton from "./components/orders/NavButton";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen w-full border font-serif font-semibold text-white">
+    <div className="min-h-screen w-full border rounded font-serif font-semibold text-white">
       <section className="container mx-auto px-4 py-8 flex flex-col items-center text-center">
         <h1 className="text-3xl md:text-4xl font-bold mb-4 font-serif">
           Welcome to Our Restaurant
