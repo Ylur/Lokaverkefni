@@ -97,31 +97,31 @@ export default function OlderOrdersPage() {
         </div>
         {message && <p className="text-red-500 mt-2">{message}</p>}
 
-        {/* Orders List */}
+        {/* Orders List if available*/}
         {orders.length > 0 && (
           <ul className="mt-4 space-y-4">
             {orders.map((o) => (
               <li
                 key={o._id}
-                className="bg-black/40 p-4 rounded shadow font-serif"
+                className="bg-primary/70 shadow border rounded font-serif mx-8"
               >
-                <h3 className="font-semibold mb-1 font-serif">
+                <h3 className="text-center mb-4 font-semibold font-serif ">
                   Order ID: {o._id}
                 </h3>
-                <p>Email: {o.email}</p>
-                <p>Total: {o.total}</p>
-                <p>Status: {o.status}</p>
+                <p className="text-center mb-4">Email: {o.email}</p>
+                <p className="text-center mb-4">Total: {o.total}</p>
+                <p className="text-center mb-4">Status: {o.status}</p>
 
-                <div className="mt-2 flex gap-2">
+                <div className="mt-2 flex gap-4 p-4">
                   <button
                     onClick={() => handleUpdate(o._id)}
-                    className="bg-secondary hover:bg-orange-400 text-white px-2 py-1 font-serif"
+                    className="bg-secondary hover:bg-orange-400 text-white px-2 font-serif"
                   >
                     Update
                   </button>
                   <button
                     onClick={() => handleReOrder(o)}
-                    className="bg-primary hover:bg-green-700 text-white px-2 py-1 font-serif"
+                    className="bg-primary hover:bg-green-700 text-white px-2 font-serif"
                   >
                     Re-Order
                   </button>

@@ -77,6 +77,11 @@ export interface Meal {
   strMeal: string;
   strMealThumb: string;
 }
+export interface Meal {
+  idMeal: string;
+  strMeal: string;
+  strMealThumb: string;
+}
 
 export interface SelectedMeal {
   idMeal: string;

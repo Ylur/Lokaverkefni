@@ -1,4 +1,3 @@
-// src/app/no-orders/page.tsx
 "use client";
 
 import React from "react";
@@ -13,10 +12,10 @@ export default function NoOrdersPage() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-4">
-      <div className="bg-black/40 max-w-md w-full p-6 rounded shadow text-white">
+    <div className="flex justify-center items-center min-h-screen p-4 bg-black/70">
+      <div className="bg-black/40 max-w-md w-full p-6 rounded shadow text-white text-center">
         <h1 className="text-2xl font-bold mb-4 font-serif">No Orders Yet</h1>
-        <p className="mb-6 font-serif ">You have not placed any orders yet.</p>
+        <p className="mb-6 font-serif">You have not placed any orders yet.</p>
         <button
           onClick={handleCreateOrder}
           className="bg-primary hover:bg-green-700 text-white px-4 py-2 rounded font-serif"

@@ -336,7 +336,7 @@ function UpdateOrder() {
             />
             <button
               onClick={() => removeDrink(idx)}
-              className="border rounded hover:bg-red-700 text-primary px-2 py-1"
+              className="border rounded hover:bg-red-700 text-white px-2 py-1"
             >
               Remove
             </button>
