@@ -22,7 +22,7 @@ export default function MiniOrderFlow({ step }: MiniOrderFlowProps) {
       <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-4 text-center">
         Order Status
       </h2>
-      <ul className="space-y-2">
+      <ul className="space-y-2 text-center">
         {steps.map(({ label, stepNumber }) => (
           <li
             key={stepNumber}

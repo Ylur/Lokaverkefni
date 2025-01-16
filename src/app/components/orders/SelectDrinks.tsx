@@ -102,25 +102,25 @@ export default function SelectDrinks() {
         Select Drinks
       </h1>
 
-      <div className="space-x-2 mb-4">
+      <div className="space-x-2 mb-4 text-center">
         <button
           onClick={handleBack}
-          className="bg-primary hover:bg-green-700 text-white px-3 py-1 font-serif  "
+          className="bg-primary hover:bg-green-700 text-white px-3 py-1 font-serif"
         >
           Back (Dishes)
         </button>
         <button
           onClick={handleNext}
-          className="bg-primary hover:bg-green-700 text-white px-3 py-1 font-serif  "
+          className="bg-primary hover:bg-green-700 text-white px-3 py-1 font-serif"
         >
           Next (Booking)
         </button>
       </div>
 
       {drinks.length === 0 ? (
-        <p>Loading drinks...</p>
+        <p className="text-white text-center">Loading drinks...</p>
       ) : (
-        <div className="grid grid-cols-3 gap-4 mt-4">
+        <div className="grid grid-cols-3 gap-4 mt-4 text-center overflow-hidden">
           {drinks.map((drink) => {
             const isSelected = selectedDrinks.some(
               (d) => d.idDrink === drink.idDrink
@@ -132,33 +132,43 @@ export default function SelectDrinks() {
             return (
               <div
                 key={drink.idDrink}
-                className="border p-2 font-serif font-semibold text-white"
+                className="
+                  border p-2 font-serif font-semibold text-white
+                  flex flex-col justify-between items-center
+                  min-h-[360px]
+                "
               >
+                {/* Top: Image + Title */}
+                <div className="text-center">
+                  <Image
+                    src={drink.strDrinkThumb}
+                    alt={drink.strDrink}
+                    width={200}
+                    height={150}
+                    className="mx-auto"
+                  />
+                  <p className="mt-2">{drink.strDrink}</p>
+                </div>
 
-                <Image
-                  src={drink.strDrinkThumb}
-                  alt={drink.strDrink}
-                  width={200}
-                  height={150}
-                  className="object-cover"
-                />
-                <p>{drink.strDrink}</p>
+                {/* Select/Remove Button */}
                 <button
                   onClick={() => toggleDrink(drink)}
-                  className={`mt-2 px-2 py-1 text-white ${
+                  className={`${
                     isSelected
-                      ? "bg-accent hover:bg-red-400"
+                      ? "bg-accent hover:bg-red-600"
                       : "bg-primary hover:bg-green-700"
-                  } text-white px-2 py-1 mt-2 font-serif font-semibold `}
+                  } text-white px-2 py-1 mt-2 font-serif font-semibold`}
                 >
                   {isSelected ? "Remove" : "Select"}
                 </button>
+
+                {/* Quantity if selected */}
                 {isSelected && drinkData && (
-                  <div className="mt-2 text-white font-serif font-semibold ">
+                  <div className="mb-2 mt-2 text-white font-serif font-semibold">
                     <label>Quantity:</label>
                     <input
                       type="number"
-                      className="border ml-2 text-primary font-serif"
+                      className="text-center border-primary text-primary font-serif ml-2 w-16"
                       value={drinkData.quantity}
                       min={1}
                       onChange={(e) =>
