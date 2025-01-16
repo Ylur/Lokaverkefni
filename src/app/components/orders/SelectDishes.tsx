@@ -113,7 +113,7 @@ export default function SelectDishes() {
       {dishes.length === 0 ? (
         <p>Loading dishes...</p>
       ) : (
-        <div className="grid grid-cols-3 gap-4 mt-4">
+        <div className="grid grid-cols-3 gap-4 mt-4 text-center overflow-hidden">
           {dishes.map((dish) => {
             const isSelected = selectedDishes.some(
               (d) => d.idMeal === dish.idMeal
@@ -125,15 +125,23 @@ export default function SelectDishes() {
             return (
               <div
                 key={dish.idMeal}
-                className="border p-2 font-serif font-semibold text-white"
+                className="
+                border p-2 font-serif font-semibold text-white
+                flex flex-col justify-between items-center
+                min-h-[360px]"
               >
-                <Image
-                  src={dish.strMealThumb}
-                  alt={dish.strMeal}
-                  width={200}
-                  height={150}
-                />
-                <p>{dish.strMeal}</p>
+
+                <div className="text-center">
+                  <Image
+                    src={dish.strMealThumb}
+                    alt={dish.strMeal}
+                    width={200}
+                    height={150}
+                    className="mx-auto"
+                  />
+                  <p className="mt-2">{dish.strMeal}</p>
+                </div>
+
                 <button
                   onClick={() => toggleDish(dish)}
                   className={`${
@@ -146,11 +154,11 @@ export default function SelectDishes() {
                 </button>
 
                 {isSelected && dishData && (
-                  <div className="mt-2 text-white font-serif font-semibold ">
+                  <div className=" mb-2 text-white font-serif font-semibold overflow-hidden">
                     <label>Quantity:</label>
                     <input
                       type="number"
-                      className="border ml-2 text-primary font-serif"
+                      className=" text-center border-primary text-primary font-serif"
                       value={dishData.quantity}
                       min={1}
                       onChange={(e) =>

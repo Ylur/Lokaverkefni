@@ -36,5 +36,50 @@
     "people": 1,
     "status": "pending",
     "createdAt": "2025-01-15T20:13:18.561Z"
+  },
+  {
+    "_id": "72c7845c-8d14-449d-8278-33a2b58492a2",
+    "transaction": "e7b165a3-702a-4497-93b8-30e91c0ec056",
+    "email": "56@56.is",
+    "dishes": [
+      {
+        "idMeal": "53077",
+        "strMeal": "Cabbage Soup (Shchi)",
+        "quantity": 1
+      },
+      {
+        "idMeal": "53055",
+        "strMeal": "Cevapi Sausages",
+        "quantity": 1
+      },
+      {
+        "idMeal": "53018",
+        "strMeal": "Bigos (Hunters Stew)",
+        "quantity": 1
+      }
+    ],
+    "drinks": [
+      {
+        "idDrink": "13198",
+        "strDrink": "Quick F**K",
+        "quantity": 1
+      },
+      {
+        "idDrink": "14181",
+        "strDrink": "Cafe Savoy",
+        "quantity": 1
+      },
+      {
+        "idDrink": "178307",
+        "strDrink": "Tequila Slammer",
+        "quantity": 1
+      }
+    ],
+    "total": 45,
+    "date": "2025-01-16",
+    "time": "18:00",
+    "people": 1,
+    "status": "pending",
+    "createdAt": "2025-01-16T09:02:05.733Z"
   }
 ]

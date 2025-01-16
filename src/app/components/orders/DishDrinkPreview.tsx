@@ -56,7 +56,7 @@ export const DishPreview: FC<DishPreviewProps> = ({ dishId }) => {
   if (!dish) return <p>Loading dish details...</p>;
 
   return (
-    <div className="max-w-xs rounded overflow-hidden shadow-lg border p-4 m-2">
+    <div className=" max-w-xs rounded overflow-hidden shadow-lg border p-4 m-2">
       <Image
         className="w-full h-auto object-cover"
         src={dish.strMealThumb}

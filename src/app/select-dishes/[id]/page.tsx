@@ -40,12 +40,12 @@ export default async function DishDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">{dish.strMeal}</h1>
+    <div className=" max-w-2xl mx-auto p-4">
+      <h1 className=" text-3xl font-bold mb-4">{dish.strMeal}</h1>
       <img
         src={dish.strMealThumb}
         alt={dish.strMeal}
-        className="w-full h-auto mb-4"
+        className=" w-full h-auto mb-4"
       />
       <p>{dish.strInstructions}</p>
     </div>
