@@ -166,5 +166,37 @@
     "people": 1,
     "status": "pending",
     "createdAt": "2025-01-16T16:16:35.262Z"
+  },
+  {
+    "_id": "28460798-f998-4ca5-adbb-27efd7ea7844",
+    "transaction": "1f1d3afd-a580-4a06-a8b4-ec141a530796",
+    "email": "1@",
+    "dishes": [
+      {
+        "idMeal": "52917",
+        "strMeal": "White chocolate creme brulee",
+        "quantity": 1
+      }
+    ],
+    "drinks": [],
+    "total": 10,
+    "date": "2025-01-16",
+    "time": "16:30",
+    "people": 1,
+    "status": "pending",
+    "createdAt": "2025-01-16T18:54:35.276Z"
+  },
+  {
+    "_id": "1c7faa21-9610-4001-9b5a-cb776052fa4c",
+    "transaction": "4fe66c0d-7bb5-483e-b9b3-d6fbb687f78a",
+    "email": "1@1",
+    "dishes": [],
+    "drinks": [],
+    "total": 0,
+    "date": "2025-01-16",
+    "time": "17:00",
+    "people": 1,
+    "status": "pending",
+    "createdAt": "2025-01-16T19:22:10.931Z"
   }
 ]

@@ -12,7 +12,7 @@ export default function NoOrdersPage() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-4 bg-black/70">
+    <div className="flex justify-center items-center min-h-screen p-4 border rounded bg-black/40">
       <div className="bg-black/40 max-w-md w-full p-6 rounded shadow text-white text-center">
         <h1 className="text-2xl font-bold mb-4 font-serif">No Orders Yet</h1>
         <p className="mb-6 font-serif">You have not placed any orders yet.</p>

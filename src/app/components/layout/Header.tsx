@@ -8,6 +8,27 @@ import Link from "next/link";
  * TopMenu with a logo on the left that navigates home,
  * and non-clickable labels that highlight the current page/section.
  */
+const SECTIONS = [
+  {
+    label: "HomePage",
+    paths: ["/"],
+  },
+  {
+    label: "Orders",
+    paths: ["/orders", "/select-dishes", "/select-drinks"],
+  },
+  {
+    label: "Booking",
+    paths: ["/booking"],
+  },
+  {
+    label: "Receipt",
+    paths: ["/receipt"],
+  },
+
+];
+
+
 export default function TopMenu() {
   const pathname = usePathname();
 
@@ -17,36 +38,7 @@ export default function TopMenu() {
    *   label -> what is displayd
    *   paths -> any routes that should highlight this label
    */
-  const sections = [
-    {
-      label: "HomePage",
-      paths: ["/"], // highlight only on home
-    },
-    {
-      label: "Menu",
-      paths: ["/Menu"],
-    },
-    {
-      label: "Orders",
-      paths: ["/orders", "/select-dishes", "/select-drinks"],
-    },
-    {
-      label: "Booking",
-      paths: ["/booking"],
-    },
-    {
-      label: "Receipt",
-      paths: ["/receipt"],
-    },
-    {
-      label: "Contact us",
-      paths: ["/contact"],
-    },
-    {
-      label: "About us",
-      paths: ["/about"],
-    },
-  ];
+
 
   /**
    * Checking if current route matches any path in the array.
@@ -70,7 +62,7 @@ export default function TopMenu() {
 
       {/* Non-interactable labels */}
       <div className="space-x-6">
-        {sections.map(({ label, paths }) => {
+        {SECTIONS.map(({ label, paths }) => {
           const active = isActiveSection(paths);
           return (
             <span

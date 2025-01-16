@@ -103,16 +103,16 @@ export default function BookingPage() {
   }
 
   return (
-
     <div className="font-serif min-h-screen flex flex-col justify-center items-center text-white">
       <div className=" max-w-md w-full mb-6">
-        <h1 className="font-serif  text-2xl font-bold mb-4 text-center">Booking Details</h1>
+        <h1 className="font-serif text-2xl font-bold mb-2 text-center">
+          Booking Details
+        </h1>
         <p className="font-serif mb-4 text-center">
           Please fill in your booking details.
         </p>
         <p className="font-serif mb-4 text-center">
-        We'll prepare your table and
-        confirm your order!
+          We'll prepare your table and confirm your order!
         </p>
         <div className="p-4 flex justify-center gap-4 mb-4 font-serif ">
           <button
