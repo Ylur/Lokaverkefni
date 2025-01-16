@@ -168,7 +168,7 @@ export default function SelectDrinks() {
                     <label>Quantity:</label>
                     <input
                       type="number"
-                      className="text-center border-primary text-primary font-serif ml-2 w-16"
+                      className="text-center border-primary text-primary font-serif ml-2  w-10"
                       value={drinkData.quantity}
                       min={1}
                       onChange={(e) =>

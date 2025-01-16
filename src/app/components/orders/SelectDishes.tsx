@@ -100,7 +100,7 @@ export default function SelectDishes() {
 
   return (
     <div className="p-8 justify-items-center">
-      <h1 className="text-xl font-bold text-white font-serif text-center">
+      <h1 className="text-2xl font-bold text-white font-serif text-center pb-4">
         Select Dishes
       </h1>
       <button
@@ -113,7 +113,7 @@ export default function SelectDishes() {
       {dishes.length === 0 ? (
         <p>Loading dishes...</p>
       ) : (
-        <div className="grid grid-cols-3 gap-4 mt-4 text-center overflow-hidden">
+        <div className="grid grid-cols-3 gap-4 mt-4 text-center">
           {dishes.map((dish) => {
             const isSelected = selectedDishes.some(
               (d) => d.idMeal === dish.idMeal
@@ -126,9 +126,9 @@ export default function SelectDishes() {
               <div
                 key={dish.idMeal}
                 className="
-                border p-2 font-serif font-semibold text-white
+                border p-2 font-serif font-semibold text-white overdflow-hidden
                 flex flex-col justify-between items-center
-                min-h-[360px]"
+                max-h-[360px]"
               >
 
                 <div className="text-center">
@@ -154,11 +154,11 @@ export default function SelectDishes() {
                 </button>
 
                 {isSelected && dishData && (
-                  <div className=" mb-2 text-white font-serif font-semibold overflow-hidden">
+                  <div className=" mb-2 text-white font-serif font-semibold">
                     <label>Quantity:</label>
                     <input
                       type="number"
-                      className=" text-center border-primary text-primary font-serif"
+                      className=" text-center border-primary text-primary font-serif ml-2  w-10"
                       value={dishData.quantity}
                       min={1}
                       onChange={(e) =>
