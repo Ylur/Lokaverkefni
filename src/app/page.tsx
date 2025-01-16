@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import "./globals.css";
 import Carousel from "./components/common/Carousel";
 import DrinkCarousel from "./components/common/DrinkCarousel";
@@ -18,28 +17,27 @@ export default function HomePage() {
           Explore delicious dishes, refreshing drinks, and easy booking. Start
           your order or check out our featured items below!
         </p>
-        <div className="space-x-3">
-          <Link
-            href="/select-dishes"
-            className="inline-block bg-primary hover:bg-green-700 text-white px-6 py-2 rounded shadow transition font-serif"
-          >
-            Create Order
-          </Link>
+
+        <div className="flex justify-items-center space-x-3 mt-4 mx:auto overflow-auto ">
+          <NavButton
+            route="/select-dishes"
+            buttonText="Create an order"
+            className="bg-primary hover:bg-green-700 text-white border px-4 py-2 rounded shadow transition font-serif"
+          />
           <NavButton
             route="/menu"
             buttonText="View our menu"
-            className="text-white bg-primary hover:bg-green-700 px-6 py-2 rounded shadow transition font-serif"
+            className="text-white bg-primary hover:bg-green-700 border px-4 py-2 rounded shadow transition font-serif"
           />
           <NavButton
             route="/orders/older-orders"
             buttonText="View Previous Orders"
-            className="text-white bg-primary hover:bg-green-700 px-6 py-2 rounded shadow transition font-serif"
+            className="text-white bg-primary hover:bg-green-700 border px-4 py-2 rounded shadow transition font-serif"
           />
         </div>
       </section>
 
       <hr className="my-8 border-gray-200" />
-
       <section className="container mx-auto px-4 py-8  ">
         <h2 className="text-2xl mb-4 text-center font-serif font-semibold">
           Popular Dishes
@@ -48,10 +46,10 @@ export default function HomePage() {
           <Carousel />
         </div>
 
-        <h2 className="text-2xl mb-4 text-center font-serif font-semibold">
+        <h2 className="text-2xl mb-4 text-center font-serif font-semibold ">
           Popular Drinks
         </h2>
-        <div className="w-full mx-auto">
+        <div className="w-full mx-auto ">
           <DrinkCarousel />
         </div>
       </section>

@@ -67,15 +67,30 @@ export default function Carousel({ onSlideChange }: CarouselProps) {
       : [];
 
   return (
-    <div className="flex justify-center items-center overflow-hidden w-full h-[200px]">
-      <div className="flex w-[900px] h-[200px]">
+    <div className="w-full overflow-hidden flex justify-center items-center">
+      <div
+        className="
+          flex
+          w-full
+          sm:w-[500px] md:w-[700px] lg:w-[900px]
+          h-[150px] sm:h-[200px] lg:h-[300px]
+          transition-all duration-500
+          border
+        "
+      >
         {indicesToShow.length > 0 ? (
           indicesToShow.map((idx) => {
             const slide = slides[idx];
             return (
               <div
                 key={idx}
-                className="w-[300px] h-[200px] flex-shrink-0 relative"
+                className="
+                  relative flex-shrink-0
+                  w-[100px] sm:w-[150px] md:w-[250px] lg:w-[300px]
+                  h-[150px] sm:h-[200px] lg:h-[300px]
+                  mx-auto
+                  border
+                "
               >
                 <Image
                   src={slide.src}
@@ -88,7 +103,7 @@ export default function Carousel({ onSlideChange }: CarouselProps) {
             );
           })
         ) : (
-          <p>Loading...</p>
+          <p className="text-center text-white">Loading...</p>
         )}
       </div>
     </div>

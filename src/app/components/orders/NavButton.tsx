@@ -7,6 +7,7 @@ interface NavigationButtonProps {
   route: string;
   buttonText?: string;
   className?: string;
+  children?: React.ReactNode;
 }
 
 const NavButton: React.FC<NavigationButtonProps> = ({

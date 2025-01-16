@@ -16,10 +16,11 @@ export default function Carousel({ onSlideChange }: CarouselProps) {
   const [slides, setSlides] = useState<Slide[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Fetch slides from the dish API on mount
+  // 1) Fetch slides from the dish API on mount
   useEffect(() => {
     async function fetchSlides() {
       const fetched: Slide[] = [];
+
       // Fetch 3 random dishes for the carousel
       for (let i = 0; i < 3; i++) {
         try {
@@ -37,13 +38,14 @@ export default function Carousel({ onSlideChange }: CarouselProps) {
           console.error("Error fetching dish:", error);
         }
       }
+
       setSlides(fetched);
     }
 
     fetchSlides();
   }, []);
 
-  // Auto-advance the carousel every 3 seconds once slides are loaded
+  // 2) Auto-advance the carousel every 3 seconds (once slides are loaded)
   useEffect(() => {
     if (slides.length === 0) return;
     const intervalId = setInterval(() => {
@@ -57,24 +59,39 @@ export default function Carousel({ onSlideChange }: CarouselProps) {
     }, 3000);
 
     return () => clearInterval(intervalId);
-  }, [slides.length, onSlideChange]);
+  }, [slides, onSlideChange]);
 
-  // Determine which three slides to display based on currentIndex
+  // 3) Determine which three slides to display based on currentIndex
   const indicesToShow =
     slides.length > 0
       ? [0, 1, 2].map((offset) => (currentIndex + offset) % slides.length)
       : [];
 
   return (
-    <div className="flex justify-center items-center overflow-hidden w-full h-[200px]">
-      <div className="flex w-[900px] h-[200px]">
+    <div className="w-full overflow-hidden flex justify-center items-center">
+      <div
+        className="
+          flex
+          w-full
+          sm:w-[500px] md:w-[700px] lg:w-[900px]
+          h-[150px] sm:h-[200px] lg:h-[300px]
+          transition-all duration-500
+          border
+        "
+      >
         {indicesToShow.length > 0 ? (
           indicesToShow.map((idx) => {
             const slide = slides[idx];
             return (
               <div
                 key={idx}
-                className="w-[300px] h-[200px] flex-shrink-0 relative"
+                className="
+                  relative flex-shrink-0
+                  w-[100px] sm:w-[150px] md:w-[250px] lg:w-[300px]
+                  h-[150px] sm:h-[200px] lg:h-[300px]
+                  mx-auto
+                  border
+                "
               >
                 <Image
                   src={slide.src}
@@ -87,7 +104,7 @@ export default function Carousel({ onSlideChange }: CarouselProps) {
             );
           })
         ) : (
-          <p>Loading...</p>
+          <p className="text-center text-white">Loading...</p>
         )}
       </div>
     </div>

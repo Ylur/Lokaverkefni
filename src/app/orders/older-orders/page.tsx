@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from "react";
@@ -72,7 +71,7 @@ export default function OlderOrdersPage() {
 
   return (
     <div className="p-4 min-h-screen text-white flex justify-items-center">
-      <div className="max-w-lg w-full">
+      <div className="max-w-sm w-full">
         <h1 className="text-3xl font-bold mb-4 text-center font-serif">
           Older Orders
         </h1>
@@ -82,7 +81,7 @@ export default function OlderOrdersPage() {
             Enter your email here:
           </label>
           <input
-            className="text-center border p-2 w-full text-primary"
+            className="text-center border rounded p-2 w-full text-primary"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
