@@ -1,4 +1,5 @@
 # Lil Bits restaurant - Lokaverkefni NTV.
+16.Jan: I know now I should have chosen context instead of params.
 
 ## Main Commands to Use the Project
 - npm install - Installs all required packages and dependencies for the project.
