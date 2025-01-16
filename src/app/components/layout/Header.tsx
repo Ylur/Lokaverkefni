@@ -49,7 +49,7 @@ export default function TopMenu() {
   }
 
   return (
-    <nav className="w-full px-4 py-3 flex items-center justify-between">
+    <nav className="w-full px-4 py-3 flex items-center justify-between border rounded">
       {/* Logo that navigates home, yes the header was supposed to be non intertact but users must be able to go to home page imo */}
       <Link href="/" className="flex items-center space-x-2">
         {/* The logo image */}

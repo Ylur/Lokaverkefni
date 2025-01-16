@@ -26,8 +26,8 @@ export default function TopMenu() {
   }
 
   return (
-    <nav className="w-full px-4 py-3 flex items-center justify-center">
-      <div className="space-x-6 flex items-center justify-center">
+    <div className="w-full px-4 py-3 flex items-center justify-center bg-primary border rounded">
+      <div className="space-x-6 flex items-center justify-center  ">
         {SECTIONS.map(({ label, paths }) => {
           const active = isActiveSection(paths);
           return (
@@ -36,8 +36,8 @@ export default function TopMenu() {
               href={paths[0]}
               className={
                 active
-                  ? "text-primary font-serif font-bold"
-                  : "text-secondary font-serif font-bold"
+                  ? "text-primary font-serif font-bold transition-transform duration-300 hover:animate-pulse"
+                  : "text-secondary font-serif font-bold transition-transform duration-300 hover:animate-pulse"
               }
             >
               {label}
@@ -45,6 +45,6 @@ export default function TopMenu() {
           );
         })}
       </div>
-    </nav>
+    </div>
   );
 }
